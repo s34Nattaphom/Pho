@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | Nattaphum - Computer Science & Engineering</title>
+    <!-- Google Fonts & Font Awesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -44,32 +45,6 @@
             z-index: -1;
             pointer-events: none;
         }
-
-        /* KEYFRAME ANIMATIONS FOR PROGRESSIVE LOAD */
-        @keyframes revealUp {
-            0% {
-                opacity: 0;
-                transform: translateY(35px) scale(0.97);
-                filter: blur(10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                filter: blur(0);
-            }
-        }
-
-        .reveal {
-            opacity: 0;
-            animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .delay-1 { animation-delay: 0.15s; }
-        .delay-2 { animation-delay: 0.35s; }
-        .delay-3 { animation-delay: 0.55s; }
-        .delay-4 { animation-delay: 0.75s; }
-        .delay-5 { animation-delay: 0.95s; }
-        .delay-6 { animation-delay: 1.15s; }
 
         /* NAVIGATION */
         nav {
@@ -163,6 +138,29 @@
             overflow: hidden;
         }
 
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: var(--mouse-y, -50px);
+            left: var(--mouse-x, -50px);
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.35) 0%, rgba(212, 175, 55, 0) 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border-radius: 50%;
+        }
+
+        .filter-btn:hover::before { opacity: 1; }
+
+        .filter-btn:hover {
+            color: #fff;
+            border-color: var(--gold-primary);
+            transform: translateY(-2px);
+        }
+
         .filter-btn.active {
             background: linear-gradient(135deg, #d4af37, #a6810a);
             color: #0b0d14;
@@ -178,7 +176,7 @@
             gap: 2.5rem;
             padding: 2.5rem 8% 5rem;
             min-height: 400px;
-            perspective: 1200px;
+            perspective: 1200px; /* กำหนดมิติระยะลึก 3D */
         }
 
         .portfolio-item {
@@ -188,7 +186,7 @@
             overflow: hidden;
             backdrop-filter: blur(10px);
             position: relative;
-            transform-style: preserve-3d;
+            transform-style: preserve-3d; /* รองรับเลเยอร์ 3D ซ้อนข้างใน */
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
                         opacity 0.6s ease,
                         filter 0.6s ease,
@@ -197,7 +195,7 @@
             z-index: 1;
         }
 
-        /* Focused State */
+        /* 1. สไตล์การ์ดที่ถูกเลือก (ขยายใหญ่ + ดันลอยมาข้างหน้า + หมุนรับสายตา) */
         .portfolio-item.focused {
             opacity: 1;
             filter: blur(0px) grayscale(0%);
@@ -206,7 +204,13 @@
             box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.25);
         }
 
-        /* Dimmed / Blurred State */
+        .portfolio-item.focused:hover {
+            border-color: var(--gold-primary);
+            transform: perspective(1000px) rotateX(-3deg) rotateY(3deg) scale(1.12) translateZ(45px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.75), 0 0 40px rgba(212, 175, 55, 0.35);
+        }
+
+        /* 2. สไตล์การ์ดที่ไม่ถูกเลือก (เอียงหมุนพับไปข้างหลัง + ย่อขนาด + เบลอ) */
         .portfolio-item.dimmed {
             opacity: 0.22;
             filter: blur(6px) grayscale(65%);
@@ -214,6 +218,24 @@
             pointer-events: none;
             z-index: 0;
         }
+
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            top: var(--mouse-y, -100px);
+            left: var(--mouse-x, -100px);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, rgba(0,0,0,0) 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .portfolio-item.focused:hover::before { opacity: 1; }
 
         .item-img {
             width: 100%;
@@ -226,14 +248,14 @@
             font-size: 3rem;
             position: relative;
             overflow: hidden;
-            transform: translateZ(15px);
+            transform: translateZ(15px); /* รูปไอคอนลอยนูน 3D */
         }
 
         .item-content {
             padding: 1.5rem;
             position: relative;
             z-index: 3;
-            transform: translateZ(25px);
+            transform: translateZ(25px); /* เลเยอร์ข้อความลอยนูนอ่านง่ายขึ้น */
             transform-style: preserve-3d;
         }
 
@@ -259,6 +281,71 @@
             line-height: 1.6;
         }
 
+        /* TIMELINE SECTION */
+        .timeline-section {
+            padding: 4rem 8% 6rem;
+            background: rgba(15, 18, 28, 0.4);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--gold-primary);
+            margin: 0.8rem auto 0;
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            border-left: 2px solid var(--border-gold);
+            padding-left: 2rem;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.55rem;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--gold-primary);
+            box-shadow: 0 0 12px var(--gold-primary);
+        }
+
+        .timeline-date {
+            color: var(--gold-primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
         footer {
             text-align: center;
             padding: 2.5rem;
@@ -266,14 +353,18 @@
             color: var(--text-muted);
             font-size: 0.85rem;
         }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2.2rem; }
+            .nav-links { display: none; }
+        }
     </style>
 </head>
 <body>
 
     <div class="ambient-glow"></div>
 
-    <!-- 1. Nav Bar Reveal -->
-    <nav class="reveal delay-1">
+    <nav>
         <a href="index.html" class="logo"><i class="fa-solid fa-arrow-left"></i> NATTAPHUM.</a>
         <ul class="nav-links">
             <li><a href="index.html">หน้าหลัก</a></li>
@@ -282,12 +373,12 @@
         </ul>
     </nav>
 
-    <!-- 2. Header & Filter Reveal -->
     <header class="page-header">
-        <h1 class="reveal delay-2">แฟ้มสะสมผลงาน <span class="gold-text">(Portfolio)</span></h1>
-        <p class="reveal delay-3">รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยี</p>
+        <h1>แฟ้มสะสมผลงาน <span class="gold-text">(Portfolio)</span></h1>
+        <p>รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยี</p>
 
-        <div class="filter-container reveal delay-4">
+        <!-- Category Filters -->
+        <div class="filter-container">
             <button class="filter-btn active" onclick="filterPortfolio('all', event)">ทั้งหมด</button>
             <button class="filter-btn" onclick="filterPortfolio('projects', event)">โครงงาน / โปรเจกต์</button>
             <button class="filter-btn" onclick="filterPortfolio('workshops', event)">การอบรม / กิจกรรม</button>
@@ -295,10 +386,9 @@
         </div>
     </header>
 
-    <!-- 3. Portfolio Items Staggered Reveal -->
     <section class="portfolio-grid" id="projects">
 
-        <div class="portfolio-item item-box projects focused reveal delay-4">
+        <div class="portfolio-item item-box projects focused">
             <div class="item-img"><i class="fa-solid fa-laptop-code"></i></div>
             <div class="item-content">
                 <span class="item-tag">Project / Web Development</span>
@@ -307,7 +397,7 @@
             </div>
         </div>
 
-        <div class="portfolio-item item-box workshops focused reveal delay-5">
+        <div class="portfolio-item item-box workshops focused">
             <div class="item-img"><i class="fa-solid fa-microchip"></i></div>
             <div class="item-content">
                 <span class="item-tag">Workshop / Engineering</span>
@@ -316,7 +406,7 @@
             </div>
         </div>
 
-        <div class="portfolio-item item-box certificates focused reveal delay-5">
+        <div class="portfolio-item item-box certificates focused">
             <div class="item-img"><i class="fa-solid fa-award"></i></div>
             <div class="item-content">
                 <span class="item-tag">Certificate</span>
@@ -325,7 +415,7 @@
             </div>
         </div>
 
-        <div class="portfolio-item item-box projects focused reveal delay-6">
+        <div class="portfolio-item item-box projects focused">
             <div class="item-img"><i class="fa-solid fa-server"></i></div>
             <div class="item-content">
                 <span class="item-tag">Project / Hardware</span>
@@ -336,11 +426,39 @@
 
     </section>
 
-    <footer class="reveal delay-6">
+    <section class="timeline-section" id="education">
+        <h2 class="section-title">เส้นทางการศึกษา & ความสนใจ</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">ระดับมัธยมศึกษาตอนปลาย</div>
+                <h3 class="timeline-title">แผนการเรียน วิทยาศาสตร์ - คณิตศาสตร์</h3>
+                <p class="timeline-desc">มุ่งเน้นการศึกษาในหมวดวิชาคำนวณและวิทยาศาสตร์ พร้อมพัฒนาทักษะด้านภาษาคอมพิวเตอร์และการแก้ปัญหาอย่างเป็นระบบด้วยตนเอง</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">เป้าหมายระดับอุดมศึกษา</div>
+                <h3 class="timeline-title">สาขาวิชาวิทยาการคอมพิวเตอร์ / วิศวกรรมคอมพิวเตอร์</h3>
+                <p class="timeline-desc">ตั้งใจเข้าศึกษาต่อในสาขา Computer Science & Engineering เพื่อมุ่งสู่นักพัฒนาซอฟต์แวร์และนวัตกรเทคโนโลยีในอนาคต</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
         <p>© 2026 Nattaphum | Portfolio Page for University Admissions</p>
     </footer>
 
     <script>
+        // 1. Mouse Spotlight Tracker Effect
+        document.querySelectorAll('.portfolio-item, .filter-btn').forEach(elem => {
+            elem.addEventListener('mousemove', (e) => {
+                const rect = elem.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                elem.style.setProperty('--mouse-x', `${x}px`);
+                elem.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // 2. 3D Tilt Filter Function
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.item-box');
             const buttons = document.querySelectorAll('.filter-btn');
