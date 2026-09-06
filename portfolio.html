@@ -1,40 +1,436 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<!-- คีย์เวิร์ดส;ําคัญคือต้องระบุช่อโฟลเดอร์ ื images/ น;ําหน้ําไฟล์รูปภําพเสมอ -->
-<img src="my02.jpg" alt="รูปโปรไฟล์ของฉัน" width="200">
-<meta charset="UTF-8">
-<meta viewport="width=device-width, initial-scale=1.0">
-<title>แฟมสะสมผลงาน📂👌👌🎶😎😎 </title>
-<style>
-  img {
-  border-radius: 30px;
-  }
-body { font-family: sans-serif; background-color: #f4f7f6; text-align: center;
-padding: 30px; }
-.container { max-width: 800px; margin: 0 auto; }
-.project-card { background: white; padding: 20px; margin: 20px 0; border-radius:
-8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: left; }
-.btn { display: inline-block; background: #2c3e50; color: white; padding: 10px
-20px; text-decoration: none; border-radius: 5px; margin-top: 20px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Nattaphum - Computer Science & Engineering</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==================== CORE STYLES ==================== */
+        :root {
+            --bg-color: #0b0d14;
+            --card-bg: rgba(22, 27, 38, 0.7);
+            --border-gold: rgba(212, 175, 55, 0.3);
+            --gold-primary: #d4af37;
+            --gold-light: #f3e5ab;
+            --text-main: #f0f4f8;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Glow Effect */
+        .ambient-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(0,0,0,0) 70%);
+            top: -100px;
+            left: -100px;
+            z-index: -1;
+        }
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 8%;
+            background: rgba(11, 13, 20, 0.85);
+            backdrop-filter: blur(15px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 30%, var(--gold-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.8rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--gold-primary);
+        }
+
+        /* Header Section */
+        .page-header {
+            padding: 8rem 8% 3rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .gold-text {
+            background: linear-gradient(135deg, #ffffff 0%, var(--gold-primary) 60%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Category Filter Buttons */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2.5rem 0 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-gold);
+            color: var(--text-muted);
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--gold-primary);
+            color: #0b0d14;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Grid Items */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            padding: 2rem 8% 5rem;
+        }
+
+        .portfolio-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold-primary);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .item-img {
+            width: 100%;
+            height: 200px;
+            background-color: #161b26;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold-primary);
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover .item-img img {
+            transform: scale(1.08);
+        }
+
+        .item-content {
+            padding: 1.5rem;
+        }
+
+        .item-tag {
+            font-size: 0.75rem;
+            color: var(--gold-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.6rem;
+        }
+
+        .item-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            padding: 4rem 8% 6rem;
+            background: rgba(15, 18, 28, 0.5);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--gold-primary);
+            margin: 0.8rem auto 0;
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            border-left: 2px solid var(--border-gold);
+            padding-left: 2rem;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.55rem;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--gold-primary);
+            box-shadow: 0 0 10px var(--gold-primary);
+        }
+
+        .timeline-date {
+            color: var(--gold-primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2.2rem; }
+            .nav-links { display: none; }
+            .timeline { padding-left: 1.5rem; }
+            .timeline-item::before { left: -2.05rem; }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-<h1> แฟ้มสะสมงาน 📂ของ นายณัฐภูมิ เฉวียงวาท (Portfolio)</h1>
-<p>นี่คือพื้นที่รวบรวมผลงานและกิจกรรมที่ภูมิใจครับ</p>
-<!-- กล่องผลงานชนที่ 1 -->
-<div class="project-card">
-<h3>1. โครงงาน/ชนงานวิทยาศาสตร์คำนวณ  </h3>
-<p>รายละเอียดชนงานนี้ : เขียนอธิบายสั้นๆ ว่าทำอะไร ได้เรียนรู้อะไรจากงานนี้บ้าง </p>
-</div>
-<!-- กล่องผลงานชนที่ 2 -->
-<div class="project-card">
-<h3>2. กิจกรรม/เกียรติบัตรที่ได้รับ</h3>
-<p>รายละเอียดชนงาน : เข้าร่วมการประกวด หรือกิจกรรมของโรงเรียน...</p>
-</div>
-<!-- ปุ่มกดกลับหน้าแรก -->
-<a href="index.html" class="btn"> กลับหน้าแรก</a>
-</div>
+
+    <div class="ambient-glow"></div>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="index.html" class="logo"><i class="fa-solid fa-arrow-left"></i> NATTAPHUM.</a>
+        <ul class="nav-links">
+            <li><a href="index.html">หน้าหลัก</a></li>
+            <li><a href="#projects" class="active">ผลงานทั้งหมด</a></li>
+            <li><a href="#education">ประวัติการศึกษา</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="page-header">
+        <h1>แฟ้มสะสมผลงาน <span class="gold-text">(Portfolio)</span></h1>
+        <p>รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยี</p>
+
+        <!-- Category Filters -->
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterPortfolio('all')">ทั้งหมด</button>
+            <button class="filter-btn" onclick="filterPortfolio('projects')">โครงงาน / โปรเจกต์</button>
+            <button class="filter-btn" onclick="filterPortfolio('workshops')">การอบรม / กิจกรรม</button>
+            <button class="filter-btn" onclick="filterPortfolio('certificates')">เกียรติบัตร</button>
+        </div>
+    </header>
+
+    <!-- Portfolio Grid Section -->
+    <section class="portfolio-grid" id="projects">
+
+        <!-- Item 1: Web Dev Project -->
+        <div class="portfolio-item item-box projects">
+            <div class="item-img">
+                <i class="fa-solid fa-laptop-code"></i>
+                <!-- ใส่รูปผลงานจริงได้โดยเพิ่ม: <img src="ชื่อรูปภาพ.jpg" alt="Project"> -->
+            </div>
+            <div class="item-content">
+                <span class="item-tag">Project / Web Development</span>
+                <h3 class="item-title">Personal Portfolio Website</h3>
+                <p class="item-desc">พัฒนาเว็บไซต์แฟ้มสะสมผลงานด้วย HTML5, CSS3, และ JavaScript โฮสต์บน GitHub Pages เน้นดีไซน์โมเดิร์น Luxury Glassmorphism</p>
+            </div>
+        </div>
+
+        <!-- Item 2: Workshop -->
+        <div class="portfolio-item item-box workshops">
+            <div class="item-img">
+                <i class="fa-solid fa-microchip"></i>
+            </div>
+            <div class="item-content">
+                <span class="item-tag">Workshop / Engineering</span>
+                <h3 class="item-title">K-Engineering World Tour & Workshop</h3>
+                <p class="item-desc">เข้าร่วมการอบรมเชิงปฏิบัติการด้านวิศวกรรมคอมพิวเตอร์ ปัญญาประดิษฐ์ (AI) และระบบอินเทอร์เน็ตของทุกสิ่ง (IoT)</p>
+            </div>
+        </div>
+
+        <!-- Item 3: Certificate -->
+        <div class="portfolio-item item-box certificates">
+            <div class="item-img">
+                <i class="fa-solid fa-award"></i>
+            </div>
+            <div class="item-content">
+                <span class="item-tag">Certificate</span>
+                <h3 class="item-title">Computer Science & Cyber Fundamentals</h3>
+                <p class="item-desc">วุฒิบัตรผ่านการอบรมทักษะพื้นฐานด้านวิทยาการคอมพิวเตอร์ การคิดเชิงคำนวณ และความมั่นคงปลอดภัยไซเบอร์</p>
+            </div>
+        </div>
+
+        <!-- Item 4: Hardware & Computer Specs Study -->
+        <div class="portfolio-item item-box projects">
+            <div class="item-img">
+                <i class="fa-solid fa-server"></i>
+            </div>
+            <div class="item-content">
+                <span class="item-tag">Project / Hardware</span>
+                <h3 class="item-title">Computer Systems & Hardware Analysis</h3>
+                <p class="item-desc">การศึกษาและวิเคราะห์สถาปัตยกรรมฮาร์ดแวร์คอมพิวเตอร์ การเปรียบเทียบประสิทธิภาพสเปกการประมวลผล GPU และ CPU</p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Timeline / Education Section -->
+    <section class="timeline-section" id="education">
+        <h2 class="section-title">เส้นทางการศึกษา & ความสนใจ</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">ระดับมัธยมศึกษาตอนปลาย</div>
+                <h3 class="timeline-title">แผนการเรียน วิทยาศาสตร์ - คณิตศาสตร์</h3>
+                <p class="timeline-desc">มุ่งเน้นการศึกษาในหมวดวิชาคำนวณและวิทยาศาสตร์ พร้อมพัฒนาทักษะด้านภาษาคอมพิวเตอร์และการแก้ปัญหาอย่างเป็นระบบด้วยตนเอง</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">เป้าหมายระดับอุดมศึกษา</div>
+                <h3 class="timeline-title">สาขาวิชาวิทยาการคอมพิวเตอร์ / วิศวกรรมคอมพิวเตอร์</h3>
+                <p class="timeline-desc">ตั้งใจเข้าศึกษาต่อในสาขา Computer Science & Engineering เพื่อมุ่งสู่นักพัฒนาซอฟต์แวร์และนวัตกรเทคโนโลยีในอนาคต</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Nattaphum | Portfolio Page for University Admissions</p>
+    </footer>
+
+    <!-- Interactive Filter Script -->
+    <script>
+        function filterPortfolio(category) {
+            const items = document.querySelectorAll('.item-box');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1)';
+                    }, 50);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+    </script>
 </body>
 </html>
