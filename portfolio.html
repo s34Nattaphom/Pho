@@ -115,7 +115,7 @@
             margin: 0 auto;
         }
 
-        /* FILTER BUTTONS WITH MOUSE SPOTLIGHT */
+        /* FILTER BUTTONS */
         .filter-container {
             display: flex;
             justify-content: center;
@@ -134,7 +134,7 @@
             cursor: pointer;
             font-size: 0.9rem;
             font-weight: 500;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s ease;
             overflow: hidden;
         }
 
@@ -169,7 +169,7 @@
             box-shadow: 0 8px 20px rgba(212, 175, 55, 0.35);
         }
 
-        /* PORTFOLIO GRID & SMOOTH FILTER ANIMATION */
+        /* PORTFOLIO GRID */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -185,17 +185,10 @@
             overflow: hidden;
             backdrop-filter: blur(10px);
             position: relative;
-
-            /* Smooth Cubic Bezier Transitions */
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                        opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.4s ease,
-                        box-shadow 0.4s ease;
-            opacity: 1;
-            transform: scale(1) translateY(0);
+            will-change: transform, opacity;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
-        /* Dynamic Mouse Glow on Items */
         .portfolio-item::before {
             content: '';
             position: absolute;
@@ -215,20 +208,8 @@
         .portfolio-item:hover::before { opacity: 1; }
 
         .portfolio-item:hover {
-            transform: translateY(-8px) scale(1.01);
             border-color: var(--gold-primary);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.18);
-        }
-
-        /* Classes used for Smooth Filter Switch */
-        .portfolio-item.is-hidden {
-            opacity: 0;
-            transform: scale(0.88) translateY(15px);
-            pointer-events: none;
-        }
-
-        .portfolio-item.is-dismissed {
-            display: none !important;
         }
 
         .item-img {
@@ -449,29 +430,63 @@
             });
         });
 
-        // 2. Ultra-Smooth Portfolio Filtering Animation (ไร้การกระตุก)
+        // 2. FLIP Animation Function (แก้ปัญหากระพริบและวาร์ปกระโดดตำแหน่ง)
         function filterPortfolio(category, evt) {
-            const items = document.querySelectorAll('.item-box');
+            const items = Array.from(document.querySelectorAll('.item-box'));
             const buttons = document.querySelectorAll('.filter-btn');
 
             buttons.forEach(btn => btn.classList.remove('active'));
-            if(evt) evt.currentTarget.classList.add('active');
+            if (evt) evt.currentTarget.classList.add('active');
 
+            // [First] บันทึกตำแหน่งพิกัดเดิมของการ์ดที่เปิดอยู่ก่อนเปลี่ยนหมวดหมู่
+            const firstPositions = new Map();
+            items.forEach(item => {
+                if (window.getComputedStyle(item).display !== 'none') {
+                    firstPositions.set(item, item.getBoundingClientRect());
+                }
+            });
+
+            // [Last] อัปเดตสถานะการแสดงผล
             items.forEach(item => {
                 const matches = category === 'all' || item.classList.contains(category);
-
                 if (matches) {
-                    item.classList.remove('is-dismissed');
-                    // Force Reflow
-                    void item.offsetWidth;
-                    item.classList.remove('is-hidden');
+                    item.style.display = 'block';
                 } else {
-                    item.classList.add('is-hidden');
-                    setTimeout(() => {
-                        if (item.classList.contains('is-hidden')) {
-                            item.classList.add('is-dismissed');
+                    item.style.display = 'none';
+                }
+            });
+
+            // [Invert & Play] สั่งให้การ์ดค่อยๆ เลื่อนอย่างราบรื่นจากพิกัดเดิมไปยังพิกัดใหม่
+            items.forEach(item => {
+                if (item.style.display !== 'none') {
+                    const first = firstPositions.get(item);
+                    const last = item.getBoundingClientRect();
+
+                    if (first) {
+                        const deltaX = first.left - last.left;
+                        const deltaY = first.top - last.top;
+
+                        if (deltaX !== 0 || deltaY !== 0) {
+                            item.style.transition = 'none';
+                            item.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+
+                            requestAnimationFrame(() => {
+                                item.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                                item.style.transform = '';
+                            });
                         }
-                    }, 350); // รอให้ Fade Out จบอย่างนุ่มนวลค่อยซ่อนตัว
+                    } else {
+                        // การ์ดที่เพิ่งปรากฏ ให้สเกลขึ้นพร้อม Fade In
+                        item.style.transition = 'none';
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.88) translateY(15px)';
+
+                        requestAnimationFrame(() => {
+                            item.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                            item.style.opacity = '1';
+                            item.style.transform = '';
+                        });
+                    }
                 }
             });
         }
