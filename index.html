@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Nattaphum Chawiangwat</title>
+    <title>Nattaphum Chawiangwat | Academic Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
     <style>
         :root {
             --bg-color: #0b0d14;
-            --card-bg: rgba(22, 27, 38, 0.75);
+            --card-bg: rgba(22, 27, 38, 0.7);
             --border-gold: rgba(212, 175, 55, 0.25);
             --gold-primary: #d4af37;
             --gold-light: #f3e5ab;
@@ -25,31 +25,32 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Prompt', sans-serif;
-            scroll-behavior: smooth;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            overflow-x: hidden;
             min-height: 100vh;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
+        /* Ambient Glow Effect */
         .ambient-glow {
             position: fixed;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(0,0,0,0) 70%);
-            top: -100px;
-            left: -100px;
+            width: 650px;
+            height: 650px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.14) 0%, rgba(0,0,0,0) 70%);
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: -1;
             pointer-events: none;
         }
 
-        /* 1. PAGE LOAD ENTRANCE ANIMATION (เหมือนหน้า Index) */
+        /* KEYFRAME ANIMATIONS (Sequential Reveal) */
         @keyframes revealUp {
             0% {
                 opacity: 0;
@@ -68,6 +69,7 @@
             animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
+        /* Sequential Delays */
         .delay-1 { animation-delay: 0.15s; }
         .delay-2 { animation-delay: 0.35s; }
         .delay-3 { animation-delay: 0.55s; }
@@ -80,13 +82,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.2rem 8%;
-            background: rgba(11, 13, 20, 0.85);
+            padding: 1.5rem 8%;
+            background: rgba(11, 13, 20, 0.8);
             backdrop-filter: blur(15px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -97,15 +95,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 1.8rem;
+            gap: 2rem;
         }
 
         .nav-links a {
@@ -119,16 +114,63 @@
             color: var(--gold-primary);
         }
 
-        /* PAGE HEADER */
-        .page-header {
-            padding: 8rem 8% 2rem;
+        /* HERO SECTION & PROFILE IMAGE */
+        .hero {
+            padding: 4rem 8% 3rem;
             text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        .page-header h1 {
-            font-size: 2.8rem;
+        .profile-wrapper {
+            position: relative;
+            width: 170px;
+            height: 170px;
+            margin: 0 auto 1.8rem;
+        }
+
+        .profile-img-card {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--gold-primary), rgba(212, 175, 55, 0.2));
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.25);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .profile-img-card:hover {
+            transform: scale(1.04);
+            box-shadow: 0 16px 45px rgba(212, 175, 55, 0.4);
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--bg-color);
+            display: block;
+        }
+
+        .badge-tag {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--border-gold);
+            border-radius: 20px;
+            color: var(--gold-primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
             font-weight: 700;
-            margin-bottom: 0.8rem;
+            line-height: 1.3;
+            margin-bottom: 1.2rem;
         }
 
         .gold-text {
@@ -137,129 +179,73 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .page-header p {
+        .hero p {
             color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 680px;
+            margin: 0 auto 2.2rem;
         }
 
-        /* FILTER BUTTONS */
-        .filter-container {
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-            margin: 2.5rem 0 1rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-gold);
-            color: var(--text-muted);
-            padding: 0.65rem 1.6rem;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .filter-btn.active, .filter-btn:hover {
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             background: linear-gradient(135deg, #d4af37, #a6810a);
             color: #0b0d14;
+            padding: 0.9rem 2.2rem;
+            border-radius: 30px;
             font-weight: 600;
-            border-color: transparent;
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.35);
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
         }
 
-        /* PORTFOLIO GRID */
-        .portfolio-grid {
+        .cta-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.45);
+        }
+
+        /* FEATURE CARDS */
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
             padding: 2rem 8% 5rem;
-            max-width: 1300px;
+            max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            min-height: 400px;
         }
 
-        /* 2. TAB FILTER ANIMATION SYSTEM (FADE IN / FADE OUT) */
-        .portfolio-item {
+        .feature-card {
             background: var(--card-bg);
             border: 1px solid var(--border-gold);
+            padding: 2rem;
             border-radius: 16px;
-            overflow: hidden;
             backdrop-filter: blur(10px);
-            position: relative;
-
-            /* Smooth Transitions for filtering */
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            filter: blur(0);
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        filter 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.3s ease,
-                        box-shadow 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
-        .portfolio-item:hover {
-            transform: translateY(-6px) scale(1.02);
+        .feature-card:hover {
+            transform: translateY(-5px);
             border-color: var(--gold-primary);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.2);
         }
 
-        /* Fade Out state when filtered out */
-        .portfolio-item.fade-out {
-            opacity: 0;
-            transform: scale(0.9) translateY(20px);
-            filter: blur(10px);
-            pointer-events: none;
-        }
-
-        /* Hide element completely after Fade Out animation finishes */
-        .portfolio-item.is-hidden {
-            display: none !important;
-        }
-
-        .item-img {
-            width: 100%;
-            height: 190px;
-            background-color: #141824;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .feature-icon {
+            font-size: 2rem;
             color: var(--gold-primary);
-            font-size: 2.8rem;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            margin-bottom: 1rem;
         }
 
-        .item-content {
-            padding: 1.5rem;
-        }
-
-        .item-tag {
-            font-size: 0.75rem;
-            color: var(--gold-primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .feature-card h3 {
+            font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            display: block;
-            font-weight: 600;
-        }
-
-        .item-title {
-            font-size: 1.15rem;
-            font-weight: 600;
             color: #fff;
-            margin-bottom: 0.6rem;
         }
 
-        .item-desc {
+        .feature-card p {
             color: var(--text-muted);
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             line-height: 1.6;
         }
 
@@ -276,106 +262,55 @@
 
     <div class="ambient-glow"></div>
 
-    <!-- 1. Nav Bar Staggered Entrance -->
+    <!-- 1. Nav Bar Reveal -->
     <nav class="reveal delay-1">
-        <a href="index.html" class="logo"><i class="fa-solid fa-arrow-left"></i> NATTAPHUM.</a>
+        <a href="index.html" class="logo">NATTAPHUM.</a>
         <ul class="nav-links">
-            <li><a href="index.html">หน้าหลัก</a></li>
-            <li><a href="portfolio.html" class="active">ผลงานทั้งหมด</a></li>
+            <li><a href="index.html" class="active">เกี่ยวกับผม</a></li>
+            <li><a href="portfolio.html">แฟ้มสะสมผลงาน</a></li>
             <li><a href="portfolio.html#education">ประวัติการศึกษา</a></li>
         </ul>
     </nav>
 
-    <!-- 2. Header & Filter Staggered Entrance -->
-    <header class="page-header">
-        <h1 class="reveal delay-2">แฟ้มสะสมผลงาน <span class="gold-text">(Portfolio)</span></h1>
-        <p class="reveal delay-3">รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยีของ นายณัฐภูมิ เฉวียงวาท</p>
-
-        <div class="filter-container reveal delay-4">
-            <button class="filter-btn active" onclick="filterPortfolio('all', event)">ทั้งหมด</button>
-            <button class="filter-btn" onclick="filterPortfolio('projects', event)">โครงงาน / โปรเจกต์</button>
-            <button class="filter-btn" onclick="filterPortfolio('workshops', event)">การอบรม / กิจกรรม</button>
-            <button class="filter-btn" onclick="filterPortfolio('certificates', event)">เกียรติบัตร</button>
-        </div>
-    </header>
-
-    <!-- 3. Portfolio Grid Cards with Staggered Entrance & Smooth Filter Animations -->
-    <section class="portfolio-grid" id="projects">
-
-        <div class="portfolio-item projects reveal delay-4">
-            <div class="item-img"><i class="fa-solid fa-laptop-code"></i></div>
-            <div class="item-content">
-                <span class="item-tag">Project / Web Development</span>
-                <h3 class="item-title">Personal Portfolio Website</h3>
-                <p class="item-desc">พัฒนาเว็บไซต์แฟ้มสะสมผลงานด้วย HTML5, CSS3, และ JavaScript โฮสต์บน GitHub Pages เน้นดีไซน์โมเดิร์น Luxury Glassmorphism พร้อม UI Entrance Animations</p>
+    <!-- 2. Hero Section with Profile Image & Personal Info -->
+    <section class="hero">
+        <!-- Profile Picture (my02.jpg) -->
+        <div class="profile-wrapper reveal delay-2">
+            <div class="profile-img-card">
+                <img src="my02.jpg" alt="ภาพถ่าย นายณัฐภูมิ เฉวียงวาท" class="profile-img">
             </div>
         </div>
 
-        <div class="portfolio-item workshops reveal delay-5">
-            <div class="item-img"><i class="fa-solid fa-microchip"></i></div>
-            <div class="item-content">
-                <span class="item-tag">Workshop / Engineering</span>
-                <h3 class="item-title">K-Engineering World Tour & Workshop</h3>
-                <p class="item-desc">เข้าร่วมการอบรมเชิงปฏิบัติการด้านวิศวกรรมคอมพิวเตอร์ ปัญญาประดิษฐ์ (AI) และระบบอินเทอร์เน็ตของทุกสิ่ง (IoT)</p>
-            </div>
+        <div class="badge-tag reveal delay-3">DEK70 ACADEMIC PORTFOLIO</div>
+        <h1 class="reveal delay-4">สวัสดีครับ ผม <span class="gold-text">นายณัฐภูมิ เฉวียงวาท</span></h1>
+        <p class="reveal delay-5">นักเรียนผู้มีความสนใจด้านสถาปัตยกรรมคอมพิวเตอร์ ระบบฮาร์ดแวร์ วิทยาการคอมพิวเตอร์ และการพัฒนาซอฟต์แวร์ เตรียมความพร้อมสำหรับการศึกษาต่อระดับอุดมศึกษา</p>
+        <div class="reveal delay-6">
+            <a href="portfolio.html" class="cta-btn"><i class="fa-solid fa-folder-open"></i> เข้าชมแฟ้มสะสมผลงานจริง</a>
         </div>
+    </section>
 
-        <div class="portfolio-item certificates reveal delay-5">
-            <div class="item-img"><i class="fa-solid fa-award"></i></div>
-            <div class="item-content">
-                <span class="item-tag">Certificate</span>
-                <h3 class="item-title">Computer Science & Cyber Fundamentals</h3>
-                <p class="item-desc">วุฒิบัตรผ่านการอบรมทักษะพื้นฐานด้านวิทยาการคอมพิวเตอร์ การคิดเชิงคำนวณ และความมั่นคงปลอดภัยไซเบอร์</p>
-            </div>
+    <!-- 3. Staggered Feature Cards -->
+    <section class="features-grid">
+        <div class="feature-card reveal delay-5">
+            <i class="fa-solid fa-code feature-icon"></i>
+            <h3>Programming & Dev</h3>
+            <p>พัฒนาเว็บไซต์และแอปพลิเคชัน การทำงานร่วมกับข้อมูล และการประยุกต์ใช้โค้ดในการแก้ปัญหา</p>
         </div>
-
-        <div class="portfolio-item projects reveal delay-6">
-            <div class="item-img"><i class="fa-solid fa-server"></i></div>
-            <div class="item-content">
-                <span class="item-tag">Project / Hardware</span>
-                <h3 class="item-title">Computer Systems & Hardware Analysis</h3>
-                <p class="item-desc">การศึกษาและวิเคราะห์สถาปัตยกรรมฮาร์ดแวร์คอมพิวเตอร์ การเปรียบเทียบประสิทธิภาพสเปกการประมวลผล GPU และ CPU</p>
-            </div>
+        <div class="feature-card reveal delay-6">
+            <i class="fa-solid fa-microchip feature-icon"></i>
+            <h3>Computer Systems</h3>
+            <p>วิเคราะห์สถาปัตยกรรมคอมพิวเตอร์ ความเข้าใจด้านฮาร์ดแวร์ ระบบ และประสิทธิภาพ</p>
         </div>
-
+        <div class="feature-card reveal delay-6">
+            <i class="fa-solid fa-lightbulb feature-icon"></i>
+            <h3>Problem Solving</h3>
+            <p>การคิดเชิงคำนวณอย่างเป็นระบบ พร้อมเรียนรู้เทคโนโลยีใหม่ๆ และปรับตัวสำหรับการทำงานจริง</p>
+        </div>
     </section>
 
     <footer class="reveal delay-6">
         <p>© 2026 นายณัฐภูมิ เฉวียงวาท | Designed for University Admissions Portfolio</p>
     </footer>
 
-    <script>
-        function filterPortfolio(category, evt) {
-            const items = document.querySelectorAll('.portfolio-item');
-            const buttons = document.querySelectorAll('.filter-btn');
-
-            // 1. เปลี่ยนสถานะปุ่ม Active
-            buttons.forEach(btn => btn.classList.remove('active'));
-            if (evt) evt.currentTarget.classList.add('active');
-
-            // 2. ทำงานร่วมกับ Fade Out -> Fade In Animation
-            items.forEach(item => {
-                const matches = category === 'all' || item.classList.contains(category);
-
-                if (matches) {
-                    // แสดงการ์ดเดิมกลับมา (Fade In)
-                    item.classList.remove('is-hidden');
-                    // Trigger Reflow เพื่อให้ CSS transition ทำงานนุ่มนวล
-                    void item.offsetWidth;
-                    item.classList.remove('fade-out');
-                } else {
-                    // ค่อยๆ จางหายไป (Fade Out)
-                    item.classList.add('fade-out');
-
-                    // ซ่อนการ์ดออกจาก Layout หลัง Animation Fade Out จบลง (350ms)
-                    setTimeout(() => {
-                        if (item.classList.contains('fade-out')) {
-                            item.classList.add('is-hidden');
-                        }
-                    }, 350);
-                }
-            });
-        }
-    </script>
 </body>
 </html>
