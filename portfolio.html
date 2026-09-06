@@ -13,7 +13,7 @@
     <style>
         :root {
             --bg-color: #0b0d14;
-            --card-bg: rgba(22, 27, 38, 0.7);
+            --card-bg: rgba(22, 27, 38, 0.75);
             --border-gold: rgba(212, 175, 55, 0.25);
             --gold-primary: #d4af37;
             --gold-light: #f3e5ab;
@@ -169,13 +169,14 @@
             box-shadow: 0 8px 20px rgba(212, 175, 55, 0.35);
         }
 
-        /* PORTFOLIO GRID */
+        /* PORTFOLIO GRID WITH 3D PERSPECTIVE */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
-            padding: 2rem 8% 5rem;
+            gap: 2.5rem;
+            padding: 2.5rem 8% 5rem;
             min-height: 400px;
+            perspective: 1200px; /* กำหนดมิติระยะลึก 3D */
         }
 
         .portfolio-item {
@@ -185,29 +186,36 @@
             overflow: hidden;
             backdrop-filter: blur(10px);
             position: relative;
-            /* อัปเดตอนิเมชันความนุ่มนวลในการโฟกัสและเบลอ */
-            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
-                        opacity 0.5s ease,
-                        filter 0.5s ease,
+            transform-style: preserve-3d; /* รองรับเลเยอร์ 3D ซ้อนข้างใน */
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        opacity 0.6s ease,
+                        filter 0.6s ease,
                         border-color 0.4s ease,
                         box-shadow 0.4s ease;
             z-index: 1;
         }
 
-        /* สไตล์สำหรับการ์ดที่โฟกัส (เลือกอยู่) */
+        /* 1. สไตล์การ์ดที่ถูกเลือก (ขยายใหญ่ + ดันลอยมาข้างหน้า + หมุนรับสายตา) */
         .portfolio-item.focused {
             opacity: 1;
             filter: blur(0px) grayscale(0%);
-            transform: scale(1) translateY(0);
-            z-index: 5;
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1.08) translateZ(30px);
+            z-index: 10;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.25);
         }
 
-        /* สไตล์สำหรับการ์ดที่ไม่เลือก (ร่วงลงไปข้างหลัง + เบลอ) */
+        .portfolio-item.focused:hover {
+            border-color: var(--gold-primary);
+            transform: perspective(1000px) rotateX(-3deg) rotateY(3deg) scale(1.12) translateZ(45px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.75), 0 0 40px rgba(212, 175, 55, 0.35);
+        }
+
+        /* 2. สไตล์การ์ดที่ไม่ถูกเลือก (เอียงหมุนพับไปข้างหลัง + ย่อขนาด + เบลอ) */
         .portfolio-item.dimmed {
             opacity: 0.22;
-            filter: blur(5px) grayscale(70%);
-            transform: scale(0.92) translateY(12px);
-            pointer-events: none; /* ห้ามคลิกหรือเอาเมาส์ไปชี้การ์ดที่เบลอ */
+            filter: blur(6px) grayscale(65%);
+            transform: perspective(1000px) rotateY(-16deg) rotateX(10deg) scale(0.85) translateZ(-80px);
+            pointer-events: none;
             z-index: 0;
         }
 
@@ -229,12 +237,6 @@
 
         .portfolio-item.focused:hover::before { opacity: 1; }
 
-        .portfolio-item.focused:hover {
-            border-color: var(--gold-primary);
-            transform: translateY(-6px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.18);
-        }
-
         .item-img {
             width: 100%;
             height: 200px;
@@ -246,12 +248,15 @@
             font-size: 3rem;
             position: relative;
             overflow: hidden;
+            transform: translateZ(15px); /* รูปไอคอนลอยนูน 3D */
         }
 
         .item-content {
             padding: 1.5rem;
             position: relative;
             z-index: 3;
+            transform: translateZ(25px); /* เลเยอร์ข้อความลอยนูนอ่านง่ายขึ้น */
+            transform-style: preserve-3d;
         }
 
         .item-tag {
@@ -453,16 +458,14 @@
             });
         });
 
-        // 2. Focus & Blur Filter Function (สลับความชัด/เบลอโดยไม่เปลี่ยนตำแหน่ง Grid)
+        // 2. 3D Tilt Filter Function
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.item-box');
             const buttons = document.querySelectorAll('.filter-btn');
 
-            // เปลี่ยนสถานะปุ่มกด
             buttons.forEach(btn => btn.classList.remove('active'));
             if (evt) evt.currentTarget.classList.add('active');
 
-            // สลับคลาส focused / dimmed ของแต่ละการ์ด
             items.forEach(item => {
                 const matches = category === 'all' || item.classList.contains(category);
                 if (matches) {
