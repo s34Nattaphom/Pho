@@ -1,32 +1,421 @@
-<!-- นี่คือโครงสร้างหน้าเว็บทังหมด ้ -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<title>หน้าแนะนำตัวของฉัน</title>
-<style>
-body {
-background-color: #0000FF; color: #333;
-text-align: center; padding: 50px;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nattaphum | Computer Science & Engineering Portfolio</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-}
-.card {
-background: white; border-radius: 10px;
-box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-max-width: 500px; margin: 0 auto; padding: 30px;
+    <style>
+        :root {
+            --bg-color: #0b0d14;
+            --card-bg: rgba(22, 27, 38, 0.65);
+            --border-gold: rgba(212, 175, 55, 0.25);
+            --gold-primary: #d4af37;
+            --gold-light: #f3e5ab;
+            --text-main: #f0f4f8;
+            --text-muted: #94a3b8;
+        }
 
-}
-h1 { color: #2c3e50; }
-p { font-size: 18px; line-height: 1.6; }
-</style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* Ambient Dynamic Background Glow */
+        .ambient-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(0,0,0,0) 70%);
+            top: -100px;
+            right: -100px;
+            z-index: -1;
+            animation: floatGlow 10s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-60px, 60px) scale(1.2); }
+        }
+
+        /* NAVIGATION */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 8%;
+            background: rgba(11, 13, 20, 0.85);
+            backdrop-filter: blur(15px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #fff 30%, var(--gold-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-primary);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .badge {
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid var(--border-gold);
+            color: var(--gold-primary);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .gold-text {
+            background: linear-gradient(135deg, #ffffff 0%, var(--gold-primary) 50%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .typing-text {
+            color: var(--gold-primary);
+            border-right: 2px solid var(--gold-primary);
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: var(--gold-primary); }
+        }
+
+        /* LUXURY BUTTON WITH MOUSE SPOTLIGHT */
+        .btn-gold {
+            position: relative;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #d4af37, #9a7608);
+            color: #0b0d14;
+            font-weight: 600;
+            text-decoration: none;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Dynamic Mouse Follow Glow Effect */
+        .spotlight-element {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spotlight-element::before {
+            content: '';
+            position: absolute;
+            top: var(--mouse-y, -100px);
+            left: var(--mouse-x, -100px);
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, rgba(255,255,255,0) 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 50%;
+        }
+
+        .spotlight-element:hover::before {
+            opacity: 1;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 18px 35px rgba(212, 175, 55, 0.4);
+        }
+
+        /* GLASS CARDS */
+        .section {
+            padding: 5rem 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--gold-primary);
+            margin: 0.8rem auto 0;
+            border-radius: 2px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-gold);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 2.2rem;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* Mouse glow on cards */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: var(--mouse-y, -100px);
+            left: var(--mouse-x, -100px);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, rgba(0,0,0,0) 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 50%;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold-primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.15);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--gold-primary);
+            margin-bottom: 1.2rem;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: #fff;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* SCROLL REVEAL ANIMATION */
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.3rem; }
+            .nav-links { display: none; }
+        }
+    </style>
 </head>
 <body>
-<div class="card">
-<h1>ยินดีต้อนรับสู่โปรไฟล์ของผม </h1>
-<p>สวัสดีครับ! ผมชื่อ <strong>ณัฐภูมิ (Nattaphum)</strong></p>
-<p>ขณะนี้กำลังศึกษา/สนใจด้าน Computer Science & Engineering</p>
-<p>นี่คือเว็บไซต์แรกของผมที่โฮสต์บน GitHub Pages!</p>
-  <a href="portfolio.html" style="display:inline-block; background:#3498db; color:white; padding:10px 20px; text-decoration:none; border-radius:5px; margin-top:15px;">👉 ดูแฟ้มสะสมงานของผม</a>
-</div>
+
+    <div class="ambient-glow"></div>
+
+    <nav>
+        <div class="logo">NATTAPHUM.</div>
+        <ul class="nav-links">
+            <li><a href="#about">เกี่ยวกับฉัน</a></li>
+            <li><a href="#skills">ทักษะความสามารถ</a></li>
+            <li><a href="#portfolio">ผลงานเด่น</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="badge"><i class="fa-solid fa-graduation-cap"></i> ACADEMIC PORTFOLIO</div>
+        <h1>สวัสดีครับ ผม <span class="gold-text">ณัฐภูมิ (Nattaphum)</span></h1>
+        <p>
+            ผู้ที่มีความชื่นชอบและมุ่งมั่นในด้าน <br>
+            <span class="typing-text" id="typing"></span>
+        </p>
+        <a href="portfolio.html" class="btn-gold spotlight-element">
+            <i class="fa-solid fa-folder-open"></i> เข้าชมแฟ้มสะสมผลงาน
+        </a>
+    </section>
+
+    <section class="section reveal" id="about">
+        <h2 class="section-title">เกี่ยวกับตัวผม</h2>
+        <div class="card spotlight-element" style="max-width: 800px; margin: 0 auto;">
+            <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+                <div style="font-size: 3.5rem; color: var(--gold-primary);"><i class="fa-solid fa-user-gear"></i></div>
+                <div style="flex: 1;">
+                    <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">แรงบันดาลใจและความเป้าหมาย</h3>
+                    <p>มีความสนใจอย่างลึกซึ้งในวิทยาการคอมพิวเตอร์ วิศวกรรมซอฟต์แวร์ และเทคโนโลยีสารสนเทศ มุ่งมั่นพัฒนาทักษะการเขียนโปรแกรม การแก้ปัญหาอย่างเป็นระบบ เพื่อเตรียมความพร้อมเข้าสู่ศึกษาระดับอุดมศึกษาในสาขา Computer Science & Engineering</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section reveal" id="skills">
+        <h2 class="section-title">ทักษะ & ความสนใจ</h2>
+        <div class="cards-grid">
+            <div class="card spotlight-element">
+                <div class="card-icon"><i class="fa-solid fa-code"></i></div>
+                <h3>Programming & Dev</h3>
+                <p>การพัฒนาเว็บแอปพลิเคชัน การศึกษาโครงสร้างข้อมูล และการฝึกแก้ไขโจทย์อัลกอริทึม</p>
+            </div>
+            <div class="card spotlight-element">
+                <div class="card-icon"><i class="fa-solid fa-microchip"></i></div>
+                <h3>Computer Systems</h3>
+                <p>ความรู้และความสนใจเกี่ยวกับสถาปัตยกรรมคอมพิวเตอร์ Hardware และระบบเครือข่าย</p>
+            </div>
+            <div class="card spotlight-element">
+                <div class="card-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                <h3>Problem Solving</h3>
+                <p>การคิดวิเคราะห์เชิงตรรกะ พร้อมที่จะเรียนรู้เทคโนโลยีใหม่ๆ และปรับตัวกับการทำงานจริง</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section reveal" id="portfolio" style="text-align: center;">
+        <h2 class="section-title">ผลงาน & กิจกรรม (Portfolio)</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">คลิกที่ปุ่มด้านล่างเพื่อเข้าชมผลงาน โครงงาน และวุฒิบัตรสะสมทั้งหมด</p>
+        <a href="portfolio.html" class="btn-gold spotlight-element" style="font-size: 1.1rem; padding: 1.2rem 3rem;">
+            <i class="fa-solid fa-gem"></i> เปิดแฟ้มสะสมผลงานฉบับเต็ม
+        </a>
+    </section>
+
+    <footer>
+        <p>© 2026 Nattaphum | Designed for University Admissions Portfolio</p>
+    </footer>
+
+    <script>
+        // 1. Dynamic Typing Effect
+        const words = ["Computer Science", "Computer Engineering", "Software Development", "Innovator of Tomorrow"];
+        let wordIndex = 0, charIndex = 0, isDeleting = false;
+        const typingElement = document.getElementById("typing");
+
+        function typeEffect() {
+            const currentWord = words[wordIndex];
+            typingElement.textContent = isDeleting ? currentWord.substring(0, charIndex - 1) : currentWord.substring(0, charIndex + 1);
+            charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
+
+            let typeSpeed = isDeleting ? 40 : 80;
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000; isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false; wordIndex = (wordIndex + 1) % words.length; typeSpeed = 500;
+            }
+            setTimeout(typeEffect, typeSpeed);
+        }
+        document.addEventListener("DOMContentLoaded", typeEffect);
+
+        // 2. Mouse Tracking Spotlight Effect (แสงวิ่งตามหัวเมาส์)
+        document.querySelectorAll('.spotlight-element').forEach(elem => {
+            elem.addEventListener('mousemove', (e) => {
+                const rect = elem.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                elem.style.setProperty('--mouse-x', `${x}px`);
+                elem.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // 3. Smooth Scroll Reveal
+        function revealOnScroll() {
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 120) {
+                    el.classList.add("active");
+                }
+            });
+        }
+        window.addEventListener("scroll", revealOnScroll);
+        revealOnScroll();
+    </script>
 </body>
 </html>
