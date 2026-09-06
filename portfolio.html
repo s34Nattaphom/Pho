@@ -12,7 +12,7 @@
     <style>
         :root {
             --bg-color: #0b0d14;
-            --card-bg: rgba(22, 27, 38, 0.7);
+            --card-bg: rgba(22, 27, 38, 0.75);
             --border-gold: rgba(212, 175, 55, 0.25);
             --gold-primary: #d4af37;
             --gold-light: #f3e5ab;
@@ -50,30 +50,31 @@
             pointer-events: none;
         }
 
-        /* 1. SMOOTH REVEAL ANIMATION (ลบ Filter Blur ออกเพื่อแก้ปัญหากระตุก) */
+        /* INITIAL PAGE LOAD REVEAL ANIMATION */
         @keyframes revealUp {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 25px, 0) scale(0.98);
+                transform: translate3d(0, 30px, 0) scale(0.96);
+                filter: blur(8px);
             }
             100% {
                 opacity: 1;
                 transform: translate3d(0, 0, 0) scale(1);
+                filter: blur(0px);
             }
         }
 
         .reveal {
             opacity: 0;
-            will-change: opacity, transform;
-            animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.25s; }
-        .delay-3 { animation-delay: 0.4s; }
-        .delay-4 { animation-delay: 0.55s; }
-        .delay-5 { animation-delay: 0.7s; }
-        .delay-6 { animation-delay: 0.85s; }
+        .delay-1 { animation-delay: 0.15s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.45s; }
+        .delay-4 { animation-delay: 0.6s; }
+        .delay-5 { animation-delay: 0.75s; }
+        .delay-6 { animation-delay: 0.9s; }
 
         /* NAVIGATION */
         nav {
@@ -174,7 +175,7 @@
             box-shadow: 0 8px 20px rgba(212, 175, 55, 0.35);
         }
 
-        /* PORTFOLIO GRID & GLASSMORPHISM CARDS */
+        /* PORTFOLIO GRID */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -186,22 +187,26 @@
             min-height: 400px;
         }
 
+        /* CARD FOCUS & BLUR SYSTEM (NO FLICKER) */
         .portfolio-item {
             background: var(--card-bg);
             border: 1px solid var(--border-gold);
             border-radius: 16px;
             overflow: hidden;
-            /* พื้นหลังเบลอกระจก (Glassmorphism) ตามเดิม */
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             position: relative;
-            backface-visibility: hidden;
 
-            /* GPU Accelerated Transitions */
-            opacity: 1;
+            /* GPU Acceleration ป้องกันการกระพริบ */
             transform: translate3d(0, 0, 0) scale(1);
-            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            will-change: transform, opacity, filter;
+
+            /* Smooth Transition เวลาเลือก/ไม่เลือกหมวดหมู่ */
+            transition: filter 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+                        opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+                        transform 0.45s cubic-bezier(0.25, 1, 0.5, 1),
                         border-color 0.3s ease,
                         box-shadow 0.3s ease;
         }
@@ -212,13 +217,15 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.2);
         }
 
-        /* Fade Out state เมื่อสลับหมวดหมู่ */
-        .portfolio-item.fade-out {
-            opacity: 0;
-            transform: translate3d(0, 15px, 0) scale(0.95);
+        /* สภาพแวดล้อมตอน "ไม่ได้เลือก" -> เบลอ ถอยไปด้านหลัง และจางลง */
+        .portfolio-item.is-blurred {
+            opacity: 0.15;
+            filter: blur(10px);
+            transform: translate3d(0, 12px, 0) scale(0.92);
             pointer-events: none;
         }
 
+        /* ซ่อนการ์ดออกจาก Layout อย่างนุ่มนวลหลังจากเบลอเสร็จ */
         .portfolio-item.is-hidden {
             display: none !important;
         }
@@ -344,6 +351,15 @@
     </footer>
 
     <script>
+        // เคลียร์ Class Animation โหลดหน้าเว็บออกหลังจากเปิดหน้าเสร็จ (แก้ปัญหากระพริบ)
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    el.classList.remove('reveal', 'delay-1', 'delay-2', 'delay-3', 'delay-4', 'delay-5', 'delay-6');
+                });
+            }, 1800);
+        });
+
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.portfolio-item');
             const buttons = document.querySelectorAll('.filter-btn');
@@ -355,16 +371,18 @@
                 const matches = category === 'all' || item.classList.contains(category);
 
                 if (matches) {
+                    // แสดงผลอันที่เลือกให้คมชัด (Focus)
                     item.classList.remove('is-hidden');
-                    void item.offsetWidth;
-                    item.classList.remove('fade-out');
+                    void item.offsetWidth; // Trigger Reflow
+                    item.classList.remove('is-blurred');
                 } else {
-                    item.classList.add('fade-out');
+                    // ทำให้อันที่ไม่เกี่ยวข้องเบลอ ถอยลงไปด้านหลัง และจางหายไป
+                    item.classList.add('is-blurred');
                     setTimeout(() => {
-                        if (item.classList.contains('fade-out')) {
+                        if (item.classList.contains('is-blurred')) {
                             item.classList.add('is-hidden');
                         }
-                    }, 300);
+                    }, 400);
                 }
             });
         }
