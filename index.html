@@ -112,7 +112,7 @@
             color: var(--gold-primary);
         }
 
-        /* ================= PERMANENT LEFT POPUP MENU (Enhanced Gold Border & Glow) ================= */
+        /* ================= PERMANENT LEFT POPUP MENU ================= */
         .side-popup-panel {
             position: fixed;
             top: 5.5rem;
@@ -141,6 +141,7 @@
         }
 
         .nav-menu-item a {
+            position: relative;
             display: flex;
             align-items: center;
             gap: 14px;
@@ -153,6 +154,20 @@
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid transparent;
+        }
+
+        /* Yellow indicator bar on the left for active/hover state */
+        .nav-menu-item a.active::before,
+        .nav-menu-item a:hover::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20%;
+            height: 60%;
+            width: 4px;
+            background: var(--gold-primary);
+            border-radius: 0 4px 4px 0;
+            box-shadow: 0 0 10px var(--gold-primary);
         }
 
         .nav-menu-item a i {
@@ -461,7 +476,7 @@
         <a href="#" class="top-logo">NATTAPHUM</a>
     </header>
 
-    <!-- Side Popup Menu with Gold Border and Glow -->
+    <!-- Side Popup Menu with Left Gold Accent Bar -->
     <aside class="side-popup-panel">
         <ul class="nav-menu-list">
             <li class="nav-menu-item">
@@ -496,12 +511,12 @@
             <!-- Hero Profile Section -->
             <section class="hero-section" id="about">
                 <div class="profile-img-container">
-                    <img src="my02.jpg" alt="นายณัฐภูมิ เฉวียงเวท">
+                    <img src="my02.jpg" alt="นายณัฐภูมิ เฉวียงวาท">
                 </div>
                 <div>
                     <span class="badge-dek">DEK70 ACADEMIC PORTFOLIO</span>
                 </div>
-                <h1 class="hero-name">สวัสดีครับ ผม นายณัฐภูมิ เฉวียงเวท</h1>
+                <h1 class="hero-name">สวัสดีครับ ผม นายณัฐภูมิ เฉวียงวาท</h1>
                 <p class="hero-bio">
                     นักเรียนผู้มีความสนใจด้านสถาปัตยกรรมคอมพิวเตอร์ ระบบฮาร์ดแวร์ วิทยาการคอมพิวเตอร์ และการพัฒนาซอฟต์แวร์ เตรียมความพร้อมสำหรับการศึกษาต่อระดับอุดมศึกษา
                 </p>
