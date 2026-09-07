@@ -18,7 +18,7 @@
             --gold-light: #f5e6ab;
             --text-main: #f0f4f8;
             --text-muted: #8b9bb4;
-            --sidebar-width: 280px;
+            --sidebar-width: 270px;
         }
 
         * {
@@ -35,159 +35,106 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            display: flex;
         }
 
-        /* Ambient Glow Effect */
+        /* ================= ANIMATIONS ================= */
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleUp {
+            from { opacity: 0; transform: scale(0.85); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes cardEntrance {
+            0% { opacity: 0; transform: translateY(35px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.5; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.08); }
+        }
+
+        /* Ambient Glow Background */
         .ambient-glow {
             position: fixed;
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(0,0,0,0) 70%);
-            top: -200px;
+            width: 750px;
+            height: 750px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(0,0,0,0) 70%);
+            top: -150px;
             left: 50%;
             transform: translateX(-50%);
             z-index: -1;
             pointer-events: none;
+            animation: pulseGlow 6s ease-in-out infinite alternate;
         }
 
-        /* Top Header */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem 6%;
+        /* ================= PERMANENT LEFT POPUP MENU ================= */
+        .side-popup-panel {
             position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 900;
-            background: rgba(11, 13, 20, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .menu-toggle-btn {
-            background: rgba(212, 175, 55, 0.12);
-            border: 1px solid var(--gold-primary);
-            color: var(--gold-primary);
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
-        .menu-toggle-btn:hover {
-            background: var(--gold-primary);
-            color: #0b0d14;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-        }
-
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: #fff;
-            text-decoration: none;
-        }
-
-        /* Left Popup Sidebar Menu (Drawer) */
-        .sidebar-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(6px);
-            z-index: 998;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-
-        .sidebar-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .side-popup-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
+            top: 2rem;
+            left: 2rem;
             width: var(--sidebar-width);
-            height: 100%;
-            background: rgba(15, 19, 29, 0.98);
-            border-right: 1px solid rgba(212, 175, 55, 0.25);
-            z-index: 999;
-            padding: 2rem 1.5rem;
+            height: calc(100vh - 4rem);
+            background: rgba(18, 23, 33, 0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 22px;
+            padding: 2rem 1.2rem;
+            z-index: 100;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transform: translateX(-100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.18);
+            animation: fadeInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .side-popup-menu.active {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 1.5rem;
+        .panel-header {
+            padding-bottom: 1.2rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
         }
 
-        .sidebar-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--gold-primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .close-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
+        .panel-logo {
             font-size: 1.3rem;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .close-btn:hover {
-            color: #fff;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--gold-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .nav-menu-list {
             list-style: none;
-            margin-top: 2rem;
+            margin-top: 1.8rem;
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 0.85rem;
         }
 
         .nav-menu-item a {
             display: flex;
             align-items: center;
             gap: 14px;
-            padding: 0.9rem 1.2rem;
+            padding: 0.95rem 1.2rem;
             color: var(--text-main);
             text-decoration: none;
-            border-radius: 12px;
-            font-size: 0.98rem;
+            border-radius: 14px;
+            font-size: 0.95rem;
             font-weight: 400;
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid transparent;
         }
@@ -197,28 +144,35 @@
             font-size: 1.1rem;
             width: 22px;
             text-align: center;
+            transition: transform 0.3s;
         }
 
         .nav-menu-item a:hover, .nav-menu-item a.active {
-            background: rgba(212, 175, 55, 0.12);
-            border-color: rgba(212, 175, 55, 0.3);
+            background: rgba(212, 175, 55, 0.15);
+            border-color: rgba(212, 175, 55, 0.4);
             color: #fff;
-            transform: translateX(5px);
+            transform: translateX(6px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
         }
 
-        .sidebar-footer {
-            padding-top: 1.5rem;
+        .nav-menu-item a:hover i {
+            transform: scale(1.18);
+        }
+
+        .panel-footer {
+            padding-top: 1.2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
             text-align: center;
         }
 
-        /* Main Container */
-        .container {
-            max-width: 1050px;
-            margin: 0 auto;
-            padding: 7rem 1.5rem 4rem;
+        /* ================= MAIN CONTENT ================= */
+        .main-wrapper {
+            margin-left: calc(var(--sidebar-width) + 4rem);
+            padding: 3.5rem 3rem 4rem 1rem;
+            flex-grow: 1;
+            max-width: 1100px;
         }
 
         /* Hero Profile Section */
@@ -228,13 +182,15 @@
         }
 
         .profile-img-container {
-            width: 130px;
-            height: 130px;
+            width: 135px;
+            height: 135px;
             margin: 0 auto 1.2rem;
             border-radius: 50%;
             padding: 4px;
-            background: linear-gradient(135deg, var(--gold-primary), rgba(212, 175, 55, 0.2));
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+            background: linear-gradient(135deg, var(--gold-primary), rgba(212, 175, 55, 0.25));
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            opacity: 0;
+            animation: scaleUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
         }
 
         .profile-img-container img {
@@ -249,29 +205,35 @@
             display: inline-block;
             background: rgba(212, 175, 55, 0.15);
             color: var(--gold-primary);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            padding: 0.35rem 1rem;
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            padding: 0.35rem 1.1rem;
             border-radius: 20px;
             font-size: 0.78rem;
             font-weight: 600;
             letter-spacing: 1px;
             margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
         }
 
         .hero-name {
-            font-size: 2rem;
+            font-size: 2.1rem;
             font-weight: 700;
             color: #fff;
             margin-bottom: 0.8rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
         }
 
         .hero-bio {
             color: var(--text-muted);
             font-size: 0.95rem;
-            max-width: 650px;
+            max-width: 680px;
             margin: 0 auto 1.8rem;
             font-weight: 300;
             line-height: 1.7;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
         }
 
         .btn-portfolio {
@@ -281,55 +243,73 @@
             background: linear-gradient(135deg, #d4af37, #a6810a);
             color: #0b0d14;
             font-weight: 600;
-            padding: 0.75rem 1.8rem;
+            padding: 0.8rem 1.9rem;
             border-radius: 30px;
             text-decoration: none;
             font-size: 0.95rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+            transition: all 0.35s ease;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
         }
 
         .btn-portfolio:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.45);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(212, 175, 55, 0.5);
         }
 
         /* Info Grid Cards */
         .info-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.2rem;
+            gap: 1.3rem;
             margin-bottom: 2.5rem;
         }
 
         .info-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 1.4rem;
             display: flex;
             align-items: center;
             gap: 1.2rem;
-            backdrop-filter: blur(10px);
-            transition: border-color 0.3s, transform 0.3s;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            animation: cardEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
+        .info-card:nth-child(1) { animation-delay: 0.65s; }
+        .info-card:nth-child(2) { animation-delay: 0.75s; }
+        .info-card:nth-child(3) { animation-delay: 0.85s; }
+        .info-card:nth-child(4) { animation-delay: 0.95s; }
+
         .info-card:hover {
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: translateY(-2px);
+            border-color: rgba(212, 175, 55, 0.45);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.2);
         }
 
         .info-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(212, 175, 55, 0.1);
-            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 175, 55, 0.12);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--gold-primary);
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+
+        .info-card:hover .info-icon {
+            transform: scale(1.12);
+            background: var(--gold-primary);
+            color: #0b0d14;
         }
 
         .info-details {
@@ -345,7 +325,7 @@
         }
 
         .info-value {
-            font-size: 1.05rem;
+            font-size: 1.08rem;
             font-weight: 600;
             color: #fff;
         }
@@ -360,44 +340,92 @@
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.2rem;
+            gap: 1.3rem;
         }
 
         .skill-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 1.5rem 1.2rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            border-radius: 18px;
+            padding: 1.6rem 1.3rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            animation: cardEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
+        .skill-card:nth-child(1) { animation-delay: 1.05s; }
+        .skill-card:nth-child(2) { animation-delay: 1.15s; }
+        .skill-card:nth-child(3) { animation-delay: 1.25s; }
+
         .skill-card:hover {
-            border-color: rgba(212, 175, 55, 0.4);
-            transform: translateY(-4px);
+            border-color: rgba(212, 175, 55, 0.5);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.25);
         }
 
         .skill-icon {
             color: var(--gold-primary);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: scale(1.15);
         }
 
         .skill-title {
-            font-size: 1rem;
+            font-size: 1.02rem;
             font-weight: 600;
             color: #fff;
         }
 
-        @media (max-width: 768px) {
+        /* Responsive Design */
+        @media (max-width: 950px) {
+            body {
+                flex-direction: column;
+            }
+
+            .side-popup-panel {
+                position: relative;
+                top: 0;
+                left: 0;
+                width: calc(100% - 2rem);
+                margin: 1rem auto 0;
+                height: auto;
+                padding: 1.2rem;
+                border-radius: 16px;
+            }
+
+            .nav-menu-list {
+                flex-direction: row;
+                justify-content: center;
+                margin-top: 1rem;
+                gap: 0.5rem;
+            }
+
+            .nav-menu-item a {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .panel-footer {
+                display: none;
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+                padding: 2rem 1.2rem 3rem;
+            }
+
             .info-grid {
                 grid-template-columns: 1fr;
             }
+
             .skills-grid {
                 grid-template-columns: 1fr;
-            }
-            .hero-name {
-                font-size: 1.6rem;
             }
         }
     </style>
@@ -406,42 +434,28 @@
 
     <div class="ambient-glow"></div>
 
-    <!-- Navigation Header with Left Menu Toggle Button -->
-    <header>
-        <div class="header-left">
-            <button class="menu-toggle-btn" id="openSidebar" aria-label="Open Menu">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-            <a href="#" class="logo">NATTAPHUM</a>
-        </div>
-    </header>
-
-    <!-- Overlay Background -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- Left Pop-up Sliding Menu (Drawer) -->
-    <aside class="side-popup-menu" id="sidebarMenu">
+    <!-- Permanent Pop-up Side Panel (ด้านซ้ายค้างไว้ ไม่ต้องกดเปิด) -->
+    <aside class="side-popup-panel">
         <div>
-            <div class="sidebar-header">
-                <span class="sidebar-title"><i class="fa-solid fa-compass"></i> เมนูหลัก</span>
-                <button class="close-btn" id="closeSidebar"><i class="fa-solid fa-xmark"></i></button>
+            <div class="panel-header">
+                <a href="#" class="panel-logo">NATTAPHUM</a>
             </div>
 
             <ul class="nav-menu-list">
                 <li class="nav-menu-item">
-                    <a href="#about" class="active" onclick="toggleSidebar()">
+                    <a href="#about" class="active">
                         <i class="fa-solid fa-user"></i>
                         <span>เกี่ยวกับผม</span>
                     </a>
                 </li>
                 <li class="nav-menu-item">
-                    <a href="portfolio.html" onclick="toggleSidebar()">
+                    <a href="portfolio.html">
                         <i class="fa-solid fa-folder-open"></i>
                         <span>แฟ้มสะสมผลงาน</span>
                     </a>
                 </li>
                 <li class="nav-menu-item">
-                    <a href="portfolio.html#education" onclick="toggleSidebar()">
+                    <a href="portfolio.html#education">
                         <i class="fa-solid fa-graduation-cap"></i>
                         <span>ประวัติการศึกษา</span>
                     </a>
@@ -449,15 +463,15 @@
             </ul>
         </div>
 
-        <div class="sidebar-footer">
+        <div class="panel-footer">
             <p>© 2026 NATTAPHUM</p>
         </div>
     </aside>
 
-    <!-- Main Content -->
-    <main class="container">
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
 
-        <!-- Hero Section -->
+        <!-- Hero Profile Section -->
         <section class="hero-section" id="about">
             <div class="profile-img-container">
                 <img src="my02.jpg" alt="นายณัฐภูมิ เฉวียงเวท">
@@ -544,20 +558,5 @@
 
     </main>
 
-    <script>
-        const openBtn = document.getElementById('openSidebar');
-        const closeBtn = document.getElementById('closeSidebar');
-        const sidebar = document.getElementById('sidebarMenu');
-        const overlay = document.getElementById('sidebarOverlay');
-
-        function toggleSidebar() {
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-        }
-
-        openBtn.addEventListener('click', toggleSidebar);
-        closeBtn.addEventListener('click', toggleSidebar);
-        overlay.addEventListener('click', toggleSidebar);
-    </script>
 </body>
 </html>
