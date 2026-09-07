@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Nattaphum Chawiangwat</title>
+    <title>Portfolio | Pakpong Phongthaophong</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -389,6 +389,10 @@
             color: var(--text-main);
             width: 46px;
             height: 46px;
+            min-width: 46px;
+            min-height: 46px;
+            padding: 0;
+            flex-shrink: 0;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -620,7 +624,7 @@
 
     <!-- Navigation Bar -->
     <nav>
-        <a href="index.html" class="logo"><i class="fa-solid fa-arrow-left"></i> NATTAPHUM.</a>
+        <a href="index.html" class="logo"><i class="fa-solid fa-arrow-left"></i> PAKPONG.</a>
         <ul class="nav-links">
             <li><a href="index.html">หน้าหลัก</a></li>
             <li><a href="portfolio.html" class="active">ผลงานทั้งหมด</a></li>
@@ -628,14 +632,14 @@
         </ul>
 
         <div class="nav-profile-wrapper">
-            <img src="my02.jpg" alt="นายณัฐภูมิ เฉวียงวาท" class="nav-profile-img">
+            <img src="my02.jpg" alt="นายปกป้อง พงษ์เฒ่าพงษ์" class="nav-profile-img">
         </div>
     </nav>
 
     <!-- Header & Filter Buttons -->
     <header class="page-header">
         <h1>แฟ้มสะสมผลงาน <span class="gold-text">(Portfolio)</span></h1>
-        <p>รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยีของ นายณัฐภูมิ เฉวียงวาท</p>
+        <p>รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยีของ นายปกป้อง พงษ์เฒ่าพงษ์</p>
 
         <div class="filter-container">
             <button class="filter-btn active" onclick="filterPortfolio('all', event)">ทั้งหมด</button>
@@ -645,7 +649,7 @@
         </div>
     </header>
 
-    <!-- Portfolio Grid (แยกผลงาน 1 ใบ ต่อ 1 การ์ด) -->
+    <!-- Portfolio Grid -->
     <section class="portfolio-grid" id="portfolioDeck">
 
         <!-- 1. PERSONAL PORTFOLIO WEBSITE -->
@@ -763,7 +767,7 @@
             </div>
         </div>
 
-        <!-- 6. THAILAND UNIVERSITY EXPO 2024 (A4.jpg) - แยกมาเป็นการ์ดเดี่ยว -->
+        <!-- 6. THAILAND UNIVERSITY EXPO 2024 (A4.jpg) -->
         <div class="portfolio-item certificates" onclick="openModal(this)"
              data-title="Thailand University Expo 2024"
              data-tag="Certificate / Workshop"
@@ -952,7 +956,7 @@
     </div>
 
     <footer>
-        <p>© 2026 นายณัฐภูมิ เฉวียงวาท | Designed for University Admissions Portfolio</p>
+        <p>© 2026 นายปกป้อง พงษ์เฒ่าพงษ์ | Designed for University Admissions Portfolio</p>
     </footer>
 
     <script>
@@ -1091,4 +1095,3 @@
     </script>
 </body>
 </html>
-
