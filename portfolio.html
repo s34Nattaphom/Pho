@@ -40,6 +40,32 @@
             position: relative;
         }
 
+        /* PAGE ENTRANCE KEYFRAMES */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes floatUpNavProfile {
+            0% { opacity: 0; transform: translateY(20px) scale(0.85); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes cardEntrance {
+            0% { opacity: 0; transform: translateY(40px) scale(0.92); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+        }
+
         /* BACKGROUND AMBIENT GLOW */
         .ambient-glow {
             position: fixed;
@@ -54,12 +80,7 @@
             animation: pulseGlow 6s ease-in-out infinite alternate;
         }
 
-        @keyframes pulseGlow {
-            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
-            100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
-        }
-
-        /* NAVIGATION BAR */
+        /* NAVIGATION BAR WITH ANIMATION */
         nav {
             display: flex;
             justify-content: space-between;
@@ -73,6 +94,7 @@
             top: 0;
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .logo {
@@ -119,9 +141,11 @@
             border: 2px solid var(--gold-primary);
             object-fit: cover;
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            animation: floatUpNavProfile 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+            opacity: 0;
         }
 
-        /* PAGE HEADER & FILTERS */
+        /* PAGE HEADER & FILTERS WITH STAGGERED ANIMATIONS */
         .page-header {
             padding: 7.5rem 5% 1rem;
             text-align: center;
@@ -131,6 +155,8 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 0.6rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
         }
 
         .gold-text {
@@ -145,6 +171,8 @@
             max-width: 680px;
             margin: 0 auto;
             font-weight: 300;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
         }
 
         .filter-container {
@@ -153,6 +181,8 @@
             gap: 0.8rem;
             margin: 2.2rem 0 1.5rem;
             flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
         }
 
         .filter-btn {
@@ -175,7 +205,7 @@
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
         }
 
-        /* PORTFOLIO GRID & 3D LAY-DOWN EFFECT */
+        /* PORTFOLIO GRID & CARDS ENTRANCE + 3D LAY DOWN EFFECT */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -184,7 +214,7 @@
             max-width: 1250px;
             margin: 0 auto;
             width: 100%;
-            perspective: 1200px; /* สร้างมิติ 3D สำหรับการเอียงของการ์ด */
+            perspective: 1200px;
         }
 
         .portfolio-item {
@@ -202,14 +232,19 @@
                         filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
                         border-color 0.35s ease, 
                         box-shadow 0.35s ease;
-            opacity: 1;
-            filter: blur(0);
-            transform: rotateX(0deg) translateY(0) scale(1);
+            opacity: 0;
+            animation: cardEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
+
+        /* ทยอยลอยขึ้นทีละใบตอนโหลดหน้าเว็บ */
+        .portfolio-item:nth-child(1) { animation-delay: 0.55s; }
+        .portfolio-item:nth-child(2) { animation-delay: 0.70s; }
+        .portfolio-item:nth-child(3) { animation-delay: 0.85s; }
+        .portfolio-item:nth-child(4) { animation-delay: 1.00s; }
 
         /* การ์ดที่ไม่ถูกเลือก: เอียงลง จางลง และเบลอ */
         .portfolio-item.inactive {
-            opacity: 0.18;
+            opacity: 0.18 !important;
             filter: blur(6px) grayscale(40%);
             transform: rotateX(52deg) translateY(35px) scale(0.88);
             pointer-events: none;
@@ -320,8 +355,8 @@
             background: rgba(18, 23, 33, 0.98);
             border: 1px solid var(--border-gold);
             border-radius: 22px;
-            width: 96vw;  /* กว้างเกือบเต็มหน้าจอ */
-            height: 92vh; /* สูงเกือบเต็มหน้าจอ */
+            width: 96vw;
+            height: 92vh;
             max-width: 1350px;
             overflow-y: auto;
             position: relative;
@@ -644,7 +679,7 @@
     </footer>
 
     <script>
-        // Filter Portfolio with 3D Lay-Down Effect for Unselected Cards
+        // Filter Portfolio with 3D Lay-Down Effect
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.portfolio-item');
             const buttons = document.querySelectorAll('.filter-btn');
