@@ -53,7 +53,7 @@
             pointer-events: none;
         }
 
-        /* NAVIGATION BAR & PROFILE ANIMATION */
+        /* NAVIGATION BAR */
         nav {
             display: flex;
             justify-content: space-between;
@@ -98,7 +98,7 @@
             color: var(--gold-primary);
         }
 
-        /* กรอบรูปโปรไฟล์มุมขวาบน */
+        /* PROFILE IMAGE ANIMATION (FADE IN + FLOAT UP) */
         .nav-profile-wrapper {
             display: flex;
             align-items: center;
@@ -108,7 +108,6 @@
             position: relative;
         }
 
-        /* อนิเมชันเคลื่อนที่รูป my02.jpg จากตำแหน่งตรงกลางหน้าแรก */
         .nav-profile-img {
             width: 44px;
             height: 44px;
@@ -117,21 +116,19 @@
             object-fit: cover;
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
             will-change: transform, opacity;
-            animation: flyFromHomeProfile 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: floatUpNavProfile 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes flyFromHomeProfile {
+        @keyframes floatUpNavProfile {
             0% {
-                /* ตำแหน่งตรงกลางหน้าจอระดับสายตา (จุดเดียวกับรูปใน index.html) */
-                transform: translate3d(-39vw, 175px, 0) scale(3.5);
-                box-shadow: 0 0 35px rgba(212, 175, 55, 0.85);
-                opacity: 0.4;
+                opacity: 0;
+                transform: translateY(25px) scale(0.85);
+                box-shadow: 0 0 0px rgba(212, 175, 55, 0);
             }
             100% {
-                /* เคลื่อนที่เข้าประจำตำแหน่งมุมขวาบนอย่างแนบเนียน */
-                transform: translate3d(0, 0, 0) scale(1);
-                box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
                 opacity: 1;
+                transform: translateY(0) scale(1);
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
             }
         }
 
@@ -189,7 +186,7 @@
             box-shadow: 0 8px 22px rgba(212, 175, 55, 0.35);
         }
 
-        /* 3D CARD DECK CONTAINER (มุมมองการถือการ์ดในมือ) */
+        /* 3D CARD DECK CONTAINER */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -198,7 +195,7 @@
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            perspective: 1200px; /* ความลึกของมิติ 3D */
+            perspective: 1200px;
         }
 
         /* 3D CARD ITEM */
@@ -211,8 +208,6 @@
             -webkit-backdrop-filter: blur(14px);
             position: relative;
             cursor: pointer;
-            
-            /* สถานะปกติ: วางเอียงพับลงด้านล่างเหมือนอยู่ในมือ */
             transform-style: preserve-3d;
             transform: translate3d(0, 0, 0) rotateX(10deg) scale(0.98);
             opacity: 0.85;
@@ -223,7 +218,6 @@
                         box-shadow 0.5s ease;
         }
 
-        /* เมื่อการ์ดถูกเลือก (Selected) -> ลอยขยับขึ้นไปด้านบนอย่างเด่นชัด */
         .portfolio-item.is-selected {
             transform: translate3d(0, -55px, 60px) rotateX(0deg) scale(1.05);
             opacity: 1;
@@ -233,7 +227,6 @@
             z-index: 50;
         }
 
-        /* เมื่อการ์ดไม่ได้ถูกเลือก (Unselected/Blurred) -> ลดระดับและจางลง */
         .portfolio-item.is-unselected {
             transform: translate3d(0, 30px, -60px) rotateX(16deg) scale(0.92);
             opacity: 0.22;
@@ -242,7 +235,6 @@
             z-index: 1;
         }
 
-        /* เอฟเฟกต์ชี้เมาส์ (Hover) หยิบการ์ดขึ้นมาดู */
         .portfolio-item:hover {
             transform: translate3d(0, -65px, 70px) rotateX(2deg) scale(1.06) !important;
             opacity: 1 !important;
@@ -325,7 +317,7 @@
             font-weight: 300;
         }
 
-        /* MODAL / POPUP SYSTEM (ไม่ต้องเปลี่ยน URL) */
+        /* MODAL / POPUP SYSTEM */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -484,21 +476,10 @@
             font-size: 0.85rem;
         }
 
-        /* RESPONSIVE DESIGN */
         @media (max-width: 850px) {
             .portfolio-grid {
                 grid-template-columns: 1fr;
                 gap: 3.5rem;
-            }
-            @keyframes flyFromHomeProfile {
-                0% {
-                    transform: translate3d(-20vw, 170px, 0) scale(2.8);
-                    opacity: 0.4;
-                }
-                100% {
-                    transform: translate3d(0, 0, 0) scale(1);
-                    opacity: 1;
-                }
             }
         }
     </style>
@@ -516,7 +497,7 @@
             <li><a href="portfolio.html#education">ประวัติการศึกษา</a></li>
         </ul>
 
-        <!-- รูปโปรไฟล์ขวาบนใช้ my02.jpg + อนิเมชันขยับต่อเนื่องมาจากตำแหน่งหน้าแรก -->
+        <!-- รูปโปรไฟล์ขวาบนใช้ my02.jpg + อนิเมชันค่อยๆ เลือนลอยขึ้น -->
         <div class="nav-profile-wrapper">
             <img src="my02.jpg" alt="นายณัฐภูมิ เฉวียงวาท" class="nav-profile-img">
         </div>
@@ -527,7 +508,6 @@
         <h1>แฟ้มสะสมผลงาน <span class="gold-text">(Portfolio)</span></h1>
         <p>รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยีของ นายณัฐภูมิ เฉวียงวาท</p>
 
-        <!-- ปุ่มกดเลือกหมวดหมู่การ์ด -->
         <div class="filter-container">
             <button class="filter-btn active" onclick="filterPortfolio('all', event)">ทั้งหมด</button>
             <button class="filter-btn" onclick="filterPortfolio('projects', event)">โครงงาน / โปรเจกต์</button>
@@ -539,11 +519,10 @@
     <!-- 3D Card Deck Grid -->
     <section class="portfolio-grid" id="portfolioDeck">
 
-        <!-- การ์ดที่ 1: โปรเจกต์ -->
         <div class="portfolio-item projects" onclick="openModal(this)"
              data-title="Personal Portfolio Website"
              data-tag="Project / Web Development"
-             data-desc="พัฒนาเว็บไซต์แฟ้มสะสมผลงานด้วย HTML5, CSS3, และ JavaScript โฮสต์บน GitHub Pages เน้นดีไซน์โมเดิร์น Luxury Glassmorphism พร้อมการจัดทำระบบ UI/UX แบบตอบสนองทุกอุปกรณ์"
+             data-desc="พัฒนาเว็บไซต์แฟ้มสะสมผลงานด้วย HTML5, CSS3, และ JavaScript โฮสต์บน GitHub Pages เน้นดีไซน์โมเดิร์น Luxury Glassmorphism"
              data-img=""
              data-icon="fa-laptop-code"
              data-date="2026"
@@ -559,11 +538,10 @@
             </div>
         </div>
 
-        <!-- การ์ดที่ 2: การอบรม -->
         <div class="portfolio-item workshops" onclick="openModal(this)"
              data-title="K-Engineering World Tour & Workshop"
              data-tag="Workshop / Engineering"
-             data-desc="เข้าร่วมการอบรมเชิงปฏิบัติการด้านวิศวกรรมคอมพิวเตอร์ ปัญญาประดิษฐ์ (AI) และระบบอินเทอร์เน็ตของทุกสิ่ง (IoT) รวมถึงการศึกษาพื้นฐาน Cybersecurity และการต่อใช้งาน PLC / Blynk Console"
+             data-desc="เข้าร่วมการอบรมเชิงปฏิบัติการด้านวิศวกรรมคอมพิวเตอร์ ปัญญาประดิษฐ์ (AI) และระบบอินเทอร์เน็ตของทุกสิ่ง (IoT) รวมถึงการศึกษาพื้นฐาน Cybersecurity"
              data-img="" 
              data-icon="fa-microchip"
              data-date="2025 - 2026"
@@ -579,7 +557,6 @@
             </div>
         </div>
 
-        <!-- การ์ดที่ 3: เกียรติบัตร -->
         <div class="portfolio-item certificates" onclick="openModal(this)"
              data-title="Computer Science & Cyber Fundamentals"
              data-tag="Certificate"
@@ -599,11 +576,10 @@
             </div>
         </div>
 
-        <!-- การ์ดที่ 4: โปรเจกต์ฮาร์ดแวร์ -->
         <div class="portfolio-item projects" onclick="openModal(this)"
              data-title="Computer Systems & Hardware Analysis"
              data-tag="Project / Hardware"
-             data-desc="การศึกษาและวิเคราะห์สถาปัตยกรรมฮาร์ดแวร์คอมพิวเตอร์ การเปรียบเทียบประสิทธิภาพสเปกการประมวลผล GPU และ CPU ความเข้ากันได้ของเมนบอร์ดและหน่วยความจำ SSD M.2 NVMe"
+             data-desc="การศึกษาและวิเคราะห์สถาปัตยกรรมฮาร์ดแวร์คอมพิวเตอร์ การเปรียบเทียบประสิทธิภาพสเปกการประมวลผล GPU และ CPU ความเข้ากันได้ของเมนบอร์ดและหน่วยความจำ"
              data-img="" 
              data-icon="fa-server"
              data-date="2025 - 2026"
@@ -621,14 +597,12 @@
 
     </section>
 
-    <!-- Modal Display (หน้าต่างป๊อปอัปดูรูปเกียรติบัตร/รายละเอียด โดยไม่เปลี่ยน URL) -->
+    <!-- Modal Popup -->
     <div class="modal-overlay" id="cardModal" onclick="closeModalOnOuterClick(event)">
         <div class="modal-container">
             <button class="modal-close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
             
-            <div class="modal-image-area" id="modalImageContainer">
-                <!-- แทรกรูปภาพเกียรติบัตรด้วย JS -->
-            </div>
+            <div class="modal-image-area" id="modalImageContainer"></div>
 
             <div class="modal-body">
                 <span class="modal-tag" id="modalTag">TAG NAME</span>
@@ -654,7 +628,6 @@
     </footer>
 
     <script>
-        // ระบบกรองหมวดหมู่แบบเลือกการ์ดลอยขึ้นจากสำรับ (3D Deck Selection)
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.portfolio-item');
             const buttons = document.querySelectorAll('.filter-btn');
@@ -666,21 +639,17 @@
                 const matches = category === 'all' || item.classList.contains(category);
 
                 if (category === 'all') {
-                    // หากเลือกทั้งหมด ให้คืนค่าการ์ดอยู่ในสำรับปกติ
                     item.classList.remove('is-selected', 'is-unselected');
                 } else if (matches) {
-                    // การ์ดตรงกับหมวดหมู่ที่กดเลือก -> ลอยขยับขึ้นไปด้านบนอย่างเด่นชัด
                     item.classList.add('is-selected');
                     item.classList.remove('is-unselected');
                 } else {
-                    // การ์ดไม่ตรง -> ลดระดับลงและเบลอเป็นฉากหลัง
                     item.classList.add('is-unselected');
                     item.classList.remove('is-selected');
                 }
             });
         }
 
-        // ระบบเปิด Popup ข้อมูลและเกียรติบัตร (ไม่ต้องเปลี่ยน URL)
         function openModal(cardElement) {
             const title = cardElement.getAttribute('data-title');
             const tag = cardElement.getAttribute('data-tag');
@@ -698,7 +667,6 @@
 
             const imgContainer = document.getElementById('modalImageContainer');
 
-            // หากมีรูปเกียรติบัตรใน data-img ให้แสดงรูปภาพทันที
             if (imgSrc && imgSrc.trim() !== '') {
                 imgContainer.innerHTML = `<img src="${imgSrc}" alt="${title}">`;
             } else {
@@ -735,3 +703,4 @@
     </script>
 </body>
 </html>
+
