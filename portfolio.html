@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Nattaphum</title>
+    <title>NATTAPHUM | แฟ้มสะสมผลงาน (Portfolio)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -12,12 +12,13 @@
     <style>
         :root {
             --bg-color: #0b0d14;
-            --card-bg: rgba(22, 27, 38, 0.88);
-            --border-gold: rgba(212, 175, 55, 0.25);
+            --card-bg: rgba(18, 23, 33, 0.85);
+            --card-border: rgba(255, 255, 255, 0.08);
             --gold-primary: #d4af37;
-            --gold-light: #f3e5ab;
+            --gold-light: #f5e6ab;
             --text-main: #f0f4f8;
-            --text-muted: #94a3b8;
+            --text-muted: #8b9bb4;
+            --sidebar-width: 260px;
         }
 
         * {
@@ -26,24 +27,25 @@
             box-sizing: border-box;
             font-family: 'Prompt', sans-serif;
             scroll-behavior: smooth;
-            -webkit-font-smoothing: antialiased;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            overflow-x: hidden;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            overflow-x: hidden;
             position: relative;
         }
 
-        /* ANIMATIONS */
+        /* ================= ANIMATIONS ================= */
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-25px); }
+            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         @keyframes fadeInUp {
@@ -51,26 +53,15 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes floatUpNavProfile {
-            0% { opacity: 0; transform: translateY(20px) scale(0.85); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        @keyframes cardEntrance {
-            0% { opacity: 0; transform: translateY(40px) scale(0.92); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
         @keyframes pulseGlow {
-            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
-            100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+            0% { opacity: 0.4; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 0.8; transform: translateX(-50%) scale(1.08); }
         }
 
-        /* BACKGROUND GLOW */
         .ambient-glow {
             position: fixed;
-            width: 850px;
-            height: 850px;
+            width: 800px;
+            height: 800px;
             background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(0,0,0,0) 70%);
             top: -200px;
             left: 50%;
@@ -80,272 +71,349 @@
             animation: pulseGlow 6s ease-in-out infinite alternate;
         }
 
-        /* NAVIGATION BAR */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 6%;
-            background: rgba(11, 13, 20, 0.88);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+        /* ================= TOP NAVBAR ================= */
+        .top-navbar {
             position: fixed;
-            width: 100%;
             top: 0;
-            z-index: 1000;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 2.5rem;
+            z-index: 900;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 13, 20, 0.82);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeInDown 0.8s ease forwards;
         }
 
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff 45%, var(--gold-primary) 55%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
+        .top-logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            letter-spacing: 0.5px;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #ffffff;
             text-decoration: none;
-            font-size: 0.95rem;
             transition: color 0.3s;
         }
 
-        .nav-links a:hover, .nav-links a.active {
+        .top-logo i {
+            font-size: 1rem;
+            color: var(--text-muted);
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .top-logo:hover {
             color: var(--gold-primary);
         }
 
-        .nav-profile-wrapper {
+        .top-logo:hover i {
+            color: var(--gold-primary);
+            transform: translateX(-4px);
+        }
+
+        .top-right-group {
             display: flex;
             align-items: center;
-            justify-content: center;
-            width: 46px;
-            height: 46px;
+            gap: 1.2rem;
         }
 
-        .nav-profile-img {
-            width: 44px;
-            height: 44px;
+        .mobile-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            border: 2px solid var(--gold-primary);
-            object-fit: cover;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            animation: floatUpNavProfile 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
-            opacity: 0;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--gold-primary), rgba(212, 175, 55, 0.3));
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
+            overflow: hidden;
+            display: block;
         }
 
-        /* PAGE HEADER & FILTERS */
-        .page-header {
-            padding: 7.5rem 5% 1rem;
+        .user-avatar-small img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* ================= SIDEBAR POPUP PANEL ================= */
+        .side-popup-panel {
+            position: fixed;
+            top: 5.5rem;
+            left: 2rem;
+            width: var(--sidebar-width);
+            height: calc(100vh - 7rem);
+            background: rgba(18, 23, 33, 0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 22px;
+            padding: 1.8rem 1.2rem;
+            z-index: 850;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.18);
+            animation: fadeInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transition: transform 0.4s ease;
+        }
+
+        .nav-menu-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .nav-menu-item a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 0.95rem 1.2rem;
+            color: var(--text-main);
+            text-decoration: none;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 400;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
+        }
+
+        .nav-menu-item a i {
+            color: var(--gold-primary);
+            font-size: 1.1rem;
+            width: 22px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .nav-menu-item a:hover, .nav-menu-item a.active {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: rgba(212, 175, 55, 0.4);
+            color: #fff;
+            transform: translateX(6px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .nav-menu-item a:hover i {
+            transform: scale(1.18);
+        }
+
+        .panel-footer {
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.78rem;
+            color: var(--text-muted);
             text-align: center;
         }
 
-        .page-header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.6rem;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+        /* ================= MAIN CONTENT WRAPPER ================= */
+        .page-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-left: calc(var(--sidebar-width) + 3.5rem);
+            padding-right: 3rem;
+            padding-top: 6.8rem;
+            padding-bottom: 4rem;
         }
 
-        .gold-text {
-            background: linear-gradient(135deg, #ffffff 0%, var(--gold-primary) 60%, var(--gold-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .page-header p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 680px;
+        .main-wrapper {
+            width: 100%;
+            max-width: 1000px;
             margin: 0 auto;
-            font-weight: 300;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+            text-align: center;
         }
 
+        /* Header Title */
+        .portfolio-header {
+            margin-bottom: 2.2rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        .portfolio-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-title span {
+            color: var(--gold-primary);
+        }
+
+        .portfolio-subtitle {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            font-weight: 300;
+        }
+
+        /* Filter Pills */
         .filter-container {
             display: flex;
             justify-content: center;
-            gap: 0.8rem;
-            margin: 2.2rem 0 1.5rem;
+            gap: 0.65rem;
             flex-wrap: wrap;
+            margin-bottom: 2.5rem;
             opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
         }
 
         .filter-btn {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-gold);
+            background: rgba(20, 25, 36, 0.7);
+            border: 1px solid var(--card-border);
             color: var(--text-muted);
-            padding: 0.65rem 1.6rem;
-            border-radius: 30px;
+            padding: 0.52rem 1.3rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 400;
             cursor: pointer;
-            font-size: 0.92rem;
-            font-weight: 500;
-            transition: all 0.35s ease;
+            transition: all 0.3s ease;
         }
 
-        .filter-btn.active, .filter-btn:hover {
-            background: linear-gradient(135deg, #d4af37, #a6810a);
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--gold-primary);
+            border-color: var(--gold-primary);
             color: #0b0d14;
             font-weight: 600;
-            border-color: transparent;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
         }
 
-        /* PORTFOLIO GRID */
+        /* Portfolio Cards Grid */
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-            gap: 2rem;
-            padding: 2rem 5% 6rem;
-            max-width: 1320px;
-            margin: 0 auto;
-            width: 100%;
-            perspective: 1000px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            text-align: left;
         }
 
-        .portfolio-item {
+        .portfolio-card {
             background: var(--card-bg);
-            border: 1px solid var(--border-gold);
+            border: 1px solid var(--card-border);
             border-radius: 18px;
             overflow: hidden;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            position: relative;
-            cursor: pointer;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            transform-origin: center bottom;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.35s ease, 
-                        box-shadow 0.35s ease;
-            opacity: 0;
-            animation: cardEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+            cursor: pointer;
         }
 
-        .portfolio-item.inactive {
-            opacity: 0.15 !important;
-            filter: blur(6px) grayscale(50%) !important;
-            transform: rotateX(55deg) translateY(40px) scale(0.88) !important;
-            pointer-events: none;
+        .portfolio-card.hide {
+            display: none;
         }
 
-        .portfolio-item:not(.inactive):hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: var(--gold-primary);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.35);
+        .portfolio-card:nth-child(1) { animation-delay: 0.4s; }
+        .portfolio-card:nth-child(2) { animation-delay: 0.5s; }
+        .portfolio-card:nth-child(3) { animation-delay: 0.6s; }
+        .portfolio-card:nth-child(4) { animation-delay: 0.7s; }
+        .portfolio-card:nth-child(5) { animation-delay: 0.8s; }
+        .portfolio-card:nth-child(6) { animation-delay: 0.9s; }
+
+        .portfolio-card:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            transform: translateY(-7px);
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.65), 0 0 20px rgba(212, 175, 55, 0.2);
         }
 
-        .item-img {
+        .card-img-holder {
             width: 100%;
-            aspect-ratio: 4 / 3;
-            background-color: rgba(15, 18, 28, 0.95);
+            height: 175px;
+            background: rgba(10, 14, 22, 0.95);
+            position: relative;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--gold-primary);
-            font-size: 3rem;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            position: relative;
-            overflow: hidden;
-            flex-shrink: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .item-img img {
+        .card-img-holder img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.4s ease;
         }
 
-        .portfolio-item:hover .item-img img {
-            transform: scale(1.06);
+        .portfolio-card:hover .card-img-holder img {
+            transform: scale(1.08);
         }
 
-        .item-img-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(11, 13, 20, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            color: var(--gold-light);
-            font-size: 0.92rem;
-            font-weight: 500;
-            gap: 8px;
+        .card-img-placeholder {
+            color: var(--gold-primary);
+            font-size: 2.8rem;
+            opacity: 0.85;
+            transition: transform 0.4s ease;
         }
 
-        .portfolio-item:hover .item-img-overlay {
-            opacity: 1;
+        .portfolio-card:hover .card-img-placeholder {
+            transform: scale(1.15);
         }
 
-        .item-content {
-            padding: 1.4rem;
+        .card-body {
+            padding: 1.25rem;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
 
-        .item-tag {
-            font-size: 0.75rem;
+        .card-tag {
+            font-size: 0.7rem;
             color: var(--gold-primary);
+            letter-spacing: 0.5px;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 0.4rem;
-            display: block;
             font-weight: 600;
+            margin-bottom: 0.4rem;
         }
 
-        .item-title {
-            font-size: 1.15rem;
+        .card-title {
+            font-size: 1.05rem;
             font-weight: 600;
-            color: #fff;
-            margin-bottom: 0.6rem;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
             line-height: 1.35;
         }
 
-        .item-desc {
+        .card-desc {
+            font-size: 0.82rem;
             color: var(--text-muted);
-            font-size: 0.86rem;
-            line-height: 1.6;
+            line-height: 1.55;
             font-weight: 300;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
         }
 
-        /* MODAL POPUP */
+        /* ================= MODAL / LIGHTBOX PREVIEW ================= */
         .modal-overlay {
             position: fixed;
-            inset: 0;
-            background: rgba(5, 7, 12, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 7, 12, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1.2rem;
+            padding: 1.5rem;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.35s ease;
@@ -356,270 +424,122 @@
             pointer-events: auto;
         }
 
-        .modal-container {
-            background: rgba(18, 23, 33, 0.98);
-            border: 1px solid var(--border-gold);
-            border-radius: 22px;
-            width: 96vw;
-            height: 92vh;
-            max-width: 1200px;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 50px rgba(212, 175, 55, 0.4);
-            transform: scale(0.92) translateY(20px);
+        .modal-content {
+            background: rgba(18, 23, 33, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 650px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8), 0 0 30px rgba(212, 175, 55, 0.25);
+            transform: scale(0.9);
             transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            flex-direction: column;
+            position: relative;
         }
 
-        .modal-container::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .modal-container::-webkit-scrollbar-track {
-            background: rgba(11, 13, 20, 0.6);
-            border-radius: 0 22px 22px 0;
-        }
-
-        .modal-container::-webkit-scrollbar-thumb {
-            background: var(--gold-primary);
-            border-radius: 4px;
-        }
-
-        .modal-overlay.active .modal-container {
-            transform: scale(1) translateY(0);
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
         }
 
         .modal-close-btn {
-            position: sticky;
-            top: 1.2rem;
-            align-self: flex-end;
-            margin-right: 1.5rem;
-            margin-top: 1.2rem;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-main);
-            width: 46px;
-            height: 46px;
-            min-width: 46px;
-            min-height: 46px;
-            padding: 0;
-            flex-shrink: 0;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-size: 1rem;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
-            z-index: 100;
+            z-index: 10;
+            transition: all 0.3s;
         }
 
         .modal-close-btn:hover {
             background: var(--gold-primary);
-            color: #0b0d14;
-            border-color: transparent;
-            transform: rotate(90deg);
+            color: #000;
         }
 
-        .modal-image-area {
+        .modal-img-holder {
             width: 100%;
-            min-height: 280px;
-            background-color: rgba(10, 13, 20, 0.95);
+            height: 280px;
+            background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-bottom: 1px solid var(--border-gold);
-            position: relative;
-            overflow: hidden;
-            margin-top: -58px;
         }
 
-        .modal-image-area img {
+        .modal-img-holder img {
             width: 100%;
-            height: auto;
-            max-height: 500px;
-            object-fit: contain;
-            background: #000;
-        }
-
-        .modal-placeholder-icon {
-            font-size: 4.5rem;
-            color: var(--gold-primary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 14px;
-            padding: 3.5rem 1rem;
-        }
-
-        .modal-placeholder-icon span {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            font-weight: 300;
+            height: 100%;
+            object-fit: cover;
         }
 
         .modal-body {
-            padding: 2.2rem 3rem 3rem;
-            flex-grow: 1;
+            padding: 1.8rem;
+            text-align: left;
         }
 
         .modal-tag {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: var(--gold-primary);
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 0.5rem;
-            display: block;
+            margin-bottom: 0.4rem;
         }
 
         .modal-title {
-            font-size: 2rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 1.2rem;
-            line-height: 1.3;
+            margin-bottom: 0.8rem;
         }
 
-        .modal-description {
+        .modal-desc {
+            font-size: 0.9rem;
             color: var(--text-muted);
-            font-size: 1.02rem;
-            line-height: 1.85;
-            margin-bottom: 1.8rem;
-            font-weight: 300;
-            white-space: pre-line;
-        }
-
-        .modal-category-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 1.2rem 1.8rem;
-            border-radius: 14px;
-            margin-bottom: 2rem;
-        }
-
-        .modal-category-box h4 {
-            font-size: 0.82rem;
-            color: var(--gold-primary);
-            margin-bottom: 0.3rem;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
-
-        .modal-category-box p {
-            font-size: 1.1rem;
-            color: #fff;
-            font-weight: 500;
-        }
-
-        .modal-section {
-            margin-top: 2rem;
-            padding-top: 1.8rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .modal-section-title {
-            font-size: 1.2rem;
-            color: var(--gold-primary);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .modal-section-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .modal-section-list li {
-            color: var(--text-main);
-            font-size: 0.98rem;
             line-height: 1.6;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
+            margin-bottom: 1.5rem;
         }
 
-        .modal-section-list li i {
-            color: var(--gold-primary);
-            margin-top: 4px;
-            font-size: 0.85rem;
-        }
-
-        .tech-tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-top: 0.5rem;
-        }
-
-        .tech-badge {
-            background: rgba(212, 175, 55, 0.12);
-            border: 1px solid var(--border-gold);
-            color: var(--gold-light);
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.88rem;
-            font-weight: 500;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.2rem;
-            margin-top: 1rem;
-        }
-
-        .gallery-img-item {
-            width: 100%;
-            height: 220px;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: #000;
-        }
-
-        .gallery-img-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transition: transform 0.4s ease;
-        }
-
-        .gallery-img-item:hover img {
-            transform: scale(1.05);
-        }
-
-        footer {
-            text-align: center;
-            padding: 2.2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-muted);
-            font-size: 0.85rem;
+        /* ================= RESPONSIVE DESIGN ================= */
+        @media (max-width: 1100px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 850px) {
+            .mobile-toggle {
+                display: block;
+            }
+
+            .page-container {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+                padding-top: 5.5rem;
+            }
+
+            .side-popup-panel {
+                position: fixed;
+                top: 4.5rem;
+                left: 0;
+                width: 280px;
+                height: calc(100vh - 4.5rem);
+                border-radius: 0 20px 20px 0;
+                transform: translateX(-100%);
+            }
+
+            .side-popup-panel.open {
+                transform: translateX(0);
+            }
+
             .portfolio-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 1.5rem;
-            }
-
-            .modal-container {
-                width: 98vw;
-                height: 95vh;
-            }
-
-            .modal-body {
-                padding: 1.8rem 1.5rem 2.5rem;
-            }
-
-            .modal-title {
-                font-size: 1.6rem;
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -628,445 +548,236 @@
 
     <div class="ambient-glow"></div>
 
-    <!-- Navigation Bar (อัปเดตชื่อโลโก้เป็น NATTAPHUM ตามหน้าแรก) -->
-    <nav>
-        <a href="index.html" class="logo"><i class="fa-solid fa-arrow-left"></i> NATTAPHUM</a>
-        <ul class="nav-links">
-            <li><a href="index.html">หน้าหลัก</a></li>
-            <li><a href="portfolio.html" class="active">ผลงานทั้งหมด</a></li>
-            <li><a href="portfolio.html#education">ประวัติการศึกษา</a></li>
-        </ul>
+    <!-- Top Header Navbar -->
+    <header class="top-navbar">
+        <a href="index.html" class="top-logo">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>NATTAPHUM</span>
+        </a>
 
-        <div class="nav-profile-wrapper">
-            <img src="my02.jpg" alt="Profile" class="nav-profile-img">
-        </div>
-    </nav>
-
-    <!-- Header & Filter Buttons -->
-    <header class="page-header">
-        <h1>แฟ้มสะสมผลงาน <span class="gold-text">(Portfolio)</span></h1>
-        <p>รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยี</p>
-
-        <div class="filter-container">
-            <button class="filter-btn active" onclick="filterPortfolio('all', event)">ทั้งหมด</button>
-            <button class="filter-btn" onclick="filterPortfolio('projects', event)">โครงงาน / โปรเจกต์</button>
-            <button class="filter-btn" onclick="filterPortfolio('workshops', event)">การอบรม / กิจกรรม</button>
-            <button class="filter-btn" onclick="filterPortfolio('certificates', event)">เกียรติบัตร</button>
+        <div class="top-right-group">
+            <button class="mobile-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <a href="index.html" class="user-avatar-small">
+                <img src="my02.jpg" alt="Profile">
+            </a>
         </div>
     </header>
 
-    <!-- Portfolio Grid -->
-    <section class="portfolio-grid" id="portfolioDeck">
+    <!-- Side Popup Menu Panel (ตรงกับหน้าแรก 100%) -->
+    <aside class="side-popup-panel" id="sidePanel">
+        <ul class="nav-menu-list">
+            <li class="nav-menu-item">
+                <a href="index.html">
+                    <i class="fa-solid fa-user"></i>
+                    <span>เกี่ยวกับผม</span>
+                </a>
+            </li>
+            <li class="nav-menu-item">
+                <a href="portfolio.html" class="active">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <span>แฟ้มสะสมผลงาน</span>
+                </a>
+            </li>
+            <li class="nav-menu-item">
+                <a href="index.html#education">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>ประวัติการศึกษา</span>
+                </a>
+            </li>
+        </ul>
 
-        <!-- 1. PERSONAL PORTFOLIO WEBSITE -->
-        <div class="portfolio-item projects" onclick="openModal(this)"
-             data-title="Personal Portfolio Website"
-             data-tag="Project / Web Development"
-             data-desc="เว็บไซต์แฟ้มสะสมผลงานส่วนตัว ออกแบบและพัฒนาขึ้นเพื่อนำเสนอประวัติการศึกษา โครงงาน และกิจกรรมทางด้านเทคโนโลยี พัฒนาโครงสร้างด้วย HTML5, CSS3 และ JavaScript โฮสต์บนระบบ GitHub Pages เน้นดีไซน์ Luxury Glassmorphism พร้อมรองรับการแสดงผลทุกหน้าจอ (Responsive Design)"
-             data-img="" 
-             data-features="ออกแบบสไตล์ Luxury Glassmorphic ผสมผสานความหรูหราและเรียบหรู|มีระบบตัวกรองผลงาน (Category Filter) พร้อมเอฟเฟกต์ 3D Lay-Down|ระบบหน้าต่าง Pop-up แสดงรายละเอียดผลงานแบบใกล้เคียงเต็มจอ (Near Full-Screen Modal)|รองรับการแสดงผลบนสมาร์ตโฟน แท็บเล็ต และคอมพิวเตอร์อย่างสมบูรณ์"
-             data-tech="HTML5, CSS3, JavaScript, GitHub Pages, FontAwesome"
-             data-gallery=""
-             data-icon="fa-laptop-code"
-             data-category="โครงงาน / โปรเจกต์">
-            <div class="item-img">
-                <i class="fa-solid fa-laptop-code"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
-            </div>
-            <div class="item-content">
-                <span class="item-tag">Project / Web Development</span>
-                <h3 class="item-title">Personal Portfolio Website</h3>
-                <p class="item-desc">พัฒนาเว็บไซต์แฟ้มสะสมผลงานด้วย HTML5, CSS3, และ JavaScript โฮสต์บน GitHub Pages เน้นดีไซน์โมเดิร์น Luxury Glassmorphism</p>
-            </div>
+        <div class="panel-footer">
+            <p>© 2026 NATTAPHUM</p>
         </div>
+    </aside>
 
-        <!-- 2. COMPUTER HARDWARE ANALYSIS -->
-        <div class="portfolio-item projects" onclick="openModal(this)"
-             data-title="Computer Systems & Hardware Analysis"
-             data-tag="Project / Hardware"
-             data-desc="การศึกษา เปรียบเทียบ และวิเคราะห์ประสิทธิภาพของชิ้นส่วนคอมพิวเตอร์ (Hardware Architecture) ทั้งหน่วยประมวลผลกลาง (CPU) หน่วยประมวลผลกราฟิก (GPU) ชิปเซ็ตเมนบอร์ด และระบบกักเก็บข้อมูลแบบ NVMe PCIe SSD เพื่อความเข้าใจในการเลือกใช้ทรัพยากรฮาร์ดแวร์ให้เหมาะสมกับงานประเภทต่างๆ"
-             data-img="" 
-             data-features="เปรียบเทียบสเปกการทำงานของชิปประมวลผลรุ่นสถาปัตยกรรมต่างยุคสมัย|วิเคราะห์ความเร็วการรับส่งข้อมูลระหว่าง NVMe PCIe SSD กับ SSD รูปแบบเดิม|ศึกษาความเข้ากันได้ของเมนบอร์ดและหน่วยความจำแรม (RAM Bus Speeds)|จัดทำสรุปรายงานสเปกคอมพิวเตอร์เพื่อการประมวลผลระดับสูง"
-             data-tech="CPU/GPU Benchmarking, NVMe Architecture, Motherboard Compatibility, PC Building"
-             data-gallery=""
-             data-icon="fa-server"
-             data-category="โครงงาน / สถาปัตยกรรมคอมพิวเตอร์">
-            <div class="item-img">
-                <i class="fa-solid fa-server"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
-            </div>
-            <div class="item-content">
-                <span class="item-tag">Project / Hardware</span>
-                <h3 class="item-title">Computer Systems & Hardware Analysis</h3>
-                <p class="item-desc">การศึกษาและวิเคราะห์สถาปัตยกรรมฮาร์ดแวร์คอมพิวเตอร์ การเปรียบเทียบประสิทธิภาพสเปกการประมวลผล GPU และ CPU</p>
-            </div>
-        </div>
+    <!-- Main Content Area -->
+    <div class="page-container">
+        <main class="main-wrapper">
 
-        <!-- 3. K-ENGINEERING: BASIC AI (A1.jpg) -->
-        <div class="portfolio-item workshops" onclick="openModal(this)"
-             data-title="K-Engineering: Basic AI Workshop"
-             data-tag="Workshop / Engineering"
-             data-desc="การเข้าร่วมอบรมเชิงปฏิบัติการทางด้านปัญญาประดิษฐ์ขั้นพื้นฐาน (Basic AI) ในงาน K-Engineering World Tour and Competency Challenge จัดโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง (KMITL)"
-             data-img="A1.jpg" 
-             data-features="เรียนรู้หลักการทำงานของ AI และ Machine Learning เบื้องต้น|ทดลองใช้งานเครื่องมือและอัลกอริทึมประมวลผลข้อมูล|ได้รับวุฒิบัตรรับรองจากคณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"
-             data-tech="Artificial Intelligence, Machine Learning, Data Analytics, KMITL"
-             data-gallery=""
-             data-icon="fa-brain"
-             data-category="การอบรม / กิจกรรม">
-            <div class="item-img">
-                <img src="A1.jpg" alt="K-Engineering Basic AI">
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
-            </div>
-            <div class="item-content">
-                <span class="item-tag">Workshop / Engineering</span>
-                <h3 class="item-title">K-Engineering: Basic AI Workshop</h3>
-                <p class="item-desc">อบรมเชิงปฏิบัติการด้านปัญญาประดิษฐ์ขั้นพื้นฐาน จากคณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
-            </div>
-        </div>
+            <!-- Header Title -->
+            <header class="portfolio-header">
+                <h1 class="portfolio-title">แฟ้มสะสมผลงาน <span>(Portfolio)</span></h1>
+                <p class="portfolio-subtitle">รวบรวมโครงงาน การเข้าร่วมอบรม และเกียรติบัตรทางด้านเทคโนโลยีและคอมพิวเตอร์</p>
+            </header>
 
-        <!-- 4. K-ENGINEERING: CYBERSECURITY (A2.jpg) -->
-        <div class="portfolio-item workshops" onclick="openModal(this)"
-             data-title="K-Engineering: Cybersecurity Competency Challenge"
-             data-tag="Workshop / Cybersecurity"
-             data-desc="การเข้าร่วมอบรมและทดสอบทักษะความมั่นคงปลอดภัยทางไซเบอร์ ในงาน K-Engineering World Tour and Competency Challenge ณ คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"
-             data-img="A2.jpg" 
-             data-features="ศึกษากรณีตัวอย่างการโจมตีทางไซเบอร์และภัยคุกคามในระบบดิจิทัล|ฝึกปฏิบัติการวิเคราะห์ความเสี่ยงและการปกป้องข้อมูลส่วนบุคคล|ได้รับวุฒิบัตรการเข้าร่วมกิจกรรมจากคณะวิศวกรรมศาสตร์ KMITL"
-             data-tech="Cybersecurity, Data Privacy, Network Security, KMITL"
-             data-gallery=""
-             data-icon="fa-shield-halved"
-             data-category="การอบรม / กิจกรรม">
-            <div class="item-img">
-                <img src="A2.jpg" alt="K-Engineering Cybersecurity">
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
+            <!-- Category Filter Buttons -->
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
+                <button class="filter-btn" data-filter="project">โครงงาน / โปรเจกต์</button>
+                <button class="filter-btn" data-filter="activity">กิจกรรม / อบรม</button>
+                <button class="filter-btn" data-filter="certificate">เกียรติบัตร</button>
             </div>
-            <div class="item-content">
-                <span class="item-tag">Workshop / Cybersecurity</span>
-                <h3 class="item-title">K-Engineering: Cybersecurity Challenge</h3>
-                <p class="item-desc">เข้าร่วมกิจกรรมอบรมทักษะและความรู้ด้านความมั่นคงปลอดภัยทางไซเบอร์ ณ คณะวิศวกรรมศาสตร์ KMITL</p>
-            </div>
-        </div>
 
-        <!-- 5. K-ENGINEERING: BASIC PLC (A3.jpg) -->
-        <div class="portfolio-item workshops" onclick="openModal(this)"
-             data-title="K-Engineering: Basic PLC Workshop"
-             data-tag="Workshop / Engineering"
-             data-desc="การเข้าร่วมอบรมเชิงปฏิบัติการควบคุมอุปกรณ์อุตสาหกรรมด้วยโปรแกรม PLC (Programmable Logic Controller) ขั้นพื้นฐาน เรียนรู้การเขียนโปรแกรมควบคุมวงจรอัตโนมัติในระบบวิศวกรรม"
-             data-img="A3.jpg" 
-             data-features="ศึกษาโครงสร้างการทำงานของโปรแกรม PLC และอุปกรณ์อินพุต/เอาต์พุต|เขียนโค้ดภาษา Ladder Diagram ควบคุมการทำงานตามเงื่อนไข|ทดลองจำลองวงจรควบคุมอุตสาหกรรมในห้องปฏิบัติการวิศวกรรม"
-             data-tech="PLC, Programmable Logic Controller, Automation, Control Systems"
-             data-gallery=""
-             data-icon="fa-microchip"
-             data-category="การอบรม / กิจกรรม">
-            <div class="item-img">
-                <img src="A3.jpg" alt="K-Engineering Basic PLC">
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
-            </div>
-            <div class="item-content">
-                <span class="item-tag">Workshop / Engineering</span>
-                <h3 class="item-title">K-Engineering: Basic PLC Workshop</h3>
-                <p class="item-desc">เรียนรู้การเขียนโปรแกรมควบคุมวงจรอัตโนมัติด้วย PLC ขั้นพื้นฐาน ณ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
-            </div>
-        </div>
+            <!-- Portfolio Cards Grid (6 Items) -->
+            <section class="portfolio-grid" id="portfolioGrid">
 
-        <!-- 6. THAILAND UNIVERSITY EXPO 2024 (A4.jpg) -->
-        <div class="portfolio-item certificates" onclick="openModal(this)"
-             data-title="Thailand University Expo 2024"
-             data-tag="Certificate / Workshop"
-             data-desc="เกียรติบัตรผ่านการเข้าร่วมกิจกรรมพัฒนาทักษะวิชาการและกิจกรรมเชิงปฏิบัติการ ในกลุ่มสาระ 'เทคโนโลยีสารสนเทศ นวัตกรรม' ภายใต้โครงการ Thailand University Expo 2024 ออกโดย สถาบันวิชาการ เจ โนว์เลจ ณ จังหวัดชลบุรี"
-             data-img="A4.jpg" 
-             data-features="เข้าร่วมกิจกรรมพัฒนาทักษะทางวิชาการด้านเทคโนโลยีสารสนเทศและนวัตกรรมดิจิทัล|ผ่านการประเมินและได้รับเกียรติบัตรรับรองจากสถาบันวิชาการ เจ โนว์เลจ|เตรียมความพร้อมการศึกษาต่อระดับอุดมศึกษาด้านคอมพิวเตอร์และไอที"
-             data-tech="Information Technology, Innovation, Academic Workshop, J-Knowledge"
-             data-gallery=""
-             data-icon="fa-graduation-cap"
-             data-category="เกียรติบัตร / การอบรมวิชาการ">
-            <div class="item-img">
-                <img src="A4.jpg" alt="Thailand University Expo 2024">
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
-            </div>
-            <div class="item-content">
-                <span class="item-tag">Certificate / Workshop</span>
-                <h3 class="item-title">Thailand University Expo 2024</h3>
-                <p class="item-desc">เกียรติบัตรเข้าร่วมการอบรมเชิงปฏิบัติการกลุ่มเทคโนโลยีสารสนเทศ นวัตกรรม จากสถาบันวิชาการ เจ โนว์เลจ</p>
-            </div>
-        </div>
+                <!-- Item 1 -->
+                <article class="portfolio-card" data-category="project">
+                    <div class="card-img-holder">
+                        <i class="fa-solid fa-laptop-code card-img-placeholder"></i>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">PROJECT / WEB DEVELOPMENT</span>
+                        <h3 class="card-title">Personal Portfolio Website</h3>
+                        <p class="card-desc">พอร์ทโฟลิโอเว็บไซต์ส่วนตัว พัฒนาด้วย HTML5, CSS3, และ JavaScript พร้อมดีไซน์แบบ Luxury Glassmorphism</p>
+                    </div>
+                </article>
 
-        <!-- 7. FAB LAB INNOVATION & TECH SEMINAR (A6.jpg) -->
-        <div class="portfolio-item workshops" onclick="openModal(this)"
-             data-title="Fab Lab Innovation & Tech Seminar"
-             data-tag="Workshop / Innovation"
-             data-desc="เข้าร่วมงานสัมมนาเชิงปฏิบัติการการพัฒนานวัตกรรมดิจิทัล Fab Lab ได้รับความรู้เกี่ยวกับกระบวนการคิดเชิงออกแบบ (Design Thinking) และเทคโนโลยีการขึ้นรูปชิ้นงานด้วยเครื่องมือดิจิทัล"
-             data-img="A6.jpg" 
-             data-features="เรียนรู้กระบวนการสร้างนวัตกรรมดิจิทัลผ่านศูนย์ปฏิบัติการ Fab Lab|สัมผัสเทคโนโลยีการผลิตชิ้นงาน 3D Printing และเครื่องมือขึ้นรูปชิ้นงานดิจิทัล|แลกเปลี่ยนไอเดียการประยุกต์ใช้เทคโนโลยีในการแก้ปัญหาจริง"
-             data-tech="Fab Lab, Design Thinking, Prototyping, Digital Fabrication"
-             data-gallery=""
-             data-icon="fa-lightbulb"
-             data-category="การอบรม / กิจกรรม">
-            <div class="item-img">
-                <img src="A6.jpg" alt="Fab Lab Innovation & Tech Seminar">
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
-            </div>
-            <div class="item-content">
-                <span class="item-tag">Workshop / Innovation</span>
-                <h3 class="item-title">Fab Lab Innovation & Tech Seminar</h3>
-                <p class="item-desc">งานสัมมนาและเชิงปฏิบัติการพัฒนานวัตกรรมดิจิทัลผ่านศูนย์ปฏิบัติการ Fab Lab</p>
-            </div>
-        </div>
+                <!-- Item 2 -->
+                <article class="portfolio-card" data-category="project">
+                    <div class="card-img-holder">
+                        <i class="fa-solid fa-microchip card-img-placeholder"></i>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">PROJECT / HARDWARE</span>
+                        <h3 class="card-title">Computer Systems & Hardware Analysis</h3>
+                        <p class="card-desc">การคำนวณและวิเคราะห์สเปกคอมพิวเตอร์สำหรับการทำงานประมวลผลสูง GPU และ CPU</p>
+                    </div>
+                </article>
 
-        <!-- 8. BE FAST E-SEARCHING COMPETITION 2025 (A7.jpg) -->
-        <div class="portfolio-item certificates" onclick="openModal(this)"
-             data-title="Be Fast E-Searching Competition 2025"
-             data-tag="Certificate / Competition"
-             data-desc="วุฒิบัตรการเข้าร่วมการแข่งขันค้นหาข้อมูลสารสนเทศออนไลน์ Be Fast E-Searching แสดงถึงความสามารถในการสืบค้น คัดกรอง และประเมินความน่าเชื่อถือของข้อมูลดิจิทัลได้อย่างรวดเร็วและแม่นยำ"
-             data-img="A7.jpg" 
-             data-features="ผ่านการทดสอบทักษะการสืบค้นข้อมูลเชิงลึกด้วย Search Engine และฐานข้อมูลออนไลน์|ทดสอบความเร็วและความแม่นยำในการวิเคราะห์คำตอบจากแหล่งข้อมูลดิจิทัล|ฝึกทักษะการประเมินความน่าเชื่อถือของแหล่งข้อมูล (Information Literacy)"
-             data-tech="Information Searching, Search Engine Literacy, Digital Research"
-             data-gallery=""
-             data-icon="fa-magnifying-glass"
-             data-category="เกียรติบัตร / การแข่งขัน">
-            <div class="item-img">
-                <img src="A7.jpg" alt="Be Fast E-Searching Competition">
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
-            </div>
-            <div class="item-content">
-                <span class="item-tag">Certificate / Competition</span>
-                <h3 class="item-title">Be Fast E-Searching Competition</h3>
-                <p class="item-desc">เกียรติบัตรเข้าร่วมการแข่งขันค้นหาข้อมูลสารสนเทศดิจิทัลด้วยความแม่นยำและรวดเร็ว</p>
-            </div>
-        </div>
+                <!-- Item 3 -->
+                <article class="portfolio-card" data-category="activity">
+                    <div class="card-img-holder">
+                        <img src="cert1.jpg" alt="K-Engineering AI Certificate" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fa-solid fa-award card-img-placeholder" style="display:none;"></i>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">WORKSHOP / ENGINEERING</span>
+                        <h3 class="card-title">K-Engineering: Basic AI Workshop</h3>
+                        <p class="card-desc">การอบรมเชิงปฏิบัติการปัญญาประดิษฐ์เบื้องต้น คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+                    </div>
+                </article>
 
-        <!-- 9. วิทยากรนิทรรศการวันวิทยาศาสตร์ (A8.jpg) -->
-        <div class="portfolio-item certificates" onclick="openModal(this)"
-             data-title="วิทยากรจัดแสดงนิทรรศการวันวิทยาศาสตร์แห่งชาติ"
-             data-tag="Certificate / Presenter"
-             data-desc="เกียรติบัตรแสดงความขอบคุณในฐานะวิทยากรประจำฐานกิจกรรม นำเสนอความรู้ทางเทคโนโลยี สื่อดิจิทัล และวิทยาศาสตร์ ให้แก่ผู้เข้าร่วมงานวันวิทยาศาสตร์แห่งชาติ"
-             data-img="A8.jpg" 
-             data-features="ปฏิบัติหน้าที่วิทยากรบรรยายและสาธิตสิ่งประดิษฐ์เทคโนโลยี|ฝึกทักษะการสื่อสารสารสนเทศทางวิทยาศาสตร์ให้เข้าใจง่าย (Science Communication)|สร้างกระบวนการเรียนรู้และถ่ายทอดความรู้แก่ผู้เข้าชมงาน"
-             data-tech="Presentation, Science Communication, Public Speaking, Exhibition Setup"
-             data-gallery=""
-             data-icon="fa-chalkboard-user"
-             data-category="เกียรติบัตร / กิจกรรมพิเศษ">
-            <div class="item-img">
-                <img src="A8.jpg" alt="วิทยากรจัดแสดงนิทรรศการวันวิทยาศาสตร์แห่งชาติ">
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
-            </div>
-            <div class="item-content">
-                <span class="item-tag">Certificate / Presenter</span>
-                <h3 class="item-title">วิทยากรจัดแสดงนิทรรศการวันวิทยาศาสตร์</h3>
-                <p class="item-desc">เกียรติบัตรปฏิบัติหน้าที่วิทยากรนำเสนอความรู้และสาธิตเทคโนโลยีในงานวันวิทยาศาสตร์แห่งชาติ</p>
-            </div>
-        </div>
+                <!-- Item 4 -->
+                <article class="portfolio-card" data-category="activity">
+                    <div class="card-img-holder">
+                        <img src="cert2.jpg" alt="Cybersecurity Certificate" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fa-solid fa-shield-halved card-img-placeholder" style="display:none;"></i>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">WORKSHOP / CYBERSECURITY</span>
+                        <h3 class="card-title">K-Engineering: Cybersecurity Challenge</h3>
+                        <p class="card-desc">เข้าร่วมกิจกรรมการเรียนรู้ความมั่นคงปลอดภัยทางไซเบอร์ ณ คณะวิศวกรรมศาสตร์ สจล.</p>
+                    </div>
+                </article>
 
-        <!-- 10. ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน (A9.jpg) -->
-        <div class="portfolio-item certificates" onclick="openModal(this)"
-             data-title="ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน"
-             data-tag="Certificate / Activity"
-             data-desc="เกียรติบัตรผ่านการเข้าร่วมโครงการค่ายพัฒนาคุณธรรม จริยธรรม และภาวะผู้นำนักเรียน เพื่อส่งเสริมจิตสาธารณะ การทำงานร่วมกับผู้อื่น และความรับผิดชอบต่อสังคม"
-             data-img="A9.jpg" 
-             data-features="ผ่านการอบรมปลูกฝังจิตสำนึกคุณธรรม จริยธรรม และวินัยในตนเอง|ฝึกทักษะการทำงานเป็นทีม และการเป็นผู้นำ-ผู้ตามที่ดีในกิจกรรมกลุ่ม|ได้รับเกียรติบัตรรับรองการเข้าร่วมโครงการพัฒนาผู้เรียน"
-             data-tech="Leadership, Teamwork, Ethics, Social Responsibility"
-             data-gallery=""
-             data-icon="fa-hands-praying"
-             data-category="เกียรติบัตร / กิจกรรมพัฒนาผู้เรียน">
-            <div class="item-img">
-                <img src="A9.jpg" alt="ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน">
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
-            </div>
-            <div class="item-content">
-                <span class="item-tag">Certificate / Activity</span>
-                <h3 class="item-title">ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน</h3>
-                <p class="item-desc">เกียรติบัตรผ่านการอบรมค่ายพัฒนาคุณธรรม จริยธรรม และภาวะผู้นำอย่างต่อเนื่อง</p>
-            </div>
-        </div>
+                <!-- Item 5 -->
+                <article class="portfolio-card" data-category="certificate">
+                    <div class="card-img-holder">
+                        <img src="cert3.jpg" alt="Basic PLC Certificate" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fa-solid fa-gears card-img-placeholder" style="display:none;"></i>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">WORKSHOP / ENGINEERING</span>
+                        <h3 class="card-title">K-Engineering: Basic PLC Workshop</h3>
+                        <p class="card-desc">เรียนรู้การเขียนโปรแกรมควบคุมอัตโนมัติในงานอุตสาหกรรมเบื้องต้น ณ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+                    </div>
+                </article>
 
-        <!-- 11. อบรมทักษะดิจิทัลและวิทยาการคอมพิวเตอร์ (A11.jpg) -->
-        <div class="portfolio-item certificates" onclick="openModal(this)"
-             data-title="การอบรมทักษะดิจิทัลและวิทยาการคอมพิวเตอร์"
-             data-tag="Certificate / Academic"
-             data-desc="วุฒิบัตรรับรองการผ่านการทดสอบอบรมความรู้พื้นฐานด้านวิทยาการคอมพิวเตอร์ การคิดเชิงคำนวณ (Computational Thinking) กระบวนการแก้ปัญหาเชิงตรรกะ และหลักการรักษาความปลอดภัยของข้อมูล"
-             data-img="A11.jpg" 
-             data-features="ผ่านเกณฑ์การประเมินความรู้ด้านการคิดเชิงคำนวณและการแก้ปัญหาเชิงอัลกอริทึม|เรียนรู้หลักการคุ้มครองข้อมูลส่วนบุคคลและการใช้งานไอทีอย่างปลอดภัย|เสริมสร้างฐานความรู้เตรียมความพร้อมศึกษาสาขาวิชาวิทยาการคอมพิวเตอร์"
-             data-tech="Computational Thinking, Logic & Algorithm, Cyber Literacy, Computer Science"
-             data-gallery=""
-             data-icon="fa-award"
-             data-category="เกียรติบัตร / วิชาการ">
-            <div class="item-img">
-                <img src="A11.jpg" alt="การอบรมทักษะดิจิทัลและวิทยาการคอมพิวเตอร์">
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
+                <!-- Item 6 -->
+                <article class="portfolio-card" data-category="certificate">
+                    <div class="card-img-holder">
+                        <img src="cert4.jpg" alt="Thailand University Expo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fa-solid fa-graduation-cap card-img-placeholder" style="display:none;"></i>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-tag">CERTIFICATE / WORKSHOP</span>
+                        <h3 class="card-title">Thailand University Expo 2024</h3>
+                        <p class="card-desc">เข้าร่วมชมนวัตกรรมและฟังบรรยายการเตรียมความพร้อมการเข้าศึกษาต่อในระดับอุดมศึกษาด้านวิศวกรรมศาสตร์</p>
+                    </div>
+                </article>
+
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Modal Lightbox Preview -->
+    <div class="modal-overlay" id="portfolioModal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-img-holder" id="modalImgContainer">
+                <!-- Dynamic Image or Icon Loaded by JS -->
             </div>
-            <div class="item-content">
-                <span class="item-tag">Certificate / Academic</span>
-                <h3 class="item-title">การอบรมทักษะดิจิทัลและวิทยาการคอมพิวเตอร์</h3>
-                <p class="item-desc">วุฒิบัตรผ่านการอบรมทักษะพื้นฐานด้านการคิดเชิงคำนวณ วิทยาการคอมพิวเตอร์ และความปลอดภัยไซเบอร์</p>
-            </div>
-        </div>
-
-    </section>
-
-    <!-- Modal Popup -->
-    <div class="modal-overlay" id="cardModal" onclick="closeModalOnOuterClick(event)">
-        <div class="modal-container">
-            <button class="modal-close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-            
-            <div class="modal-image-area" id="modalImageContainer"></div>
-
             <div class="modal-body">
                 <span class="modal-tag" id="modalTag">TAG NAME</span>
                 <h2 class="modal-title" id="modalTitle">Project Title</h2>
-                <p class="modal-description" id="modalDesc">Project description text goes here...</p>
-
-                <div class="modal-category-box">
-                    <h4>หมวดหมู่ (CATEGORY)</h4>
-                    <p id="modalCategory">-</p>
-                </div>
-
-                <div class="modal-section" id="modalFeaturesSection">
-                    <h3 class="modal-section-title"><i class="fa-solid fa-circle-check"></i> จุดเด่นและเนื้อหาสำคัญ (Highlights)</h3>
-                    <ul class="modal-section-list" id="modalFeaturesList"></ul>
-                </div>
-
-                <div class="modal-section" id="modalTechSection">
-                    <h3 class="modal-section-title"><i class="fa-solid fa-layer-group"></i> เทคโนโลยีและทักษะที่เกี่ยวข้อง (Tech Stack & Skills)</h3>
-                    <div class="tech-tags-container" id="modalTechContainer"></div>
-                </div>
-
-                <div class="modal-section" id="modalGallerySection" style="display: none;">
-                    <h3 class="modal-section-title"><i class="fa-solid fa-images"></i> รูปภาพเกียรติบัตร / กิจกรรมเพิ่มเติม (Gallery)</h3>
-                    <div class="gallery-grid" id="modalGalleryGrid"></div>
-                </div>
-
+                <p class="modal-desc" id="modalDesc">Project description text goes here.</p>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>© 2026 NATTAPHUM | Designed for University Admissions Portfolio</p>
-    </footer>
-
+    <!-- JavaScript For Interactivity -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.portfolio-item');
-            cards.forEach(card => {
-                card.addEventListener('animationend', () => {
-                    card.style.animation = 'none';
-                    card.style.opacity = '1';
+        // 1. Filter Functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioCards = document.querySelectorAll('.portfolio-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                portfolioCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.classList.remove('hide');
+                    } else {
+                        card.classList.add('hide');
+                    }
                 });
             });
         });
 
-        function filterPortfolio(category, evt) {
-            const items = document.querySelectorAll('.portfolio-item');
-            const buttons = document.querySelectorAll('.filter-btn');
+        // 2. Modal Popup Lightbox Functionality
+        const modal = document.getElementById('portfolioModal');
+        const modalClose = document.getElementById('modalClose');
+        const modalImgContainer = document.getElementById('modalImgContainer');
+        const modalTag = document.getElementById('modalTag');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
 
-            buttons.forEach(btn => btn.classList.remove('active'));
-            if (evt) evt.currentTarget.classList.add('active');
+        portfolioCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const tag = card.querySelector('.card-tag').innerText;
+                const title = card.querySelector('.card-title').innerText;
+                const desc = card.querySelector('.card-desc').innerText;
+                const imgHolderContent = card.querySelector('.card-img-holder').innerHTML;
 
-            items.forEach((item) => {
-                item.style.animation = 'none';
-                item.style.opacity = '1';
+                modalTag.innerText = tag;
+                modalTitle.innerText = title;
+                modalDesc.innerText = desc;
+                modalImgContainer.innerHTML = imgHolderContent;
 
-                const matches = category === 'all' || item.classList.contains(category);
-
-                if (matches) {
-                    item.classList.remove('inactive');
-                } else {
-                    item.classList.add('inactive');
-                }
+                modal.classList.add('active');
             });
-        }
+        });
 
-        function openModal(cardElement) {
-            if (cardElement.classList.contains('inactive')) return;
-
-            const title = cardElement.getAttribute('data-title');
-            const tag = cardElement.getAttribute('data-tag');
-            const desc = cardElement.getAttribute('data-desc');
-            const imgSrc = cardElement.getAttribute('data-img');
-            const iconClass = cardElement.getAttribute('data-icon');
-            const category = cardElement.getAttribute('data-category');
-            
-            const featuresRaw = cardElement.getAttribute('data-features') || '';
-            const techRaw = cardElement.getAttribute('data-tech') || '';
-            const galleryRaw = cardElement.getAttribute('data-gallery') || '';
-
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalTag').innerText = tag;
-            document.getElementById('modalDesc').innerText = desc;
-            document.getElementById('modalCategory').innerText = category || '-';
-
-            const imgContainer = document.getElementById('modalImageContainer');
-            if (imgSrc && imgSrc.trim() !== '') {
-                imgContainer.innerHTML = `<img src="${imgSrc}" alt="${title}">`;
-            } else {
-                imgContainer.innerHTML = `
-                    <div class="modal-placeholder-icon">
-                        <i class="fa-solid ${iconClass || 'fa-certificate'}"></i>
-                        <span>(โปรเจกต์งานพัฒนาซอฟต์แวร์และวิเคราะห์ระบบคอมพิวเตอร์)</span>
-                    </div>
-                `;
-            }
-
-            const featuresList = document.getElementById('modalFeaturesList');
-            featuresList.innerHTML = '';
-            if (featuresRaw.trim() !== '') {
-                const featuresArray = featuresRaw.split('|');
-                featuresArray.forEach(item => {
-                    featuresList.innerHTML += `<li><i class="fa-solid fa-check-circle"></i> <span>${item.trim()}</span></li>`;
-                });
-                document.getElementById('modalFeaturesSection').style.display = 'block';
-            } else {
-                document.getElementById('modalFeaturesSection').style.display = 'none';
-            }
-
-            const techContainer = document.getElementById('modalTechContainer');
-            techContainer.innerHTML = '';
-            if (techRaw.trim() !== '') {
-                const techArray = techRaw.split(',');
-                techArray.forEach(item => {
-                    techContainer.innerHTML += `<span class="tech-badge">${item.trim()}</span>`;
-                });
-                document.getElementById('modalTechSection').style.display = 'block';
-            } else {
-                document.getElementById('modalTechSection').style.display = 'none';
-            }
-
-            const galleryGrid = document.getElementById('modalGalleryGrid');
-            galleryGrid.innerHTML = '';
-            if (galleryRaw.trim() !== '') {
-                const galleryArray = galleryRaw.split(',');
-                galleryArray.forEach(img => {
-                    galleryGrid.innerHTML += `
-                        <div class="gallery-img-item">
-                            <img src="${img.trim()}" alt="ภาพประกอบ">
-                        </div>
-                    `;
-                });
-                document.getElementById('modalGallerySection').style.display = 'block';
-            } else {
-                document.getElementById('modalGallerySection').style.display = 'none';
-            }
-
-            const modal = document.getElementById('cardModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('cardModal');
+        modalClose.addEventListener('click', () => {
             modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
+        });
 
-        function closeModalOnOuterClick(event) {
-            if (event.target.classList.contains('modal-overlay')) {
-                closeModal();
-            }
-        }
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
             }
         });
+
+        // 3. Mobile Sidebar Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidePanel = document.getElementById('sidePanel');
+
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                sidePanel.classList.toggle('open');
+            });
+        }
     </script>
+
 </body>
 </html>
