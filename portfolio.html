@@ -80,7 +80,7 @@
             animation: pulseGlow 6s ease-in-out infinite alternate;
         }
 
-        /* NAVIGATION BAR WITH ANIMATION */
+        /* NAVIGATION BAR */
         nav {
             display: flex;
             justify-content: space-between;
@@ -145,7 +145,7 @@
             opacity: 0;
         }
 
-        /* PAGE HEADER & FILTERS WITH STAGGERED ANIMATIONS */
+        /* PAGE HEADER & FILTERS */
         .page-header {
             padding: 7.5rem 5% 1rem;
             text-align: center;
@@ -214,7 +214,7 @@
             max-width: 1250px;
             margin: 0 auto;
             width: 100%;
-            perspective: 1200px;
+            perspective: 1000px;
         }
 
         .portfolio-item {
@@ -233,7 +233,7 @@
                         border-color 0.35s ease, 
                         box-shadow 0.35s ease;
             opacity: 0;
-            animation: cardEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: cardEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         /* ทยอยลอยขึ้นทีละใบตอนโหลดหน้าเว็บ */
@@ -242,16 +242,16 @@
         .portfolio-item:nth-child(3) { animation-delay: 0.85s; }
         .portfolio-item:nth-child(4) { animation-delay: 1.00s; }
 
-        /* การ์ดที่ไม่ถูกเลือก: เอียงลง จางลง และเบลอ */
+        /* การ์ดที่ไม่ถูกเลือก: เอียงลง จางลง และเบลอ (3D Lay Down) */
         .portfolio-item.inactive {
-            opacity: 0.18 !important;
-            filter: blur(6px) grayscale(40%);
-            transform: rotateX(52deg) translateY(35px) scale(0.88);
+            opacity: 0.15 !important;
+            filter: blur(6px) grayscale(50%) !important;
+            transform: rotateX(55deg) translateY(40px) scale(0.88) !important;
             pointer-events: none;
         }
 
         .portfolio-item:not(.inactive):hover {
-            transform: translateY(-8px) scale(1.01);
+            transform: translateY(-8px) scale(1.02);
             border-color: var(--gold-primary);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.35);
         }
@@ -679,6 +679,17 @@
     </footer>
 
     <script>
+        // เคลียร์ CSS Animation ออกเมื่อการ์ดลอยขึ้นมาครบถ้วนแล้ว เพื่อคืนค่า Transform ให้ 3D Lay Down ทำงานได้ราบรื่น
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.portfolio-item');
+            cards.forEach(card => {
+                card.addEventListener('animationend', () => {
+                    card.style.animation = 'none';
+                    card.style.opacity = '1';
+                });
+            });
+        });
+
         // Filter Portfolio with 3D Lay-Down Effect
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.portfolio-item');
@@ -688,6 +699,10 @@
             if (evt) evt.currentTarget.classList.add('active');
 
             items.forEach((item) => {
+                // ปลดล็อกการล็อก Keyframes ทันทีเมื่อผู้ใช้กดปุ่มตัวกรอง
+                item.style.animation = 'none';
+                item.style.opacity = '1';
+
                 const matches = category === 'all' || item.classList.contains(category);
 
                 if (matches) {
@@ -754,4 +769,3 @@
     </script>
 </body>
 </html>
-
