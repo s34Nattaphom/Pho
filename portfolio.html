@@ -51,6 +51,12 @@
             transform: translateX(-50%);
             z-index: -1;
             pointer-events: none;
+            animation: pulseGlow 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
         }
 
         /* NAVIGATION BAR */
@@ -67,6 +73,12 @@
             top: 0;
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .logo {
@@ -132,7 +144,7 @@
             }
         }
 
-        /* PAGE HEADER & FILTER BUTTONS */
+        /* PAGE HEADER & FILTER BUTTONS ANIMATION */
         .page-header {
             padding: 7.8rem 5% 1rem;
             text-align: center;
@@ -142,6 +154,8 @@
             font-size: 2.6rem;
             font-weight: 700;
             margin-bottom: 0.6rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
         }
 
         .gold-text {
@@ -156,6 +170,8 @@
             max-width: 680px;
             margin: 0 auto;
             font-weight: 300;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
         }
 
         .filter-container {
@@ -164,6 +180,19 @@
             gap: 0.8rem;
             margin: 2.2rem 0 2rem;
             flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .filter-btn {
@@ -198,7 +227,7 @@
             perspective: 1200px;
         }
 
-        /* 3D CARD ITEM */
+        /* 3D CARD ITEM & ENTRANCE ANIMATION */
         .portfolio-item {
             background: var(--card-bg);
             border: 1px solid var(--border-gold);
@@ -209,8 +238,8 @@
             position: relative;
             cursor: pointer;
             transform-style: preserve-3d;
-            transform: translate3d(0, 0, 0) rotateX(10deg) scale(0.98);
-            opacity: 0.85;
+            opacity: 0;
+            animation: cardEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
                         opacity 0.5s ease,
                         filter 0.5s ease,
@@ -218,20 +247,37 @@
                         box-shadow 0.5s ease;
         }
 
+        /* STAGGERED ANIMATION DELAY FOR CARDS */
+        .portfolio-item:nth-child(1) { animation-delay: 0.35s; }
+        .portfolio-item:nth-child(2) { animation-delay: 0.50s; }
+        .portfolio-item:nth-child(3) { animation-delay: 0.65s; }
+        .portfolio-item:nth-child(4) { animation-delay: 0.80s; }
+
+        @keyframes cardEntrance {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 50px, -100px) rotateX(20deg) scale(0.9);
+            }
+            100% {
+                opacity: 0.85;
+                transform: translate3d(0, 0, 0) rotateX(10deg) scale(0.98);
+            }
+        }
+
         .portfolio-item.is-selected {
-            transform: translate3d(0, -55px, 60px) rotateX(0deg) scale(1.05);
-            opacity: 1;
-            filter: none;
-            border-color: var(--gold-primary);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(212, 175, 55, 0.45);
+            transform: translate3d(0, -55px, 60px) rotateX(0deg) scale(1.05) !important;
+            opacity: 1 !important;
+            filter: none !important;
+            border-color: var(--gold-primary) !important;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(212, 175, 55, 0.45) !important;
             z-index: 50;
         }
 
         .portfolio-item.is-unselected {
-            transform: translate3d(0, 30px, -60px) rotateX(16deg) scale(0.92);
-            opacity: 0.22;
-            filter: blur(6px) grayscale(50%);
-            border-color: rgba(255, 255, 255, 0.05);
+            transform: translate3d(0, 30px, -60px) rotateX(16deg) scale(0.92) !important;
+            opacity: 0.22 !important;
+            filter: blur(6px) grayscale(50%) !important;
+            border-color: rgba(255, 255, 255, 0.05) !important;
             z-index: 1;
         }
 
