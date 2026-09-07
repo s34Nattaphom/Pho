@@ -205,13 +205,13 @@
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
         }
 
-        /* PORTFOLIO GRID */
+        /* PORTFOLIO GRID (ปรับแต่งเป็นแบบแนวตั้ง ทรงสูง) */
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2.2rem;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 2rem;
             padding: 2rem 5% 6rem;
-            max-width: 1250px;
+            max-width: 1320px;
             margin: 0 auto;
             width: 100%;
             perspective: 1000px;
@@ -226,6 +226,9 @@
             -webkit-backdrop-filter: blur(14px);
             position: relative;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
             transform-origin: center bottom;
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
                         opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -249,18 +252,20 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.35);
         }
 
+        /* ปรับส่วนรูปภาพในการ์ดให้เป็นแนวตั้งสัดส่วน 4:3 */
         .item-img {
             width: 100%;
-            height: 220px;
+            aspect-ratio: 4 / 3;
             background-color: rgba(15, 18, 28, 0.95);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--gold-primary);
-            font-size: 3.2rem;
+            font-size: 3rem;
             border-bottom: 1px solid rgba(212, 175, 55, 0.15);
             position: relative;
             overflow: hidden;
+            flex-shrink: 0;
         }
 
         .item-img img {
@@ -277,14 +282,14 @@
         .item-img-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(11, 13, 20, 0.75);
+            background: rgba(11, 13, 20, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             transition: opacity 0.3s ease;
             color: var(--gold-light);
-            font-size: 1rem;
+            font-size: 0.92rem;
             font-weight: 500;
             gap: 8px;
         }
@@ -294,11 +299,14 @@
         }
 
         .item-content {
-            padding: 1.5rem;
+            padding: 1.4rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
         .item-tag {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             color: var(--gold-primary);
             text-transform: uppercase;
             letter-spacing: 0.8px;
@@ -308,7 +316,7 @@
         }
 
         .item-title {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 600;
             color: #fff;
             margin-bottom: 0.6rem;
@@ -317,9 +325,13 @@
 
         .item-desc {
             color: var(--text-muted);
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             line-height: 1.6;
             font-weight: 300;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         /* MODAL POPUP */
@@ -350,7 +362,7 @@
             border-radius: 22px;
             width: 96vw;
             height: 92vh;
-            max-width: 1350px;
+            max-width: 1200px;
             overflow-y: auto;
             position: relative;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 50px rgba(212, 175, 55, 0.4);
@@ -378,6 +390,7 @@
             transform: scale(1) translateY(0);
         }
 
+        /* ปรับแต่งปุ่มปิด Modal ให้เป็นวงกลมไม่ถูกบีบ */
         .modal-close-btn {
             position: sticky;
             top: 1.2rem;
@@ -426,7 +439,7 @@
         .modal-image-area img {
             width: 100%;
             height: auto;
-            max-height: 520px;
+            max-height: 500px;
             object-fit: contain;
             background: #000;
         }
@@ -448,22 +461,22 @@
         }
 
         .modal-body {
-            padding: 2.5rem 3.5rem 3.5rem;
+            padding: 2.2rem 3rem 3rem;
             flex-grow: 1;
         }
 
         .modal-tag {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--gold-primary);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
             display: block;
         }
 
         .modal-title {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #fff;
             margin-bottom: 1.2rem;
@@ -472,45 +485,45 @@
 
         .modal-description {
             color: var(--text-muted);
-            font-size: 1.05rem;
+            font-size: 1.02rem;
             line-height: 1.85;
-            margin-bottom: 2rem;
+            margin-bottom: 1.8rem;
             font-weight: 300;
             white-space: pre-line;
         }
 
-        .modal-details-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+        /* จัดแต่งส่วนหมวดหมู่เดี่ยว (ลบวันที่ออก) */
+        .modal-category-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 1.8rem;
-            border-radius: 16px;
+            padding: 1.2rem 1.8rem;
+            border-radius: 14px;
             margin-bottom: 2rem;
         }
 
-        .detail-item h4 {
-            font-size: 0.85rem;
+        .modal-category-box h4 {
+            font-size: 0.82rem;
             color: var(--gold-primary);
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.3rem;
             text-transform: uppercase;
+            letter-spacing: 0.8px;
         }
 
-        .detail-item p {
-            font-size: 1.05rem;
+        .modal-category-box p {
+            font-size: 1.1rem;
             color: #fff;
+            font-weight: 500;
         }
 
         /* SECTIONS INSIDE MODAL */
         .modal-section {
-            margin-top: 2.2rem;
+            margin-top: 2rem;
             padding-top: 1.8rem;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .modal-section-title {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             color: var(--gold-primary);
             font-weight: 600;
             margin-bottom: 1rem;
@@ -560,7 +573,7 @@
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 1.2rem;
             margin-top: 1rem;
         }
@@ -595,8 +608,8 @@
 
         @media (max-width: 850px) {
             .portfolio-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 1.5rem;
             }
 
             .modal-container {
@@ -610,10 +623,6 @@
 
             .modal-title {
                 font-size: 1.6rem;
-            }
-
-            .modal-details-grid {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -649,7 +658,7 @@
         </div>
     </header>
 
-    <!-- Portfolio Grid -->
+    <!-- Portfolio Grid (ปรับปรุงการ์ดแนวตั้ง ทรงสูงเรียบหรู) -->
     <section class="portfolio-grid" id="portfolioDeck">
 
         <!-- 1. PERSONAL PORTFOLIO WEBSITE -->
@@ -662,7 +671,6 @@
              data-tech="HTML5, CSS3, JavaScript, GitHub Pages, FontAwesome"
              data-gallery=""
              data-icon="fa-laptop-code"
-             data-date="2026"
              data-category="โครงงาน / โปรเจกต์">
             <div class="item-img">
                 <i class="fa-solid fa-laptop-code"></i>
@@ -685,7 +693,6 @@
              data-tech="CPU/GPU Benchmarking, NVMe Architecture, Motherboard Compatibility, PC Building"
              data-gallery=""
              data-icon="fa-server"
-             data-date="2025 - 2026"
              data-category="โครงงาน / สถาปัตยกรรมคอมพิวเตอร์">
             <div class="item-img">
                 <i class="fa-solid fa-server"></i>
@@ -702,13 +709,12 @@
         <div class="portfolio-item workshops" onclick="openModal(this)"
              data-title="K-Engineering: Basic AI Workshop"
              data-tag="Workshop / Engineering"
-             data-desc="การเข้าร่วมอบรมเชิงปฏิบัติการทางด้านปัญญาประดิษฐ์ขั้นพื้นฐาน (Basic AI) ในงาน K-Engineering World Tour and Competency Challenge 2026 จัดโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง (KMITL)"
+             data-desc="การเข้าร่วมอบรมเชิงปฏิบัติการทางด้านปัญญาประดิษฐ์ขั้นพื้นฐาน (Basic AI) ในงาน K-Engineering World Tour and Competency Challenge จัดโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง (KMITL)"
              data-img="A1.jpg" 
              data-features="เรียนรู้หลักการทำงานของ AI และ Machine Learning เบื้องต้น|ทดลองใช้งานเครื่องมือและอัลกอริทึมประมวลผลข้อมูล|ได้รับวุฒิบัตรรับรองจากคณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"
              data-tech="Artificial Intelligence, Machine Learning, Data Analytics, KMITL"
              data-gallery=""
              data-icon="fa-brain"
-             data-date="5 กรกฎาคม 2569"
              data-category="การอบรม / กิจกรรม">
             <div class="item-img">
                 <img src="A1.jpg" alt="K-Engineering Basic AI">
@@ -725,13 +731,12 @@
         <div class="portfolio-item workshops" onclick="openModal(this)"
              data-title="K-Engineering: Cybersecurity Competency Challenge"
              data-tag="Workshop / Cybersecurity"
-             data-desc="การเข้าร่วมอบรมและทดสอบทักษะความมั่นคงปลอดภัยทางไซเบอร์ ในงาน K-Engineering World Tour and Competency Challenge 2026 ณ คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"
+             data-desc="การเข้าร่วมอบรมและทดสอบทักษะความมั่นคงปลอดภัยทางไซเบอร์ ในงาน K-Engineering World Tour and Competency Challenge ณ คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"
              data-img="A2.jpg" 
              data-features="ศึกษากรณีตัวอย่างการโจมตีทางไซเบอร์และภัยคุกคามในระบบดิจิทัล|ฝึกปฏิบัติการวิเคราะห์ความเสี่ยงและการปกป้องข้อมูลส่วนบุคคล|ได้รับวุฒิบัตรการเข้าร่วมกิจกรรมจากคณะวิศวกรรมศาสตร์ KMITL"
              data-tech="Cybersecurity, Data Privacy, Network Security, KMITL"
              data-gallery=""
              data-icon="fa-shield-halved"
-             data-date="5 กรกฎาคม 2569"
              data-category="การอบรม / กิจกรรม">
             <div class="item-img">
                 <img src="A2.jpg" alt="K-Engineering Cybersecurity">
@@ -754,7 +759,6 @@
              data-tech="PLC, Programmable Logic Controller, Automation, Control Systems"
              data-gallery=""
              data-icon="fa-microchip"
-             data-date="5 กรกฎาคม 2569"
              data-category="การอบรม / กิจกรรม">
             <div class="item-img">
                 <img src="A3.jpg" alt="K-Engineering Basic PLC">
@@ -771,13 +775,12 @@
         <div class="portfolio-item certificates" onclick="openModal(this)"
              data-title="Thailand University Expo 2024"
              data-tag="Certificate / Workshop"
-             data-desc="เกียรติบัตรผ่านการเข้าร่วมกิจกรรมพัฒนาทักษะวิชาการและกิจกรรมเชิงปฏิบัติการ ในกลุ่มสาระ 'เทคโนโลยีสารสนเทศ นวัตกรรม' ภายใต้โครงการ Thailand University Expo 2024 ประจำปี 2567 ออกโดย สถาบันวิชาการ เจ โนว์เลจ ณ จังหวัดชลบุรี"
+             data-desc="เกียรติบัตรผ่านการเข้าร่วมกิจกรรมพัฒนาทักษะวิชาการและกิจกรรมเชิงปฏิบัติการ ในกลุ่มสาระ 'เทคโนโลยีสารสนเทศ นวัตกรรม' ภายใต้โครงการ Thailand University Expo 2024 ออกโดย สถาบันวิชาการ เจ โนว์เลจ ณ จังหวัดชลบุรี"
              data-img="A4.jpg" 
              data-features="เข้าร่วมกิจกรรมพัฒนาทักษะทางวิชาการด้านเทคโนโลยีสารสนเทศและนวัตกรรมดิจิทัล|ผ่านการประเมินและได้รับเกียรติบัตรรับรองจากสถาบันวิชาการ เจ โนว์เลจ|เตรียมความพร้อมการศึกษาต่อระดับอุดมศึกษาด้านคอมพิวเตอร์และไอที"
              data-tech="Information Technology, Innovation, Academic Workshop, J-Knowledge"
              data-gallery=""
              data-icon="fa-graduation-cap"
-             data-date="29 มิถุนายน 2567"
              data-category="เกียรติบัตร / การอบรมวิชาการ">
             <div class="item-img">
                 <img src="A4.jpg" alt="Thailand University Expo 2024">
@@ -800,7 +803,6 @@
              data-tech="Fab Lab, Design Thinking, Prototyping, Digital Fabrication"
              data-gallery=""
              data-icon="fa-lightbulb"
-             data-date="2025"
              data-category="การอบรม / กิจกรรม">
             <div class="item-img">
                 <img src="A6.jpg" alt="Fab Lab Innovation & Tech Seminar">
@@ -817,21 +819,20 @@
         <div class="portfolio-item certificates" onclick="openModal(this)"
              data-title="Be Fast E-Searching Competition 2025"
              data-tag="Certificate / Competition"
-             data-desc="วุฒิบัตรการเข้าร่วมการแข่งขันค้นหาข้อมูลสารสนเทศออนไลน์ Be Fast E-Searching 2025 แสดงถึงความสามารถในการสืบค้น คัดกรอง และประเมินความน่าเชื่อถือของข้อมูลดิจิทัลได้อย่างรวดเร็วและแม่นยำ"
+             data-desc="วุฒิบัตรการเข้าร่วมการแข่งขันค้นหาข้อมูลสารสนเทศออนไลน์ Be Fast E-Searching แสดงถึงความสามารถในการสืบค้น คัดกรอง และประเมินความน่าเชื่อถือของข้อมูลดิจิทัลได้อย่างรวดเร็วและแม่นยำ"
              data-img="A7.jpg" 
              data-features="ผ่านการทดสอบทักษะการสืบค้นข้อมูลเชิงลึกด้วย Search Engine และฐานข้อมูลออนไลน์|ทดสอบความเร็วและความแม่นยำในการวิเคราะห์คำตอบจากแหล่งข้อมูลดิจิทัล|ฝึกทักษะการประเมินความน่าเชื่อถือของแหล่งข้อมูล (Information Literacy)"
              data-tech="Information Searching, Search Engine Literacy, Digital Research"
              data-gallery=""
              data-icon="fa-magnifying-glass"
-             data-date="2025"
              data-category="เกียรติบัตร / การแข่งขัน">
             <div class="item-img">
-                <img src="A7.jpg" alt="Be Fast E-Searching Competition 2025">
+                <img src="A7.jpg" alt="Be Fast E-Searching Competition">
                 <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
             </div>
             <div class="item-content">
                 <span class="item-tag">Certificate / Competition</span>
-                <h3 class="item-title">Be Fast E-Searching Competition 2025</h3>
+                <h3 class="item-title">Be Fast E-Searching Competition</h3>
                 <p class="item-desc">เกียรติบัตรเข้าร่วมการแข่งขันค้นหาข้อมูลสารสนเทศดิจิทัลด้วยความแม่นยำและรวดเร็ว</p>
             </div>
         </div>
@@ -846,7 +847,6 @@
              data-tech="Presentation, Science Communication, Public Speaking, Exhibition Setup"
              data-gallery=""
              data-icon="fa-chalkboard-user"
-             data-date="2025"
              data-category="เกียรติบัตร / กิจกรรมพิเศษ">
             <div class="item-img">
                 <img src="A8.jpg" alt="วิทยากรจัดแสดงนิทรรศการวันวิทยาศาสตร์แห่งชาติ">
@@ -869,7 +869,6 @@
              data-tech="Leadership, Teamwork, Ethics, Social Responsibility"
              data-gallery=""
              data-icon="fa-hands-praying"
-             data-date="2567 - 2568"
              data-category="เกียรติบัตร / กิจกรรมพัฒนาผู้เรียน">
             <div class="item-img">
                 <img src="A9.jpg" alt="ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน">
@@ -892,7 +891,6 @@
              data-tech="Computational Thinking, Logic & Algorithm, Cyber Literacy, Computer Science"
              data-gallery=""
              data-icon="fa-award"
-             data-date="2025"
              data-category="เกียรติบัตร / วิชาการ">
             <div class="item-img">
                 <img src="A11.jpg" alt="การอบรมทักษะดิจิทัลและวิทยาการคอมพิวเตอร์">
@@ -921,16 +919,10 @@
                 <h2 class="modal-title" id="modalTitle">Project Title</h2>
                 <p class="modal-description" id="modalDesc">Project description text goes here...</p>
 
-                <!-- ตารางสรุปข้อมูล -->
-                <div class="modal-details-grid">
-                    <div class="detail-item">
-                        <h4>หมวดหมู่ (Category)</h4>
-                        <p id="modalCategory">-</p>
-                    </div>
-                    <div class="detail-item">
-                        <h4>ช่วงเวลา / วันที่ (Date)</h4>
-                        <p id="modalDate">-</p>
-                    </div>
+                <!-- กล่องหมวดหมู่ (ลบส่วนวันที่ออกแล้ว) -->
+                <div class="modal-category-box">
+                    <h4>หมวดหมู่ (CATEGORY)</h4>
+                    <p id="modalCategory">-</p>
                 </div>
 
                 <!-- หัวข้อเพิ่มเติม 1: ฟีเจอร์เด่น / จุดเน้น -->
@@ -1001,7 +993,6 @@
             const desc = cardElement.getAttribute('data-desc');
             const imgSrc = cardElement.getAttribute('data-img');
             const iconClass = cardElement.getAttribute('data-icon');
-            const date = cardElement.getAttribute('data-date');
             const category = cardElement.getAttribute('data-category');
             
             const featuresRaw = cardElement.getAttribute('data-features') || '';
@@ -1011,7 +1002,6 @@
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalTag').innerText = tag;
             document.getElementById('modalDesc').innerText = desc;
-            document.getElementById('modalDate').innerText = date || '-';
             document.getElementById('modalCategory').innerText = category || '-';
 
             // 1. แสดงรูปภาพปกหลักใน Modal ด้านบน
