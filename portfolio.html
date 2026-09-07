@@ -3,270 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Nattaphum Chawiangwat</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>ผลงานและเกียรติบัตร (Portfolio & Certificates)</title>
+    <!-- FontAwesome สำหรับไอคอน -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --bg-color: #0b0d14;
-            --card-bg: rgba(22, 27, 38, 0.88);
-            --border-gold: rgba(212, 175, 55, 0.25);
-            --gold-primary: #d4af37;
-            --gold-light: #f3e5ab;
-            --text-main: #f0f4f8;
-            --text-muted: #94a3b8;
-        }
-
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Prompt', sans-serif;
-            scroll-behavior: smooth;
-            -webkit-font-smoothing: antialiased;
+            font-family: 'Kanit', sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            color: #38bdf8;
             position: relative;
         }
 
-        /* PAGE ENTRANCE KEYFRAMES */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-25px); }
-            to { opacity: 1; transform: translateY(0); }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #38bdf8;
+            margin: 10px auto 0;
+            border-radius: 2px;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes floatUpNavProfile {
-            0% { opacity: 0; transform: translateY(20px) scale(0.85); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        @keyframes cardEntrance {
-            0% { opacity: 0; transform: translateY(40px) scale(0.92); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        @keyframes pulseGlow {
-            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
-            100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
-        }
-
-        /* BACKGROUND AMBIENT GLOW */
-        .ambient-glow {
-            position: fixed;
-            width: 850px;
-            height: 850px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(0,0,0,0) 70%);
-            top: -200px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: -1;
-            pointer-events: none;
-            animation: pulseGlow 6s ease-in-out infinite alternate;
-        }
-
-        /* NAVIGATION BAR */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 6%;
-            background: rgba(11, 13, 20, 0.88);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff 30%, var(--gold-primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--gold-primary);
-        }
-
-        .nav-profile-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 46px;
-            height: 46px;
-        }
-
-        .nav-profile-img {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 2px solid var(--gold-primary);
-            object-fit: cover;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            animation: floatUpNavProfile 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
-            opacity: 0;
-        }
-
-        /* PAGE HEADER & FILTERS */
-        .page-header {
-            padding: 7.5rem 5% 1rem;
-            text-align: center;
-        }
-
-        .page-header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.6rem;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
-        }
-
-        .gold-text {
-            background: linear-gradient(135deg, #ffffff 0%, var(--gold-primary) 60%, var(--gold-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .page-header p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 680px;
-            margin: 0 auto;
-            font-weight: 300;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
-        }
-
-        .filter-container {
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-            margin: 2.2rem 0 1.5rem;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
-        }
-
-        .filter-btn {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-gold);
-            color: var(--text-muted);
-            padding: 0.65rem 1.6rem;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.92rem;
-            font-weight: 500;
-            transition: all 0.35s ease;
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            background: linear-gradient(135deg, #d4af37, #a6810a);
-            color: #0b0d14;
-            font-weight: 600;
-            border-color: transparent;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
-        }
-
-        /* PORTFOLIO GRID & CARDS ENTRANCE + 3D LAY DOWN EFFECT */
+        /* Portfolio Grid */
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2.2rem;
-            padding: 2rem 5% 6rem;
-            max-width: 1250px;
-            margin: 0 auto;
-            width: 100%;
-            perspective: 1000px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
         }
 
+        /* Portfolio Item Card */
         .portfolio-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-gold);
-            border-radius: 18px;
+            background-color: #1e293b;
+            border-radius: 12px;
             overflow: hidden;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            position: relative;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            transform-origin: center bottom;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.35s ease, 
-                        box-shadow 0.35s ease;
-            opacity: 0;
-            animation: cardEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-
-        /* ทยอยลอยขึ้นทีละใบตอนโหลดหน้าเว็บ */
-        .portfolio-item:nth-child(1) { animation-delay: 0.55s; }
-        .portfolio-item:nth-child(2) { animation-delay: 0.70s; }
-        .portfolio-item:nth-child(3) { animation-delay: 0.85s; }
-        .portfolio-item:nth-child(4) { animation-delay: 1.00s; }
-
-        /* การ์ดที่ไม่ถูกเลือก: เอียงลง จางลง และเบลอ (3D Lay Down) */
-        .portfolio-item.inactive {
-            opacity: 0.15 !important;
-            filter: blur(6px) grayscale(50%) !important;
-            transform: rotateX(55deg) translateY(40px) scale(0.88) !important;
-            pointer-events: none;
-        }
-
-        .portfolio-item:not(.inactive):hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: var(--gold-primary);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.35);
-        }
-
-        .item-img {
-            width: 100%;
-            height: 210px;
-            background-color: rgba(15, 18, 28, 0.95);
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gold-primary);
-            font-size: 3.2rem;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            flex-direction: column;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.25);
+            border-color: #38bdf8;
+        }
+
+        /* Image Box */
+        .item-img {
             position: relative;
+            width: 100%;
+            height: 220px;
+            background-color: #0f172a;
             overflow: hidden;
         }
 
@@ -274,25 +85,28 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.4s ease;
         }
 
         .portfolio-item:hover .item-img img {
-            transform: scale(1.06);
+            transform: scale(1.05);
         }
 
         .item-img-overlay {
             position: absolute;
-            inset: 0;
-            background: rgba(11, 13, 20, 0.7);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.7);
             display: flex;
-            align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            color: var(--gold-light);
+            align-items: center;
+            color: #fff;
             font-size: 1rem;
             font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.3s ease;
             gap: 8px;
         }
 
@@ -300,472 +114,427 @@
             opacity: 1;
         }
 
+        /* Content Box */
         .item-content {
-            padding: 1.5rem;
-        }
-
-        .item-tag {
-            font-size: 0.78rem;
-            color: var(--gold-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 0.4rem;
-            display: block;
-            font-weight: 600;
-        }
-
-        .item-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 0.6rem;
-            line-height: 1.35;
-        }
-
-        .item-desc {
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            line-height: 1.6;
-            font-weight: 300;
-        }
-
-        /* NEAR FULL-SCREEN MODAL POPUP */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(5, 7, 12, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.2rem;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.35s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-container {
-            background: rgba(18, 23, 33, 0.98);
-            border: 1px solid var(--border-gold);
-            border-radius: 22px;
-            width: 96vw;
-            height: 92vh;
-            max-width: 1350px;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 50px rgba(212, 175, 55, 0.4);
-            transform: scale(0.92) translateY(20px);
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 20px;
             display: flex;
             flex-direction: column;
-        }
-
-        .modal-container::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .modal-container::-webkit-scrollbar-track {
-            background: rgba(11, 13, 20, 0.6);
-            border-radius: 0 22px 22px 0;
-        }
-
-        .modal-container::-webkit-scrollbar-thumb {
-            background: var(--gold-primary);
-            border-radius: 4px;
-        }
-
-        .modal-overlay.active .modal-container {
-            transform: scale(1) translateY(0);
-        }
-
-        .modal-close-btn {
-            position: sticky;
-            top: 1.2rem;
-            align-self: flex-end;
-            margin-right: 1.5rem;
-            margin-top: 1.2rem;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-main);
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
-
-        .modal-close-btn:hover {
-            background: var(--gold-primary);
-            color: #0b0d14;
-            border-color: transparent;
-            transform: rotate(90deg);
-        }
-
-        .modal-image-area {
-            width: 100%;
-            min-height: 380px;
-            background-color: rgba(10, 13, 20, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid var(--border-gold);
-            position: relative;
-            overflow: hidden;
-            margin-top: -58px;
-        }
-
-        .modal-image-area img {
-            width: 100%;
-            height: auto;
-            max-height: 600px;
-            object-fit: contain;
-        }
-
-        .modal-placeholder-icon {
-            font-size: 5rem;
-            color: var(--gold-primary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 14px;
-            padding: 4rem 1rem;
-        }
-
-        .modal-placeholder-icon span {
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-weight: 300;
-        }
-
-        .modal-body {
-            padding: 2.8rem 3.5rem 3.5rem;
             flex-grow: 1;
         }
 
-        .modal-tag {
+        .item-tag {
+            align-self: flex-start;
+            background-color: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .item-title {
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #f1f5f9;
+            line-height: 1.4;
+        }
+
+        .item-desc {
             font-size: 0.9rem;
-            color: var(--gold-primary);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 0.6rem;
-            display: block;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        /* Modal Popup */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #1e293b;
+            border-radius: 12px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #475569;
+        }
+
+        @media (min-width: 768px) {
+            .modal-content {
+                flex-direction: row;
+            }
+        }
+
+        .modal-img-container {
+            flex: 1.2;
+            background-color: #020617;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-img-container img {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        .modal-details {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #f43f5e;
+        }
+
+        .modal-tag {
+            display: inline-block;
+            background-color: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            align-self: flex-start;
         }
 
         .modal-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 1.2rem;
-            line-height: 1.3;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #f8fafc;
         }
 
-        .modal-description {
-            color: var(--text-muted);
-            font-size: 1.08rem;
-            line-height: 1.85;
-            margin-bottom: 2.5rem;
-            font-weight: 300;
-            white-space: pre-line;
+        .modal-desc {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
 
-        .modal-details-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 1.8rem;
-            border-radius: 16px;
-        }
-
-        .detail-item h4 {
+        .modal-info {
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #334155;
             font-size: 0.85rem;
-            color: var(--gold-primary);
-            margin-bottom: 0.4rem;
-            text-transform: uppercase;
+            color: #94a3b8;
         }
 
-        .detail-item p {
-            font-size: 1.05rem;
-            color: #fff;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2.2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 850px) {
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .modal-container {
-                width: 98vw;
-                height: 95vh;
-            }
-
-            .modal-body {
-                padding: 1.8rem 1.5rem 2.5rem;
-            }
-
-            .modal-title {
-                font-size: 1.6rem;
-            }
-
-            .modal-details-grid {
-                grid-template-columns: 1fr;
-            }
+        .modal-info p {
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
 
-    <div class="ambient-glow"></div>
-
-    <!-- Navigation Bar -->
-    <nav>
-        <a href="index.html" class="logo"><i class="fa-solid fa-arrow-left"></i> NATTAPHUM.</a>
-        <ul class="nav-links">
-            <li><a href="index.html">หน้าหลัก</a></li>
-            <li><a href="portfolio.html" class="active">ผลงานทั้งหมด</a></li>
-            <li><a href="portfolio.html#education">ประวัติการศึกษา</a></li>
-        </ul>
-
-        <div class="nav-profile-wrapper">
-            <img src="my02.jpg" alt="นายณัฐภูมิ เฉวียงวาท" class="nav-profile-img">
-        </div>
-    </nav>
-
-    <!-- Header & Filter Buttons -->
-    <header class="page-header">
-        <h1>แฟ้มสะสมผลงาน <span class="gold-text">(Portfolio)</span></h1>
-        <p>รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยีของ นายณัฐภูมิ เฉวียงวาท</p>
-
-        <div class="filter-container">
-            <button class="filter-btn active" onclick="filterPortfolio('all', event)">ทั้งหมด</button>
-            <button class="filter-btn" onclick="filterPortfolio('projects', event)">โครงงาน / โปรเจกต์</button>
-            <button class="filter-btn" onclick="filterPortfolio('workshops', event)">การอบรม / กิจกรรม</button>
-            <button class="filter-btn" onclick="filterPortfolio('certificates', event)">เกียรติบัตร</button>
-        </div>
-    </header>
-
-    <!-- Portfolio Grid -->
-    <section class="portfolio-grid" id="portfolioDeck">
-
-        <div class="portfolio-item projects" onclick="openModal(this)"
-             data-title="Personal Portfolio Website"
-             data-tag="Project / Web Development"
-             data-desc="พัฒนาเว็บไซต์แฟ้มสะสมผลงานด้วย HTML5, CSS3, และ JavaScript โฮสต์บน GitHub Pages เน้นดีไซน์โมเดิร์น Luxury Glassmorphism พร้อมระบบตอบสนองเต็มรูปแบบ (Responsive Design)"
-             data-img=""
-             data-icon="fa-laptop-code"
-             data-date="2026"
-             data-category="โครงงาน / โปรเจกต์">
-            <div class="item-img">
-                <i class="fa-solid fa-laptop-code"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกดูรายละเอียดเพิ่มเติม</div>
+<section class="portfolio-section">
+    <div class="container">
+        <h2 class="section-title">เกียรติบัตรและผลงาน (Certificates)</h2>
+        
+        <div class="portfolio-grid">
+            <!-- 1. Thailand University Expo 2024 (เทคโนโลยีสารสนเทศ นวัตกรรม) -->
+            <div class="portfolio-item certificates" onclick="openModal(this)"
+                 data-title="Thailand University Expo 2024 (IT & Innovation)"
+                 data-tag="อบรมวิชาการ / IT"
+                 data-desc="ผ่านการเข้าร่วมพัฒนาทักษะวิชาการและกิจกรรมเชิงปฏิบัติการ กลุ่มคณะ 'เทคโนโลยีสารสนเทศ นวัตกรรม' จัดโดยสถาบันวิชาการ เจ โนว์เลจ ณ จังหวัดชลบุรี"
+                 data-img="A1.jpg"
+                 data-icon="fa-award"
+                 data-date="29 มิถุนายน 2567"
+                 data-category="เกียรติบัตร / วุฒิบัตร">
+                <div class="item-img">
+                    <img src="A1.jpg" alt="Thailand University Expo 2024 IT">
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูเกียรติบัตร</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">อบรมวิชาการ / IT</span>
+                    <h3 class="item-title">กลุ่มคณะเทคโนโลยีสารสนเทศ นวัตกรรม</h3>
+                    <p class="item-desc">สถาบันวิชาการ เจ โนว์เลจ</p>
+                </div>
             </div>
-            <div class="item-content">
-                <span class="item-tag">Project / Web Development</span>
-                <h3 class="item-title">Personal Portfolio Website</h3>
-                <p class="item-desc">พัฒนาเว็บไซต์แฟ้มสะสมผลงานด้วย HTML5, CSS3, และ JavaScript โฮสต์บน GitHub Pages เน้นดีไซน์โมเดิร์น Luxury Glassmorphism</p>
-            </div>
-        </div>
 
-        <div class="portfolio-item workshops" onclick="openModal(this)"
-             data-title="K-Engineering World Tour & Workshop"
-             data-tag="Workshop / Engineering"
-             data-desc="เข้าร่วมการอบรมเชิงปฏิบัติการด้านวิศวกรรมคอมพิวเตอร์ ปัญญาประดิษฐ์ (AI) และระบบอินเทอร์เน็ตของทุกสิ่ง (IoT) รวมถึงการศึกษาพื้นฐาน Cybersecurity และการต่อใช้งานเซนเซอร์เบื้องต้น"
-             data-img="" 
-             data-icon="fa-microchip"
-             data-date="2025 - 2026"
-             data-category="การอบรม / กิจกรรม">
-            <div class="item-img">
-                <i class="fa-solid fa-microchip"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกดูรายละเอียดเพิ่มเติม</div>
+            <!-- 2. Thailand University Expo 2024 (วิศวกรรมศาสตร์) -->
+            <div class="portfolio-item certificates" onclick="openModal(this)"
+                 data-title="Thailand University Expo 2024 (Engineering)"
+                 data-tag="อบรมวิชาการ / วิศวกรรมศาสตร์"
+                 data-desc="ผ่านการเข้าร่วมพัฒนาทักษะวิชาการและกิจกรรมเชิงปฏิบัติการ กลุ่มคณะ 'วิศวกรรมศาสตร์' จัดโดยสถาบันวิชาการ เจ โนว์เลจ ณ จังหวัดชลบุรี"
+                 data-img="A2.jpg"
+                 data-icon="fa-award"
+                 data-date="29 มิถุนายน 2567"
+                 data-category="เกียรติบัตร / วุฒิบัตร">
+                <div class="item-img">
+                    <img src="A2.jpg" alt="Thailand University Expo 2024 Engineering">
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูเกียรติบัตร</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">อบรมวิชาการ / วิศวกรรมศาสตร์</span>
+                    <h3 class="item-title">กลุ่มคณะวิศวกรรมศาสตร์</h3>
+                    <p class="item-desc">สถาบันวิชาการ เจ โนว์เลจ</p>
+                </div>
             </div>
-            <div class="item-content">
-                <span class="item-tag">Workshop / Engineering</span>
-                <h3 class="item-title">K-Engineering World Tour & Workshop</h3>
-                <p class="item-desc">เข้าร่วมการอบรมเชิงปฏิบัติการด้านวิศวกรรมคอมพิวเตอร์ ปัญญาประดิษฐ์ (AI) และระบบอินเทอร์เน็ตของทุกสิ่ง (IoT)</p>
+
+            <!-- 3. ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน -->
+            <div class="portfolio-item certificates" onclick="openModal(this)"
+                 data-title="ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน"
+                 data-tag="กิจกรรมพัฒนาผู้เรียน"
+                 data-desc="เข้าร่วมกิจกรรมค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน ประจำปีการศึกษา 2569 โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'"
+                 data-img="A3.jpg"
+                 data-icon="fa-award"
+                 data-date="8 กรกฎาคม 2569"
+                 data-category="เกียรติบัตร / วุฒิบัตร">
+                <div class="item-img">
+                    <img src="A3.jpg" alt="ค่ายพัฒนาคุณธรรม จริยธรรม">
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูเกียรติบัตร</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">กิจกรรมพัฒนาผู้เรียน</span>
+                    <h3 class="item-title">ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน</h3>
+                    <p class="item-desc">โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'</p>
+                </div>
             </div>
-        </div>
 
-        <div class="portfolio-item certificates" onclick="openModal(this)"
-             data-title="Computer Science & Cyber Fundamentals"
-             data-tag="Certificate"
-             data-desc="วุฒิบัตรผ่านการอบรมทักษะพื้นฐานด้านวิทยาการคอมพิวเตอร์ การคิดเชิงคำนวณ (Computational Thinking) และความมั่นคงปลอดภัยทางไซเบอร์"
-             data-img="" 
-             data-icon="fa-award"
-             data-date="2025"
-             data-category="เกียรติบัตร / วุฒิบัตร">
-            <div class="item-img">
-                <i class="fa-solid fa-award"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกดูรายละเอียดเพิ่มเติม</div>
+            <!-- 4. KMITL Workshop - PLC ขั้นพื้นฐาน -->
+            <div class="portfolio-item certificates" onclick="openModal(this)"
+                 data-title="Workshop PLC ขั้นพื้นฐาน [EE, Computing]"
+                 data-tag="Workshop / วิศวกรรมศาสตร์"
+                 data-desc="ผ่านการฝึกอบรมเชิงปฏิบัติการหัวข้อ PLC ขั้นพื้นฐาน ในงาน K-ENGINEERING WORLD TOUR AND COMPETENCY CHALLENGE 2026 คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"
+                 data-img="A4.jpg"
+                 data-icon="fa-award"
+                 data-date="5 กรกฎาคม 2569"
+                 data-category="เกียรติบัตร / วุฒิบัตร">
+                <div class="item-img">
+                    <img src="A4.jpg" alt="Workshop PLC ขั้นพื้นฐาน KMITL">
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูเกียรติบัตร</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">Workshop / วิศวกรรมศาสตร์</span>
+                    <h3 class="item-title">PLC ขั้นพื้นฐาน [EE, Computing]</h3>
+                    <p class="item-desc">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+                </div>
             </div>
-            <div class="item-content">
-                <span class="item-tag">Certificate</span>
-                <h3 class="item-title">Computer Science & Cyber Fundamentals</h3>
-                <p class="item-desc">วุฒิบัตรผ่านการอบรมทักษะพื้นฐานด้านวิทยาการคอมพิวเตอร์ การคิดเชิงคำนวณ และความมั่นคงปลอดภัยไซเบอร์</p>
+
+            <!-- 5. กิจกรรม วันวิทยาศาสตร์ วิทย์ WITH วัด -->
+            <div class="portfolio-item certificates" onclick="openModal(this)"
+                 data-title="เข้าร่วมกิจกรรม วันวิทยาศาสตร์ 'วิทย์ WITH วัด'"
+                 data-tag="กิจกรรมวิชาการ / วิทยาศาสตร์"
+                 data-desc="เข้าร่วมกิจกรรมวันวิทยาศาสตร์ หัวข้อ 'วิทย์ WITH วัด (มองวัดในมุมวิทย์)' เนื่องในสัปดาห์วิทยาศาสตร์ ประจำปีการศึกษา 2568"
+                 data-img="A5.jpg"
+                 data-icon="fa-award"
+                 data-date="ปีการศึกษา 2568"
+                 data-category="เกียรติบัตร / วุฒิบัตร">
+                <div class="item-img">
+                    <img src="A5.jpg" alt="วิทย์ WITH วัด">
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูเกียรติบัตร</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">กิจกรรมวิชาการ / วิทยาศาสตร์</span>
+                    <h3 class="item-title">วิทย์ WITH วัด (มองวัดในมุมวิทย์)</h3>
+                    <p class="item-desc">โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'</p>
+                </div>
             </div>
-        </div>
 
-        <div class="portfolio-item projects" onclick="openModal(this)"
-             data-title="Computer Systems & Hardware Analysis"
-             data-tag="Project / Hardware"
-             data-desc="การศึกษาและวิเคราะห์สถาปัตยกรรมฮาร์ดแวร์คอมพิวเตอร์ การเปรียบเทียบประสิทธิภาพสเปกการประมวลผล GPU และ CPU ความเข้ากันได้ของเมนบอร์ดและหน่วยความจำ"
-             data-img="" 
-             data-icon="fa-server"
-             data-date="2025 - 2026"
-             data-category="โครงงาน / สถาปัตยกรรมคอมพิวเตอร์">
-            <div class="item-img">
-                <i class="fa-solid fa-server"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกดูรายละเอียดเพิ่มเติม</div>
+            <!-- 6. แข่งขัน Be Fast E-Searching 2025 -->
+            <div class="portfolio-item certificates" onclick="openModal(this)"
+                 data-title="เข้าร่วมการแข่งขัน Be Fast E-Searching 2025"
+                 data-tag="การแข่งขัน / ค้นหาข้อมูล"
+                 data-desc="เข้าร่วมการแข่งขัน Be Fast E-Searching 2025 ระดับมัธยมศึกษาตอนปลาย จัดโดยวิทยาลัยเทคโนโลยีภาคตะวันออก (อี.เทค)"
+                 data-img="A6.jpg"
+                 data-icon="fa-award"
+                 data-date="25 สิงหาคม 2568"
+                 data-category="เกียรติบัตร / วุฒิบัตร">
+                <div class="item-img">
+                    <img src="A6.jpg" alt="Be Fast E-Searching 2025">
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูเกียรติบัตร</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">การแข่งขัน / ค้นหาข้อมูล</span>
+                    <h3 class="item-title">Be Fast E-Searching 2025</h3>
+                    <p class="item-desc">วิทยาลัยเทคโนโลยีภาคตะวันออก (อี.เทค)</p>
+                </div>
             </div>
-            <div class="item-content">
-                <span class="item-tag">Project / Hardware</span>
-                <h3 class="item-title">Computer Systems & Hardware Analysis</h3>
-                <p class="item-desc">การศึกษาและวิเคราะห์สถาปัตยกรรมฮาร์ดแวร์คอมพิวเตอร์ การเปรียบเทียบประสิทธิภาพสเปกการประมวลผล GPU และ CPU</p>
+
+            <!-- 7. ค่ายพัฒนานวัตกรรมและเทคโนโลยี ครั้งที่ 5 -->
+            <div class="portfolio-item certificates" onclick="openModal(this)"
+                 data-title="เข้าร่วมค่ายพัฒนานวัตกรรมและเทคโนโลยี ครั้งที่ 5"
+                 data-tag="ค่ายวิชาการ / นวัตกรรม"
+                 data-desc="เข้าร่วมโครงการค่ายพัฒนานวัตกรรมและเทคโนโลยี ครั้งที่ 5 จัดโดยโรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'"
+                 data-img="A7.jpg"
+                 data-icon="fa-award"
+                 data-date="11 มกราคม 2569"
+                 data-category="เกียรติบัตร / วุฒิบัตร">
+                <div class="item-img">
+                    <img src="A7.jpg" alt="ค่ายพัฒนานวัตกรรมและเทคโนโลยี">
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูเกียรติบัตร</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">ค่ายวิชาการ / นวัตกรรม</span>
+                    <h3 class="item-title">ค่ายพัฒนานวัตกรรมและเทคโนโลยี ครั้งที่ 5</h3>
+                    <p class="item-desc">โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'</p>
+                </div>
             </div>
-        </div>
 
-    </section>
+            <!-- 8. วิทยากรงานวันวิทยาศาสตร์แห่งชาติ -->
+            <div class="portfolio-item certificates" onclick="openModal(this)"
+                 data-title="วิทยากรจัดแสดงนิทรรศการวิทยาศาสตร์และเทคโนโลยี"
+                 data-tag="วิทยากร / กิจกรรมวิทยาศาสตร์"
+                 data-desc="ทำหน้าที่เป็นวิทยากรจัดแสดงนิทรรศการวิทยาศาสตร์และเทคโนโลยี หัวข้อ 'Intelligence in Science for a Sustainable Future' งานวันวิทยาศาสตร์แห่งชาติ โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'"
+                 data-img="A8.jpg"
+                 data-icon="fa-award"
+                 data-date="20 สิงหาคม 2569"
+                 data-category="เกียรติบัตร / วุฒิบัตร">
+                <div class="item-img">
+                    <img src="A8.jpg" alt="วิทยากรนิทรรศการวิทยาศาสตร์">
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูเกียรติบัตร</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">วิทยากร / กิจกรรมวิทยาศาสตร์</span>
+                    <h3 class="item-title">วิทยากรนิทรรศการวิทยาศาสตร์และเทคโนโลยี</h3>
+                    <p class="item-desc">โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'</p>
+                </div>
+            </div>
 
-    <!-- Near Full-Screen Modal Popup -->
-    <div class="modal-overlay" id="cardModal" onclick="closeModalOnOuterClick(event)">
-        <div class="modal-container">
-            <button class="modal-close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-            
-            <div class="modal-image-area" id="modalImageContainer"></div>
+            <!-- 9. KMITL Workshop - ปัญญาประดิษฐ์ & ไซเบอร์ซีเคียวริตี -->
+            <div class="portfolio-item certificates" onclick="openModal(this)"
+                 data-title="Workshop AI & Cybersecurity [EE, Computing]"
+                 data-tag="Workshop / ความมั่นคงไซเบอร์"
+                 data-desc="ผ่านการฝึกอบรมหัวข้อ 'ปัญญาประดิษฐ์พื้นฐานร่วมกับข้อมูลด้านความมั่นคงปลอดภัยทางไซเบอร์' ในงาน K-ENGINEERING WORLD TOUR AND COMPETENCY CHALLENGE 2026 คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"
+                 data-img="A9.jpg"
+                 data-icon="fa-award"
+                 data-date="5 กรกฎาคม 2569"
+                 data-category="เกียรติบัตร / วุฒิบัตร">
+                <div class="item-img">
+                    <img src="A9.jpg" alt="Workshop AI & Cybersecurity KMITL">
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูเกียรติบัตร</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">Workshop / ความมั่นคงไซเบอร์</span>
+                    <h3 class="item-title">AI & Cybersecurity [EE, Computing]</h3>
+                    <p class="item-desc">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+                </div>
+            </div>
 
-            <div class="modal-body">
-                <span class="modal-tag" id="modalTag">TAG NAME</span>
-                <h2 class="modal-title" id="modalTitle">Project Title</h2>
-                <p class="modal-description" id="modalDesc">Project description text goes here...</p>
+            <!-- 10. สัมมนาพัฒนาเทคโนโลยี (Fab Lab) -->
+            <div class="portfolio-item certificates" onclick="openModal(this)"
+                 data-title="เข้าร่วมการสัมมนาพัฒนาเทคโนโลยี"
+                 data-tag="สัมมนา / เทคโนโลยี"
+                 data-desc="เข้าร่วมการสัมมนาเรื่อง Technology Development Seminar ณ ห้อง Fabrication Laboratory อาคาร 1 ชั้น 5 โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'"
+                 data-img="A10.jpg"
+                 data-icon="fa-award"
+                 data-date="11 กุมภาพันธ์ 2569"
+                 data-category="เกียรติบัตร / วุฒิบัตร">
+                <div class="item-img">
+                    <img src="A10.jpg" alt="สัมมนาพัฒนาเทคโนโลยี">
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูเกียรติบัตร</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">สัมมนา / เทคโนโลยี</span>
+                    <h3 class="item-title">Technology Development Seminar</h3>
+                    <p class="item-desc">โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'</p>
+                </div>
+            </div>
 
-                <div class="modal-details-grid">
-                    <div class="detail-item">
-                        <h4>หมวดหมู่ (Category)</h4>
-                        <p id="modalCategory">-</p>
-                    </div>
-                    <div class="detail-item">
-                        <h4>ช่วงเวลา / ปีที่ทำ (Year)</h4>
-                        <p id="modalDate">-</p>
-                    </div>
+            <!-- 11. ค่ายยกระดับผลสัมฤทธิ์ทางการเรียนเทคโนโลยี -->
+            <div class="portfolio-item certificates" onclick="openModal(this)"
+                 data-title="ค่ายยกระดับผลสัมฤทธิ์ทางการเรียนเทคโนโลยี"
+                 data-tag="ค่ายวิชาการ / เทคโนโลยี"
+                 data-desc="เข้าร่วมกิจกรรมค่ายยกระดับผลสัมฤทธิ์ทางการเรียนเทคโนโลยี เพื่อเพิ่มพูนทักษะด้านเทคโนโลยีตามหลักสูตร ณ หอประชุมกาญจนานนท์ โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'"
+                 data-img="A11.jpg"
+                 data-icon="fa-award"
+                 data-date="24 มกราคม 2569"
+                 data-category="เกียรติบัตร / วุฒิบัตร">
+                <div class="item-img">
+                    <img src="A11.jpg" alt="ค่ายยกระดับผลสัมฤทธิ์ทางการเรียนเทคโนโลยี">
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูเกียรติบัตร</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">ค่ายวิชาการ / เทคโนโลยี</span>
+                    <h3 class="item-title">ค่ายยกระดับผลสัมฤทธิ์ทางการเรียนเทคโนโลยี</h3>
+                    <p class="item-desc">โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'</p>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <footer>
-        <p>© 2026 นายณัฐภูมิ เฉวียงวาท | Designed for University Admissions Portfolio</p>
-    </footer>
+<!-- Modal Popup สำหรับแสดงรูปภาพและรายละเอียดเกียรติบัตร -->
+<div id="certModal" class="modal" onclick="closeModalOutside(event)">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div class="modal-img-container">
+            <img id="modalImg" src="" alt="เกียรติบัตร">
+        </div>
+        <div class="modal-details">
+            <span id="modalTag" class="modal-tag">หมวดหมู่</span>
+            <h3 id="modalTitle" class="modal-title">หัวข้อเกียรติบัตร</h3>
+            <p id="modalDesc" class="modal-desc">รายละเอียดเกียรติบัตร</p>
+            <div class="modal-info">
+                <p><strong>วันที่ได้รับ:</strong> <span id="modalDate">-</span></p>
+                <p><strong>ประเภท:</strong> <span id="modalCategory">-</span></p>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script>
-        // เคลียร์ CSS Animation ออกเมื่อการ์ดลอยขึ้นมาครบถ้วนแล้ว เพื่อคืนค่า Transform ให้ 3D Lay Down ทำงานได้ราบรื่น
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.portfolio-item');
-            cards.forEach(card => {
-                card.addEventListener('animationend', () => {
-                    card.style.animation = 'none';
-                    card.style.opacity = '1';
-                });
-            });
-        });
+<script>
+    function openModal(element) {
+        const modal = document.getElementById('certModal');
+        
+        document.getElementById('modalImg').src = element.getAttribute('data-img');
+        document.getElementById('modalTitle').textContent = element.getAttribute('data-title');
+        document.getElementById('modalTag').textContent = element.getAttribute('data-tag');
+        document.getElementById('modalDesc').textContent = element.getAttribute('data-desc');
+        document.getElementById('modalDate').textContent = element.getAttribute('data-date');
+        document.getElementById('modalCategory').textContent = element.getAttribute('data-category');
+        
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // ป้องกันการสกอร์ลหน้าหลัง
+    }
 
-        // Filter Portfolio with 3D Lay-Down Effect
-        function filterPortfolio(category, evt) {
-            const items = document.querySelectorAll('.portfolio-item');
-            const buttons = document.querySelectorAll('.filter-btn');
+    function closeModal() {
+        const modal = document.getElementById('certModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
 
-            buttons.forEach(btn => btn.classList.remove('active'));
-            if (evt) evt.currentTarget.classList.add('active');
-
-            items.forEach((item) => {
-                // ปลดล็อกการล็อก Keyframes ทันทีเมื่อผู้ใช้กดปุ่มตัวกรอง
-                item.style.animation = 'none';
-                item.style.opacity = '1';
-
-                const matches = category === 'all' || item.classList.contains(category);
-
-                if (matches) {
-                    item.classList.remove('inactive');
-                } else {
-                    item.classList.add('inactive');
-                }
-            });
+    function closeModalOutside(event) {
+        const modal = document.getElementById('certModal');
+        if (event.target === modal) {
+            closeModal();
         }
+    }
+</script>
 
-        // Open Near Full-Screen Modal
-        function openModal(cardElement) {
-            if (cardElement.classList.contains('inactive')) return;
-
-            const title = cardElement.getAttribute('data-title');
-            const tag = cardElement.getAttribute('data-tag');
-            const desc = cardElement.getAttribute('data-desc');
-            const imgSrc = cardElement.getAttribute('data-img');
-            const iconClass = cardElement.getAttribute('data-icon');
-            const date = cardElement.getAttribute('data-date');
-            const category = cardElement.getAttribute('data-category');
-
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalTag').innerText = tag;
-            document.getElementById('modalDesc').innerText = desc;
-            document.getElementById('modalDate').innerText = date || '-';
-            document.getElementById('modalCategory').innerText = category || '-';
-
-            const imgContainer = document.getElementById('modalImageContainer');
-
-            if (imgSrc && imgSrc.trim() !== '') {
-                imgContainer.innerHTML = `<img src="${imgSrc}" alt="${title}">`;
-            } else {
-                imgContainer.innerHTML = `
-                    <div class="modal-placeholder-icon">
-                        <i class="fa-solid ${iconClass || 'fa-certificate'}"></i>
-                        <span>(ยังไม่ได้แนบรูปภาพผลงาน/เกียรติบัตร)</span>
-                    </div>
-                `;
-            }
-
-            const modal = document.getElementById('cardModal');
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('cardModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function closeModalOnOuterClick(event) {
-            if (event.target.classList.contains('modal-overlay')) {
-                closeModal();
-            }
-        }
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
-    </script>
 </body>
 </html>
+
