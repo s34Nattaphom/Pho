@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NATTAPHUM | Academic Portfolio</title>
@@ -82,7 +82,7 @@
             animation: pulseGlow 6s ease-in-out infinite alternate;
         }
 
-        /* ================= TOP HEADER (NATTAPHUM LOGO OUTSIDE) ================= */
+        /* ================= TOP HEADER ================= */
         .top-navbar {
             position: fixed;
             top: 0;
@@ -112,7 +112,7 @@
             color: var(--gold-primary);
         }
 
-        /* ================= PERMANENT LEFT POPUP MENU ================= */
+        /* ================= PERMANENT LEFT POPUP MENU (Enhanced Gold Border & Glow) ================= */
         .side-popup-panel {
             position: fixed;
             top: 5.5rem;
@@ -122,14 +122,14 @@
             background: rgba(18, 23, 33, 0.88);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            border: 1.5px solid rgba(212, 175, 55, 0.45);
             border-radius: 22px;
             padding: 1.8rem 1.2rem;
             z-index: 100;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.18);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.22);
             animation: fadeInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
@@ -164,11 +164,11 @@
         }
 
         .nav-menu-item a:hover, .nav-menu-item a.active {
-            background: rgba(212, 175, 55, 0.15);
-            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.18);
+            border-color: rgba(212, 175, 55, 0.55);
             color: #fff;
             transform: translateX(6px);
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 4px 18px rgba(212, 175, 55, 0.25);
         }
 
         .nav-menu-item a:hover i {
@@ -183,7 +183,7 @@
             text-align: center;
         }
 
-        /* ================= MAIN CONTENT WRAPPER (CENTERED) ================= */
+        /* ================= MAIN CONTENT WRAPPER ================= */
         .page-container {
             width: 100%;
             display: flex;
@@ -456,12 +456,12 @@
 
     <div class="ambient-glow"></div>
 
-    <!-- Top Navigation Header (NATTAPHUM ย้ายออกข้างนอกเหมือนหน้าที่ 2) -->
+    <!-- Top Navigation Header -->
     <header class="top-navbar">
         <a href="#" class="top-logo">NATTAPHUM</a>
     </header>
 
-    <!-- Side Popup Menu (ไม่มี logo ด้านในแล้ว) -->
+    <!-- Side Popup Menu with Gold Border and Glow -->
     <aside class="side-popup-panel">
         <ul class="nav-menu-list">
             <li class="nav-menu-item">
@@ -489,7 +489,7 @@
         </div>
     </aside>
 
-    <!-- Page Content Wrapper (จัดกึ่งกลางพื้นที่ส่วนที่เหลืออย่างสมดุล) -->
+    <!-- Page Content Wrapper -->
     <div class="page-container">
         <main class="main-wrapper">
 
@@ -583,3 +583,4 @@
 
 </body>
 </html>
+```[cite: 4]
