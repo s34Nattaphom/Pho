@@ -12,7 +12,7 @@
     <style>
         :root {
             --bg-color: #0b0d14;
-            --card-bg: rgba(22, 27, 38, 0.82);
+            --card-bg: rgba(22, 27, 38, 0.88);
             --border-gold: rgba(212, 175, 55, 0.25);
             --gold-primary: #d4af37;
             --gold-light: #f3e5ab;
@@ -45,7 +45,7 @@
             position: fixed;
             width: 750px;
             height: 750px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.14) 0%, rgba(0,0,0,0) 70%);
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(0,0,0,0) 70%);
             top: -180px;
             left: 50%;
             transform: translateX(-50%);
@@ -110,14 +110,12 @@
             color: var(--gold-primary);
         }
 
-        /* PROFILE IMAGE ANIMATION (FADE IN + FLOAT UP) */
         .nav-profile-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 46px;
             height: 46px;
-            position: relative;
         }
 
         .nav-profile-img {
@@ -127,35 +125,26 @@
             border: 2px solid var(--gold-primary);
             object-fit: cover;
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            will-change: transform, opacity;
             animation: floatUpNavProfile 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes floatUpNavProfile {
-            0% {
-                opacity: 0;
-                transform: translateY(25px) scale(0.85);
-                box-shadow: 0 0 0px rgba(212, 175, 55, 0);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-                box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            }
+            0% { opacity: 0; transform: translateY(20px) scale(0.85); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* PAGE HEADER & FILTER BUTTONS ANIMATION */
+        /* PAGE HEADER & FILTERS */
         .page-header {
             padding: 7.8rem 5% 1rem;
             text-align: center;
         }
 
         .page-header h1 {
-            font-size: 2.6rem;
+            font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 0.6rem;
-            opacity: 0;
             animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+            opacity: 0;
         }
 
         .gold-text {
@@ -166,33 +155,27 @@
 
         .page-header p {
             color: var(--text-muted);
-            font-size: 1.02rem;
+            font-size: 1rem;
             max-width: 680px;
             margin: 0 auto;
             font-weight: 300;
-            opacity: 0;
             animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+            opacity: 0;
         }
 
         .filter-container {
             display: flex;
             justify-content: center;
             gap: 0.8rem;
-            margin: 2.2rem 0 2rem;
+            margin: 2.2rem 0 1.5rem;
             flex-wrap: wrap;
-            opacity: 0;
             animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+            opacity: 0;
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .filter-btn {
@@ -204,7 +187,7 @@
             cursor: pointer;
             font-size: 0.92rem;
             font-weight: 500;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s ease;
         }
 
         .filter-btn.active, .filter-btn:hover {
@@ -212,88 +195,56 @@
             color: #0b0d14;
             font-weight: 600;
             border-color: transparent;
-            box-shadow: 0 8px 22px rgba(212, 175, 55, 0.35);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
         }
 
-        /* 3D CARD DECK CONTAINER */
+        /* PORTFOLIO GRID - FLAT & STRAIGHT CARDS */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 2.5rem 2rem;
-            padding: 3rem 5% 6rem;
+            gap: 2rem;
+            padding: 2rem 5% 6rem;
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            perspective: 1200px;
         }
 
-        /* 3D CARD ITEM & ENTRANCE ANIMATION */
         .portfolio-item {
             background: var(--card-bg);
             border: 1px solid var(--border-gold);
-            border-radius: 20px;
+            border-radius: 18px;
             overflow: hidden;
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             position: relative;
             cursor: pointer;
-            transform-style: preserve-3d;
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
             opacity: 0;
-            animation: cardEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                        opacity 0.5s ease,
-                        filter 0.5s ease,
-                        border-color 0.4s ease,
-                        box-shadow 0.5s ease;
+            animation: cardFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* STAGGERED ANIMATION DELAY FOR CARDS */
-        .portfolio-item:nth-child(1) { animation-delay: 0.35s; }
-        .portfolio-item:nth-child(2) { animation-delay: 0.50s; }
-        .portfolio-item:nth-child(3) { animation-delay: 0.65s; }
-        .portfolio-item:nth-child(4) { animation-delay: 0.80s; }
-
-        @keyframes cardEntrance {
+        /* ANIMATION FOR FILTERING CARDS */
+        @keyframes cardFadeIn {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 50px, -100px) rotateX(20deg) scale(0.9);
+                transform: translateY(25px) scale(0.95);
             }
             100% {
-                opacity: 0.85;
-                transform: translate3d(0, 0, 0) rotateX(10deg) scale(0.98);
+                opacity: 1;
+                transform: translateY(0) scale(1);
             }
-        }
-
-        .portfolio-item.is-selected {
-            transform: translate3d(0, -55px, 60px) rotateX(0deg) scale(1.05) !important;
-            opacity: 1 !important;
-            filter: none !important;
-            border-color: var(--gold-primary) !important;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(212, 175, 55, 0.45) !important;
-            z-index: 50;
-        }
-
-        .portfolio-item.is-unselected {
-            transform: translate3d(0, 30px, -60px) rotateX(16deg) scale(0.92) !important;
-            opacity: 0.22 !important;
-            filter: blur(6px) grayscale(50%) !important;
-            border-color: rgba(255, 255, 255, 0.05) !important;
-            z-index: 1;
         }
 
         .portfolio-item:hover {
-            transform: translate3d(0, -65px, 70px) rotateX(2deg) scale(1.06) !important;
-            opacity: 1 !important;
-            filter: none !important;
-            border-color: var(--gold-light) !important;
-            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.85), 0 0 40px rgba(212, 175, 55, 0.6) !important;
-            z-index: 100 !important;
+            transform: translateY(-8px);
+            border-color: var(--gold-primary);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.3);
         }
 
         .item-img {
             width: 100%;
-            height: 210px;
-            background-color: rgba(15, 18, 28, 0.9);
+            height: 200px;
+            background-color: rgba(15, 18, 28, 0.95);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -312,20 +263,20 @@
         }
 
         .portfolio-item:hover .item-img img {
-            transform: scale(1.08);
+            transform: scale(1.06);
         }
 
         .item-img-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(11, 13, 20, 0.65);
+            background: rgba(11, 13, 20, 0.7);
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             transition: opacity 0.3s ease;
             color: var(--gold-light);
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 500;
             gap: 8px;
         }
@@ -335,7 +286,7 @@
         }
 
         .item-content {
-            padding: 1.6rem;
+            padding: 1.5rem;
         }
 
         .item-tag {
@@ -363,13 +314,13 @@
             font-weight: 300;
         }
 
-        /* MODAL / POPUP SYSTEM */
+        /* LARGE & SCROLLABLE MODAL POPUP */
         .modal-overlay {
             position: fixed;
             inset: 0;
             background: rgba(5, 7, 12, 0.88);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             z-index: 2000;
             display: flex;
             align-items: center;
@@ -377,7 +328,7 @@
             padding: 1.5rem;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.35s ease;
         }
 
         .modal-overlay.active {
@@ -386,17 +337,32 @@
         }
 
         .modal-container {
-            background: rgba(18, 23, 33, 0.96);
+            background: rgba(18, 23, 33, 0.98);
             border: 1px solid var(--border-gold);
-            border-radius: 24px;
-            max-width: 820px;
-            width: 100%;
-            max-height: 88vh;
-            overflow-y: auto;
+            border-radius: 22px;
+            width: 94%;
+            max-width: 1000px;
+            max-height: 90vh; /* ขยายเกือบเต็มจอ */
+            overflow-y: auto;  /* เลื่อนลงด้านล่างเพิ่มได้ */
             position: relative;
-            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.85), 0 0 45px rgba(212, 175, 55, 0.35);
-            transform: scale(0.88) translateY(35px);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.3);
+            transform: scale(0.92) translateY(20px);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* CUSTOM GOLDEN SCROLLBAR FOR MODAL */
+        .modal-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-container::-webkit-scrollbar-track {
+            background: rgba(11, 13, 20, 0.6);
+            border-radius: 0 22px 22px 0;
+        }
+
+        .modal-container::-webkit-scrollbar-thumb {
+            background: var(--gold-primary);
+            border-radius: 4px;
         }
 
         .modal-overlay.active .modal-container {
@@ -404,14 +370,16 @@
         }
 
         .modal-close-btn {
-            position: absolute;
+            position: sticky;
             top: 1.2rem;
-            right: 1.2rem;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            float: right;
+            margin-right: 1.2rem;
+            margin-top: 1.2rem;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: var(--text-main);
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -419,7 +387,7 @@
             cursor: pointer;
             font-size: 1.2rem;
             transition: all 0.3s ease;
-            z-index: 10;
+            z-index: 100;
         }
 
         .modal-close-btn:hover {
@@ -431,65 +399,69 @@
 
         .modal-image-area {
             width: 100%;
-            height: 360px;
-            background-color: rgba(10, 13, 20, 0.92);
+            min-height: 320px;
+            background-color: rgba(10, 13, 20, 0.95);
             display: flex;
             align-items: center;
             justify-content: center;
             border-bottom: 1px solid var(--border-gold);
             position: relative;
             overflow: hidden;
+            margin-top: -54px; /* ชดเชยปุ่มปิดแบบ Sticky */
         }
 
         .modal-image-area img {
             width: 100%;
-            height: 100%;
+            height: auto;
+            max-height: 520px;
             object-fit: contain;
         }
 
         .modal-placeholder-icon {
-            font-size: 4rem;
+            font-size: 4.5rem;
             color: var(--gold-primary);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 12px;
+            padding: 3rem 1rem;
         }
 
         .modal-placeholder-icon span {
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
             font-weight: 300;
         }
 
         .modal-body {
-            padding: 2.2rem;
+            padding: 2.2rem 2.5rem 3rem;
         }
 
         .modal-tag {
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             color: var(--gold-primary);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
             display: block;
         }
 
         .modal-title {
-            font-size: 1.75rem;
+            font-size: 1.9rem;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 0.9rem;
+            margin-bottom: 1rem;
             line-height: 1.3;
         }
 
         .modal-description {
             color: var(--text-muted);
-            font-size: 0.98rem;
-            line-height: 1.7;
-            margin-bottom: 1.8rem;
+            font-size: 1.02rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
             font-weight: 300;
+            white-space: pre-line; /* รองรับการเว้นวรรคขึ้นบรรทัดใหม่ */
         }
 
         .modal-details-grid {
@@ -497,20 +469,20 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 1.2rem;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 1.2rem 1.5rem;
-            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1.5rem;
+            border-radius: 16px;
         }
 
         .detail-item h4 {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: var(--gold-primary);
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.3rem;
             text-transform: uppercase;
         }
 
         .detail-item p {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: #fff;
         }
 
@@ -525,7 +497,15 @@
         @media (max-width: 850px) {
             .portfolio-grid {
                 grid-template-columns: 1fr;
-                gap: 3.5rem;
+                gap: 2rem;
+            }
+
+            .modal-body {
+                padding: 1.5rem 1.2rem 2rem;
+            }
+
+            .modal-details-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -543,13 +523,12 @@
             <li><a href="portfolio.html#education">ประวัติการศึกษา</a></li>
         </ul>
 
-        <!-- รูปโปรไฟล์ขวาบนใช้ my02.jpg + อนิเมชันค่อยๆ เลือนลอยขึ้น -->
         <div class="nav-profile-wrapper">
             <img src="my02.jpg" alt="นายณัฐภูมิ เฉวียงวาท" class="nav-profile-img">
         </div>
     </nav>
 
-    <!-- Header & Filter -->
+    <!-- Header & Filter Buttons -->
     <header class="page-header">
         <h1>แฟ้มสะสมผลงาน <span class="gold-text">(Portfolio)</span></h1>
         <p>รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยีของ นายณัฐภูมิ เฉวียงวาท</p>
@@ -562,20 +541,20 @@
         </div>
     </header>
 
-    <!-- 3D Card Deck Grid -->
+    <!-- Portfolio Grid -->
     <section class="portfolio-grid" id="portfolioDeck">
 
         <div class="portfolio-item projects" onclick="openModal(this)"
              data-title="Personal Portfolio Website"
              data-tag="Project / Web Development"
-             data-desc="พัฒนาเว็บไซต์แฟ้มสะสมผลงานด้วย HTML5, CSS3, และ JavaScript โฮสต์บน GitHub Pages เน้นดีไซน์โมเดิร์น Luxury Glassmorphism"
+             data-desc="พัฒนาเว็บไซต์แฟ้มสะสมผลงานด้วย HTML5, CSS3, และ JavaScript โฮสต์บน GitHub Pages เน้นดีไซน์โมเดิร์น Luxury Glassmorphism พร้อมระบบตอบสนองเต็มรูปแบบ (Responsive Design)"
              data-img=""
              data-icon="fa-laptop-code"
              data-date="2026"
              data-category="โครงงาน / โปรเจกต์">
             <div class="item-img">
                 <i class="fa-solid fa-laptop-code"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูรายละเอียด</div>
+                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกดูรายละเอียดเพิ่มเติม</div>
             </div>
             <div class="item-content">
                 <span class="item-tag">Project / Web Development</span>
@@ -587,14 +566,14 @@
         <div class="portfolio-item workshops" onclick="openModal(this)"
              data-title="K-Engineering World Tour & Workshop"
              data-tag="Workshop / Engineering"
-             data-desc="เข้าร่วมการอบรมเชิงปฏิบัติการด้านวิศวกรรมคอมพิวเตอร์ ปัญญาประดิษฐ์ (AI) และระบบอินเทอร์เน็ตของทุกสิ่ง (IoT) รวมถึงการศึกษาพื้นฐาน Cybersecurity"
+             data-desc="เข้าร่วมการอบรมเชิงปฏิบัติการด้านวิศวกรรมคอมพิวเตอร์ ปัญญาประดิษฐ์ (AI) และระบบอินเทอร์เน็ตของทุกสิ่ง (IoT) รวมถึงการศึกษาพื้นฐาน Cybersecurity และการต่อใช้งานเซนเซอร์เบื้องต้น"
              data-img="" 
              data-icon="fa-microchip"
              data-date="2025 - 2026"
              data-category="การอบรม / กิจกรรม">
             <div class="item-img">
                 <i class="fa-solid fa-microchip"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูรายละเอียด</div>
+                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกดูรายละเอียดเพิ่มเติม</div>
             </div>
             <div class="item-content">
                 <span class="item-tag">Workshop / Engineering</span>
@@ -613,7 +592,7 @@
              data-category="เกียรติบัตร / วุฒิบัตร">
             <div class="item-img">
                 <i class="fa-solid fa-award"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูรายละเอียด</div>
+                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกดูรายละเอียดเพิ่มเติม</div>
             </div>
             <div class="item-content">
                 <span class="item-tag">Certificate</span>
@@ -632,7 +611,7 @@
              data-category="โครงงาน / สถาปัตยกรรมคอมพิวเตอร์">
             <div class="item-img">
                 <i class="fa-solid fa-server"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> ดูรายละเอียด</div>
+                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกดูรายละเอียดเพิ่มเติม</div>
             </div>
             <div class="item-content">
                 <span class="item-tag">Project / Hardware</span>
@@ -643,7 +622,7 @@
 
     </section>
 
-    <!-- Modal Popup -->
+    <!-- Modal Popup (Large & Scrollable) -->
     <div class="modal-overlay" id="cardModal" onclick="closeModalOnOuterClick(event)">
         <div class="modal-container">
             <button class="modal-close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
@@ -674,6 +653,7 @@
     </footer>
 
     <script>
+        // Smooth Filtering with Fade/Scale Animation
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.portfolio-item');
             const buttons = document.querySelectorAll('.filter-btn');
@@ -681,21 +661,22 @@
             buttons.forEach(btn => btn.classList.remove('active'));
             if (evt) evt.currentTarget.classList.add('active');
 
-            items.forEach(item => {
+            items.forEach((item, index) => {
                 const matches = category === 'all' || item.classList.contains(category);
 
-                if (category === 'all') {
-                    item.classList.remove('is-selected', 'is-unselected');
-                } else if (matches) {
-                    item.classList.add('is-selected');
-                    item.classList.remove('is-unselected');
+                if (matches) {
+                    item.style.display = 'block';
+                    // Trigger reflow to restart keyframe animation
+                    item.style.animation = 'none';
+                    item.offsetHeight; 
+                    item.style.animation = `cardFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.08}s forwards`;
                 } else {
-                    item.classList.add('is-unselected');
-                    item.classList.remove('is-selected');
+                    item.style.display = 'none';
                 }
             });
         }
 
+        // Open Scrollable Modal
         function openModal(cardElement) {
             const title = cardElement.getAttribute('data-title');
             const tag = cardElement.getAttribute('data-tag');
@@ -719,7 +700,7 @@
                 imgContainer.innerHTML = `
                     <div class="modal-placeholder-icon">
                         <i class="fa-solid ${iconClass || 'fa-certificate'}"></i>
-                        <span>(ยังไม่ได้แนบรูปภาพเกียรติบัตร/ผลงาน)</span>
+                        <span>(ยังไม่ได้แนบรูปภาพผลงาน/เกียรติบัตร)</span>
                     </div>
                 `;
             }
