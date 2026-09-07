@@ -213,36 +213,42 @@
             background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 100%);
         }
 
-        /* GPAX CARD WITH COUNT-UP EFFECT (ส่วนที่เพิ่มใหม่) */
-        .gpax-container {
-            margin: 2.2rem 0 1rem;
+        /* PERSONAL INFO & GPAX GRID (ส่วนที่ปรับปรุงใหม่) */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+            width: 100%;
+            margin: 2.5rem 0 1rem;
             opacity: 0;
             animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
         }
 
-        .gpax-card {
+        .info-card {
             background: rgba(22, 27, 38, 0.85);
             border: 1px solid var(--border-gold);
-            padding: 1rem 2.2rem;
+            padding: 1.1rem 1.6rem;
             border-radius: 18px;
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             display: flex;
             align-items: center;
             gap: 1.2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(212, 175, 55, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(212, 175, 55, 0.05);
             transition: transform 0.35s ease, border-color 0.35s ease;
+            text-align: left;
         }
 
-        .gpax-card:hover {
+        .info-card:hover {
             transform: translateY(-4px);
             border-color: var(--gold-primary);
             box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
         }
 
-        .gpax-icon {
+        .info-icon {
             width: 48px;
             height: 48px;
+            min-width: 48px;
             background: rgba(212, 175, 55, 0.12);
             border: 1px solid var(--border-gold);
             border-radius: 50%;
@@ -250,29 +256,46 @@
             align-items: center;
             justify-content: center;
             color: var(--gold-primary);
-            font-size: 1.3rem;
+            font-size: 1.25rem;
         }
 
-        .gpax-info {
-            text-align: left;
+        .info-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        .gpax-label {
-            font-size: 0.8rem;
+        .info-label {
+            font-size: 0.78rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             font-weight: 500;
+            margin-bottom: 2px;
         }
 
-        .gpax-value {
-            font-size: 2.1rem;
+        .info-value {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.35;
+        }
+
+        .info-subtext {
+            font-size: 0.82rem;
+            color: var(--gold-light);
+            font-weight: 400;
+            margin-top: 1px;
+        }
+
+        .gpax-value-text {
+            font-size: 2rem;
             font-weight: 700;
-            line-height: 1.1;
             background: linear-gradient(135deg, #ffffff 20%, var(--gold-light) 60%, var(--gold-primary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-family: 'Prompt', sans-serif;
+            line-height: 1;
         }
 
         /* SKILL HIGHLIGHT CARDS */
@@ -281,7 +304,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             width: 100%;
-            margin-top: 2.5rem;
+            margin-top: 1.5rem;
             opacity: 0;
             animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.05s forwards;
         }
@@ -333,20 +356,17 @@
         }
 
         @media (max-width: 850px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
             .skills-grid {
                 grid-template-columns: 1fr;
                 gap: 1.2rem;
             }
 
             .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .gpax-card {
-                padding: 0.8rem 1.6rem;
-            }
-
-            .gpax-value {
                 font-size: 1.8rem;
             }
         }
@@ -382,15 +402,50 @@
             <i class="fa-solid fa-folder-open"></i> เข้าชมแฟ้มสะสมผลงานจริง
         </a>
 
-        <!-- GPAX DISPLAY CARD (ส่วนที่เพิ่มตามคำขอ) -->
-        <div class="gpax-container">
-            <div class="gpax-card">
-                <div class="gpax-icon">
+        <!-- PERSONAL INFO & GPAX GRID (การ์ดข้อมูลส่วนตัวแทรกตรงเส้นสีแดง) -->
+        <div class="info-grid">
+            <!-- GPAX -->
+            <div class="info-card">
+                <div class="info-icon">
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
-                <div class="gpax-info">
-                    <div class="gpax-label">เกรดเฉลี่ยสะสม (GPAX)</div>
-                    <div class="gpax-value" id="gpaxCounter">0.00</div>
+                <div class="info-details">
+                    <span class="info-label">เกรดเฉลี่ยสะสม (GPAX)</span>
+                    <span class="gpax-value-text" id="gpaxCounter">0.00</span>
+                </div>
+            </div>
+
+            <!-- School & Program -->
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fa-solid fa-school"></i>
+                </div>
+                <div class="info-details">
+                    <span class="info-label">สถานศึกษา</span>
+                    <span class="info-value">โรงเรียนบ้านบึง "อุตสาหกรรมนุเคราะห์"</span>
+                    <span class="info-subtext">สายการเรียน วิทย์-คณิตคอมพิวเตอร์</span>
+                </div>
+            </div>
+
+            <!-- Birthdate -->
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fa-solid fa-cake-candles"></i>
+                </div>
+                <div class="info-details">
+                    <span class="info-label">วันเกิด</span>
+                    <span class="info-value">16 กุมภาพันธ์ 2552</span>
+                </div>
+            </div>
+
+            <!-- Age -->
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="info-details">
+                    <span class="info-label">อายุ</span>
+                    <span class="info-value">17 ปี</span>
                 </div>
             </div>
         </div>
@@ -421,21 +476,19 @@
         <p>© 2026 นายณัฐภูมิ เฉวียงวาท | Designed for University Admissions Portfolio</p>
     </footer>
 
-    <!-- JavaScript สำหรับนับตัวเลขเกรด 0.00 -> 3.73 -->
+    <!-- JavaScript เฉพาะสำหรับ GPAX (0.00 -> 3.73) ส่วนข้อมูลอื่นแสดงทันที -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const counterElement = document.getElementById('gpaxCounter');
             const targetGPA = 3.73;
-            const duration = 2000; // ระยะเวลาแอนิเมชัน 2 วินาที
+            const duration = 1800; 
             const steps = 60;
             const stepTime = duration / steps;
             let currentStep = 0;
 
-            // ดีเลย์รอให้การ์ด Fade-In ขึ้นมาก่อนเริ่มนับ
             setTimeout(() => {
                 const timer = setInterval(() => {
                     currentStep++;
-                    // ใช้ฟังก์ชัน Ease-Out ให้ตัวเลขวิ่งเร็วตอนแรกและค่อยๆ ชะลอตอนใกล้ถึง 3.73
                     const progress = currentStep / steps;
                     const easeOutProgress = 1 - Math.pow(1 - progress, 3);
                     const currentValue = (targetGPA * easeOutProgress).toFixed(2);
@@ -447,7 +500,7 @@
                         clearInterval(timer);
                     }
                 }, stepTime);
-            }, 800);
+            }, 700);
         });
     </script>
 </body>
