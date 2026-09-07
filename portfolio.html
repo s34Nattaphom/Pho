@@ -67,6 +67,17 @@
             100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
         }
 
+        @keyframes slideGoldIndicator {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         /* BACKGROUND GLOW */
         .ambient-glow {
             position: fixed;
@@ -81,7 +92,7 @@
             animation: pulseGlow 6s ease-in-out infinite alternate;
         }
 
-        /* NAVIGATION BAR & BACK BUTTON (ตรงกับหน้าแรก) */
+        /* NAVIGATION BAR & BACK BUTTON */
         nav {
             display: flex;
             justify-content: space-between;
@@ -143,7 +154,7 @@
             opacity: 0;
         }
 
-        /* SIDEBAR MENU (เมนูด้านซ้าย) */
+        /* SIDEBAR MENU (แก้ไข: ปิด Fade In ซ้ำ + เพิ่มแอนิเมชันเลื่อนลงของแถบสีเหลือง) */
         .side-menu-panel {
             position: fixed;
             top: 5.5rem;
@@ -157,7 +168,9 @@
             padding: 1.5rem 1rem;
             z-index: 900;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+            /* ปิดการใช้ animation fadeInDown เพื่อไม่ให้เมนูกระพริบ/จางซ้ำ */
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .side-menu-list {
@@ -165,6 +178,7 @@
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
+            position: relative;
         }
 
         .side-menu-list a {
@@ -179,19 +193,43 @@
             transition: all 0.3s ease;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid transparent;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
         }
 
         .side-menu-list a i {
             color: var(--gold-primary);
             width: 20px;
             text-align: center;
+            transition: transform 0.3s ease;
         }
 
-        .side-menu-list a:hover, .side-menu-list a.active {
+        .side-menu-list a:hover {
+            color: #fff;
+            background: rgba(212, 175, 55, 0.08);
+            border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        /* แถบไฮไลต์สีเหลืองสำหรับ Active State ให้ความรู้สึกเลื่อนลงมา */
+        .side-menu-list a.active {
             color: #fff;
             background: rgba(212, 175, 55, 0.15);
             border-color: rgba(212, 175, 55, 0.3);
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+        }
+
+        .side-menu-list a.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gold-primary);
+            box-shadow: 0 0 10px var(--gold-primary);
+            border-radius: 4px 0 0 4px;
+            animation: slideGoldIndicator 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         /* PAGE HEADER & MAIN CONTENT WRAPPER */
@@ -691,7 +729,7 @@
 
     <div class="ambient-glow"></div>
 
-    <!-- Navigation Bar (ปรับลูกศรย้อนกลับและขนาดตรงกับหน้าแรก) -->
+    <!-- Navigation Bar -->
     <nav>
         <a href="index.html" class="logo"><i class="fa-solid fa-arrow-left"></i> NATTAPHUM</a>
 
@@ -700,7 +738,7 @@
         </div>
     </nav>
 
-    <!-- Side Menu Panel (เมนูด้านซ้าย) -->
+    <!-- Side Menu Panel -->
     <aside class="side-menu-panel">
         <ul class="side-menu-list">
             <li>
