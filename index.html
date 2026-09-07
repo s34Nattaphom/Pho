@@ -213,7 +213,7 @@
             background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 100%);
         }
 
-        /* PERSONAL INFO & GPAX GRID (ส่วนที่ปรับปรุงใหม่) */
+        /* PERSONAL INFO & GPAX GRID */
         .info-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -402,19 +402,8 @@
             <i class="fa-solid fa-folder-open"></i> เข้าชมแฟ้มสะสมผลงานจริง
         </a>
 
-        <!-- PERSONAL INFO & GPAX GRID (การ์ดข้อมูลส่วนตัวแทรกตรงเส้นสีแดง) -->
+        <!-- PERSONAL INFO & GPAX GRID (สลับตำแหน่งโรงเรียนและ GPAX แล้ว) -->
         <div class="info-grid">
-            <!-- GPAX -->
-            <div class="info-card">
-                <div class="info-icon">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-                <div class="info-details">
-                    <span class="info-label">เกรดเฉลี่ยสะสม (GPAX)</span>
-                    <span class="gpax-value-text" id="gpaxCounter">0.00</span>
-                </div>
-            </div>
-
             <!-- School & Program -->
             <div class="info-card">
                 <div class="info-icon">
@@ -424,6 +413,17 @@
                     <span class="info-label">สถานศึกษา</span>
                     <span class="info-value">โรงเรียนบ้านบึง "อุตสาหกรรมนุเคราะห์"</span>
                     <span class="info-subtext">สายการเรียน วิทย์-คณิตคอมพิวเตอร์</span>
+                </div>
+            </div>
+
+            <!-- GPAX -->
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="info-details">
+                    <span class="info-label">เกรดเฉลี่ยสะสม (GPAX)</span>
+                    <span class="gpax-value-text" id="gpaxCounter">0.00</span>
                 </div>
             </div>
 
@@ -476,11 +476,11 @@
         <p>© 2026 นายณัฐภูมิ เฉวียงวาท | Designed for University Admissions Portfolio</p>
     </footer>
 
-    <!-- JavaScript เฉพาะสำหรับ GPAX (0.00 -> 3.73) ส่วนข้อมูลอื่นแสดงทันที -->
+    <!-- JavaScript สำหรับนับ GPAX เป็น 3.68 -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const counterElement = document.getElementById('gpaxCounter');
-            const targetGPA = 3.73;
+            const targetGPA = 3.68;
             const duration = 1800; 
             const steps = 60;
             const stepTime = duration / steps;
@@ -505,3 +505,4 @@
     </script>
 </body>
 </html>
+
