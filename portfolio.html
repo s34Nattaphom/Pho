@@ -413,7 +413,7 @@
 
         .modal-image-area {
             width: 100%;
-            min-height: 380px;
+            min-height: 280px;
             background-color: rgba(10, 13, 20, 0.95);
             display: flex;
             align-items: center;
@@ -427,34 +427,28 @@
         .modal-image-area img {
             width: 100%;
             height: auto;
-            max-height: 550px;
-            object-fit: contain;
-        }
-
-        .modal-image-area iframe {
-            width: 100%;
-            height: 480px;
-            border: none;
+            max-height: 500px;
+            object-fit: cover;
         }
 
         .modal-placeholder-icon {
-            font-size: 5rem;
+            font-size: 4.5rem;
             color: var(--gold-primary);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 14px;
-            padding: 4rem 1rem;
+            padding: 3.5rem 1rem;
         }
 
         .modal-placeholder-icon span {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
             font-weight: 300;
         }
 
         .modal-body {
-            padding: 2.8rem 3.5rem 3.5rem;
+            padding: 2.5rem 3.5rem 3.5rem;
             flex-grow: 1;
         }
 
@@ -478,9 +472,9 @@
 
         .modal-description {
             color: var(--text-muted);
-            font-size: 1.08rem;
+            font-size: 1.05rem;
             line-height: 1.85;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             font-weight: 300;
             white-space: pre-line;
         }
@@ -493,6 +487,7 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 1.8rem;
             border-radius: 16px;
+            margin-bottom: 2rem;
         }
 
         .detail-item h4 {
@@ -507,27 +502,86 @@
             color: #fff;
         }
 
-        /* ปุ่ม ลิงก์เข้าชมผลงานจริง */
-        .modal-link-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 2rem;
-            padding: 0.8rem 2rem;
-            background: linear-gradient(135deg, var(--gold-primary), #a6810a);
-            color: #0b0d14;
-            font-weight: 600;
-            border-radius: 30px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
-            font-size: 0.98rem;
+        /* SECTIONS INSIDE MODAL (ส่วนต่อขยายด้านล่าง) */
+        .modal-section {
+            margin-top: 2.2rem;
+            padding-top: 1.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .modal-link-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.55);
-            color: #000;
+        .modal-section-title {
+            font-size: 1.25rem;
+            color: var(--gold-primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-section-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .modal-section-list li {
+            color: var(--text-main);
+            font-size: 0.98rem;
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .modal-section-list li i {
+            color: var(--gold-primary);
+            margin-top: 4px;
+            font-size: 0.85rem;
+        }
+
+        .tech-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+        }
+
+        .tech-badge {
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid var(--border-gold);
+            color: var(--gold-light);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .gallery-img-item {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gallery-img-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-img-item:hover img {
+            transform: scale(1.05);
         }
 
         footer {
@@ -559,10 +613,6 @@
 
             .modal-details-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .modal-image-area iframe {
-                height: 320px;
             }
         }
     </style>
@@ -601,19 +651,21 @@
     <!-- Portfolio Grid -->
     <section class="portfolio-grid" id="portfolioDeck">
 
-        <!-- ตัวอย่าง: แนบลิงก์เว็บไซต์ใน data-link="https://nattaphom.github.io" หรือใส่รูปภาพใน data-img="portfolio-preview.jpg" -->
+        <!-- 1. PERSONAL PORTFOLIO WEBSITE -->
         <div class="portfolio-item projects" onclick="openModal(this)"
              data-title="Personal Portfolio Website"
              data-tag="Project / Web Development"
-             data-desc="พัฒนาเว็บไซต์แฟ้มสะสมผลงานด้วย HTML5, CSS3, และ JavaScript โฮสต์บน GitHub Pages เน้นดีไซน์โมเดิร์น Luxury Glassmorphism พร้อมระบบตอบสนองเต็มรูปแบบ (Responsive Design)"
+             data-desc="เว็บไซต์แฟ้มสะสมผลงานส่วนตัว ออกแบบและพัฒนาขึ้นเพื่อนำเสนอประวัติการศึกษา โครงงาน และกิจกรรมทางด้านเทคโนโลยี พัฒนาโครงสร้างด้วย HTML5, CSS3 และ JavaScript โฮสต์บนระบบ GitHub Pages เน้นดีไซน์ Luxury Glassmorphism พร้อมรองรับการแสดงผลทุกหน้าจอ (Responsive Design)"
              data-img="" 
-             data-link="https://nattaphom.github.io"
+             data-features="ออกแบบสไตล์ Luxury Glassmorphic ผสมผสานความหรูหราและเรียบหรู|มีระบบตัวกรองผลงาน (Category Filter) พร้อมเอฟเฟกต์ 3D Lay-Down|ระบบหน้าต่าง Pop-up แสดงรายละเอียดผลงานแบบใกล้เคียงเต็มจอ (Near Full-Screen Modal)|รองรับการแสดงผลบนสมาร์ตโฟน แท็บเล็ต และคอมพิวเตอร์อย่างสมบูรณ์"
+             data-tech="HTML5, CSS3, JavaScript, GitHub Pages, FontAwesome"
+             data-gallery=""
              data-icon="fa-laptop-code"
              data-date="2026"
              data-category="โครงงาน / โปรเจกต์">
             <div class="item-img">
                 <i class="fa-solid fa-laptop-code"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกดูรายละเอียดเพิ่มเติม</div>
+                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
             </div>
             <div class="item-content">
                 <span class="item-tag">Project / Web Development</span>
@@ -622,18 +674,21 @@
             </div>
         </div>
 
+        <!-- 2. WORKSHOP K-ENGINEERING -->
         <div class="portfolio-item workshops" onclick="openModal(this)"
              data-title="K-Engineering World Tour & Workshop"
              data-tag="Workshop / Engineering"
-             data-desc="เข้าร่วมการอบรมเชิงปฏิบัติการด้านวิศวกรรมคอมพิวเตอร์ ปัญญาประดิษฐ์ (AI) และระบบอินเทอร์เน็ตของทุกสิ่ง (IoT) รวมถึงการศึกษาพื้นฐาน Cybersecurity และการต่อใช้งานเซนเซอร์เบื้องต้น"
+             data-desc="การเข้าร่วมกิจกรรมอบรมเชิงปฏิบัติการทางด้านวิศวกรรมคอมพิวเตอร์และเทคโนโลยีปัญญาประดิษฐ์ (AI) ณ คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง ได้เรียนรู้หลักการทำงานของฮาร์ดแวร์ บอร์ดไมโครคอนโทรลเลอร์ เซนเซอร์ และระบบความปลอดภัยทางไซเบอร์เบื้องต้น"
              data-img="" 
-             data-link=""
+             data-features="ศึกษาโครงสร้างพื้นฐานระบบ Internet of Things (IoT) และระบบควบคุมอัตโนมัติ|เวิร์กช็อปปฏิบัติการต่อใช้งานบอร์ดสมองกลและเขียนโปรแกรมควบคุมเซนเซอร์|เรียนรู้ทักษะความมั่นคงปลอดภัยทางไซเบอร์ (Cybersecurity) ในชีวิตประจำวัน|รับฟังบรรยายแนะแนวการศึกษาต่อระดับอุดมศึกษาในสายวิศวกรรมศาสตร์"
+             data-tech="IoT, Microcontroller, Sensors, AI Fundamentals, Cybersecurity"
+             data-gallery=""
              data-icon="fa-microchip"
              data-date="2025 - 2026"
              data-category="การอบรม / กิจกรรม">
             <div class="item-img">
                 <i class="fa-solid fa-microchip"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกดูรายละเอียดเพิ่มเติม</div>
+                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
             </div>
             <div class="item-content">
                 <span class="item-tag">Workshop / Engineering</span>
@@ -642,18 +697,21 @@
             </div>
         </div>
 
+        <!-- 3. CERTIFICATE COMPUTER SCIENCE -->
         <div class="portfolio-item certificates" onclick="openModal(this)"
              data-title="Computer Science & Cyber Fundamentals"
              data-tag="Certificate"
-             data-desc="วุฒิบัตรผ่านการอบรมทักษะพื้นฐานด้านวิทยาการคอมพิวเตอร์ การคิดเชิงคำนวณ (Computational Thinking) และความมั่นคงปลอดภัยทางไซเบอร์"
+             data-desc="วุฒิบัตรการผ่านการทดสอบอบรมความรู้พื้นฐานด้านวิทยาการคอมพิวเตอร์ การคิดเชิงคำนวณ (Computational Thinking) กระบวนการแก้ปัญหาเชิงตรรกะ และหลักการรักษาความปลอดภัยของข้อมูลในระบบดิจิทัล"
              data-img="" 
-             data-link=""
+             data-features="ผ่านเกณฑ์การประเมินความรู้ด้านการคิดเชิงคำนวณและการแก้ปัญหาเชิงอัลกอริทึม|ผ่านการอบรมหลักสูตรความตระหนักรู้ด้านภัยคุกคามทางไซเบอร์และการคุ้มครองข้อมูลส่วนบุคคล|ได้รับวุฒิบัตรรับรองจากสถาบันการศึกษาเพื่อใช้ประกอบแฟ้มสะสมผลงาน"
+             data-tech="Computational Thinking, Logic & Algorithm, Data Privacy, Cybersecurity"
+             data-gallery=""
              data-icon="fa-award"
              data-date="2025"
              data-category="เกียรติบัตร / วุฒิบัตร">
             <div class="item-img">
                 <i class="fa-solid fa-award"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกดูรายละเอียดเพิ่มเติม</div>
+                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
             </div>
             <div class="item-content">
                 <span class="item-tag">Certificate</span>
@@ -662,18 +720,21 @@
             </div>
         </div>
 
+        <!-- 4. COMPUTER HARDWARE ANALYSIS -->
         <div class="portfolio-item projects" onclick="openModal(this)"
              data-title="Computer Systems & Hardware Analysis"
              data-tag="Project / Hardware"
-             data-desc="การศึกษาและวิเคราะห์สถาปัตยกรรมฮาร์ดแวร์คอมพิวเตอร์ การเปรียบเทียบประสิทธิภาพสเปกการประมวลผล GPU และ CPU ความเข้ากันได้ของเมนบอร์ดและหน่วยความจำ"
+             data-desc="การศึกษา เปรียบเทียบ และวิเคราะห์ประสิทธิภาพของชิ้นส่วนคอมพิวเตอร์ (Hardware Architecture) ทั้งหน่วยประมวลผลกลาง (CPU) หน่วยประมวลผลกราฟิก (GPU) ชิปเซ็ตเมนบอร์ด และระบบกักเก็บข้อมูลแบบ NVMe PCIe SSD เพื่อความเข้าใจในการเลือกใช้ทรัพยากรฮาร์ดแวร์ให้เหมาะสมกับงานประเภทต่างๆ"
              data-img="" 
-             data-link=""
+             data-features="เปรียบเทียบสเปกการทำงานของชิปประมวลผลรุ่นสถาปัตยกรรมต่างยุคสมัย|วิเคราะห์ความเร็วการรับส่งข้อมูลระหว่าง NVMe PCIe SSD กับ SSD รูปแบบเดิม|ศึกษาความเข้ากันได้ของเมนบอร์ดและหน่วยความจำแรม (RAM Bus Speeds)|จัดทำสรุปรายงานสเปกคอมพิวเตอร์เพื่อการประมวลผลระดับสูง"
+             data-tech="CPU/GPU Benchmarking, NVMe Architecture, Motherboard Compatibility, PC Building"
+             data-gallery=""
              data-icon="fa-server"
              data-date="2025 - 2026"
              data-category="โครงงาน / สถาปัตยกรรมคอมพิวเตอร์">
             <div class="item-img">
                 <i class="fa-solid fa-server"></i>
-                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกดูรายละเอียดเพิ่มเติม</div>
+                <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
             </div>
             <div class="item-content">
                 <span class="item-tag">Project / Hardware</span>
@@ -684,18 +745,21 @@
 
     </section>
 
-    <!-- Near Full-Screen Modal Popup -->
+    <!-- Near Full-Screen Modal Popup (ป๊อปอัปแสดงผล) -->
     <div class="modal-overlay" id="cardModal" onclick="closeModalOnOuterClick(event)">
         <div class="modal-container">
             <button class="modal-close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
             
+            <!-- รูปภาพหลักด้านบน -->
             <div class="modal-image-area" id="modalImageContainer"></div>
 
+            <!-- รายละเอียดเนื้อหาใน Modal (เลื่อนลงด้านล่างได้) -->
             <div class="modal-body">
                 <span class="modal-tag" id="modalTag">TAG NAME</span>
                 <h2 class="modal-title" id="modalTitle">Project Title</h2>
                 <p class="modal-description" id="modalDesc">Project description text goes here...</p>
 
+                <!-- ตารางสรุปข้อมูล -->
                 <div class="modal-details-grid">
                     <div class="detail-item">
                         <h4>หมวดหมู่ (Category)</h4>
@@ -707,8 +771,24 @@
                     </div>
                 </div>
 
-                <!-- ส่วนแสดงปุ่มเข้าชมเว็บไซต์ (จะแสดงอัตโนมัติหากมี data-link) -->
-                <div id="modalLinkContainer"></div>
+                <!-- หัวข้อเพิ่มเติม 1: ฟีเจอร์เด่น / จุดเน้น -->
+                <div class="modal-section" id="modalFeaturesSection">
+                    <h3 class="modal-section-title"><i class="fa-solid fa-circle-check"></i> จุดเด่นและเนื้อหาสำคัญ (Highlights)</h3>
+                    <ul class="modal-section-list" id="modalFeaturesList"></ul>
+                </div>
+
+                <!-- หัวข้อเพิ่มเติม 2: เครื่องมือ / เทคโนโลยี -->
+                <div class="modal-section" id="modalTechSection">
+                    <h3 class="modal-section-title"><i class="fa-solid fa-layer-group"></i> เทคโนโลยีและทักษะที่เกี่ยวข้อง (Tech Stack & Skills)</h3>
+                    <div class="tech-tags-container" id="modalTechContainer"></div>
+                </div>
+
+                <!-- หัวข้อเพิ่มเติม 3: รูปภาพประกอบเพิ่มเติม (ถ้ามี) -->
+                <div class="modal-section" id="modalGallerySection" style="display: none;">
+                    <h3 class="modal-section-title"><i class="fa-solid fa-images"></i> รูปภาพประกอบเพิ่มเติม (Gallery)</h3>
+                    <div class="gallery-grid" id="modalGalleryGrid"></div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -750,7 +830,7 @@
             });
         }
 
-        // Open Near Full-Screen Modal
+        // Open Modal (จบเนื้อหาทั้งหมดภายในป๊อปอัปเดียว)
         function openModal(cardElement) {
             if (cardElement.classList.contains('inactive')) return;
 
@@ -758,10 +838,14 @@
             const tag = cardElement.getAttribute('data-tag');
             const desc = cardElement.getAttribute('data-desc');
             const imgSrc = cardElement.getAttribute('data-img');
-            const linkSrc = cardElement.getAttribute('data-link');
             const iconClass = cardElement.getAttribute('data-icon');
             const date = cardElement.getAttribute('data-date');
             const category = cardElement.getAttribute('data-category');
+            
+            // ข้อมูลเนื้อหาเพิ่มเติมด้านล่าง
+            const featuresRaw = cardElement.getAttribute('data-features') || '';
+            const techRaw = cardElement.getAttribute('data-tech') || '';
+            const galleryRaw = cardElement.getAttribute('data-gallery') || '';
 
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalTag').innerText = tag;
@@ -769,34 +853,60 @@
             document.getElementById('modalDate').innerText = date || '-';
             document.getElementById('modalCategory').innerText = category || '-';
 
+            // 1. แสดงรูปภาพปกหลักใน Modal ด้านบน
             const imgContainer = document.getElementById('modalImageContainer');
-            const linkContainer = document.getElementById('modalLinkContainer');
-
-            // 1. จัดการส่วนแสดงรูปภาพ / พรีวิวเว็บ
             if (imgSrc && imgSrc.trim() !== '') {
                 imgContainer.innerHTML = `<img src="${imgSrc}" alt="${title}">`;
-            } else if (linkSrc && linkSrc.trim() !== '') {
-                // หากใส่ลิงก์ไว้แต่ไม่ได้ระบุรูปภาพ จะดึงหน้าเว็บขึ้นมา พรีวิวสด (Interactive Preview)
-                imgContainer.innerHTML = `<iframe src="${linkSrc}" title="${title}"></iframe>`;
             } else {
-                // แสดง ไอคอน แทนหากไม่ได้ใส่รูปภาพ/ลิงก์
                 imgContainer.innerHTML = `
                     <div class="modal-placeholder-icon">
                         <i class="fa-solid ${iconClass || 'fa-certificate'}"></i>
-                        <span>(ยังไม่ได้แนบรูป/ภาพเกียรติบัตร/ผลงาน)</span>
+                        <span>(สามารถแนบรูปภาพผลงาน / เกียรติบัตร เพิ่มเติมได้ใน data-img)</span>
                     </div>
                 `;
             }
 
-            // 2. จัดการส่วนปุ่มกดเข้าชมเว็บไซต์จริง (Live Demo Link)
-            if (linkSrc && linkSrc.trim() !== '') {
-                linkContainer.innerHTML = `
-                    <a href="${linkSrc}" target="_blank" class="modal-link-btn">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i> เข้าชมเว็บไซต์ / ผลงานจริง
-                    </a>
-                `;
+            // 2. แสดงรายการจุดเด่น (Features / Highlights)
+            const featuresList = document.getElementById('modalFeaturesList');
+            featuresList.innerHTML = '';
+            if (featuresRaw.trim() !== '') {
+                const featuresArray = featuresRaw.split('|');
+                featuresArray.forEach(item => {
+                    featuresList.innerHTML += `<li><i class="fa-solid fa-check-circle"></i> <span>${item.trim()}</span></li>`;
+                });
+                document.getElementById('modalFeaturesSection').style.display = 'block';
             } else {
-                linkContainer.innerHTML = '';
+                document.getElementById('modalFeaturesSection').style.display = 'none';
+            }
+
+            // 3. แสดงแฮชแท็ก/เทคโนโลยี (Tech Stack)
+            const techContainer = document.getElementById('modalTechContainer');
+            techContainer.innerHTML = '';
+            if (techRaw.trim() !== '') {
+                const techArray = techRaw.split(',');
+                techArray.forEach(item => {
+                    techContainer.innerHTML += `<span class="tech-badge">${item.trim()}</span>`;
+                });
+                document.getElementById('modalTechSection').style.display = 'block';
+            } else {
+                document.getElementById('modalTechSection').style.display = 'none';
+            }
+
+            // 4. แสดงรูปแกลเลอรีเพิ่มเติม (ถ้ามีรูปมากกว่า 1 รูป ให้ใช้เครื่องหมาย comma แยกรูป)
+            const galleryGrid = document.getElementById('modalGalleryGrid');
+            galleryGrid.innerHTML = '';
+            if (galleryRaw.trim() !== '') {
+                const galleryArray = galleryRaw.split(',');
+                galleryArray.forEach(img => {
+                    galleryGrid.innerHTML += `
+                        <div class="gallery-img-item">
+                            <img src="${img.trim()}" alt="ภาพประกอบ">
+                        </div>
+                    `;
+                });
+                document.getElementById('modalGallerySection').style.display = 'block';
+            } else {
+                document.getElementById('modalGallerySection').style.display = 'none';
             }
 
             const modal = document.getElementById('cardModal');
@@ -808,9 +918,6 @@
             const modal = document.getElementById('cardModal');
             modal.classList.remove('active');
             document.body.style.overflow = '';
-            
-            // ล้างการโหลด iframe ป้องกันการเล่นต่อในเบื้องหลัง
-            document.getElementById('modalImageContainer').innerHTML = '';
         }
 
         function closeModalOnOuterClick(event) {
@@ -827,3 +934,4 @@
     </script>
 </body>
 </html>
+
