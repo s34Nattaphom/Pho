@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Pakpong Phongthaophong</title>
+    <title>Portfolio | Nattaphum</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -100,13 +100,14 @@
         .logo {
             font-size: 1.25rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #fff 30%, var(--gold-primary));
+            background: linear-gradient(135deg, #fff 45%, var(--gold-primary) 55%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 10px;
+            letter-spacing: 0.5px;
         }
 
         .nav-links {
@@ -205,7 +206,7 @@
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
         }
 
-        /* PORTFOLIO GRID (ปรับแต่งเป็นแบบแนวตั้ง ทรงสูง) */
+        /* PORTFOLIO GRID */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
@@ -252,7 +253,6 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.35);
         }
 
-        /* ปรับส่วนรูปภาพในการ์ดให้เป็นแนวตั้งสัดส่วน 4:3 */
         .item-img {
             width: 100%;
             aspect-ratio: 4 / 3;
@@ -390,7 +390,6 @@
             transform: scale(1) translateY(0);
         }
 
-        /* ปรับแต่งปุ่มปิด Modal ให้เป็นวงกลมไม่ถูกบีบ */
         .modal-close-btn {
             position: sticky;
             top: 1.2rem;
@@ -492,7 +491,6 @@
             white-space: pre-line;
         }
 
-        /* จัดแต่งส่วนหมวดหมู่เดี่ยว (ลบวันที่ออก) */
         .modal-category-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -515,7 +513,6 @@
             font-weight: 500;
         }
 
-        /* SECTIONS INSIDE MODAL */
         .modal-section {
             margin-top: 2rem;
             padding-top: 1.8rem;
@@ -631,9 +628,9 @@
 
     <div class="ambient-glow"></div>
 
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar (อัปเดตชื่อโลโก้เป็น NATTAPHUM ตามหน้าแรก) -->
     <nav>
-        <a href="index.html" class="logo"><i class="fa-solid fa-arrow-left"></i> PAKPONG.</a>
+        <a href="index.html" class="logo"><i class="fa-solid fa-arrow-left"></i> NATTAPHUM</a>
         <ul class="nav-links">
             <li><a href="index.html">หน้าหลัก</a></li>
             <li><a href="portfolio.html" class="active">ผลงานทั้งหมด</a></li>
@@ -641,14 +638,14 @@
         </ul>
 
         <div class="nav-profile-wrapper">
-            <img src="my02.jpg" alt="นายปกป้อง พงษ์เฒ่าพงษ์" class="nav-profile-img">
+            <img src="my02.jpg" alt="Profile" class="nav-profile-img">
         </div>
     </nav>
 
     <!-- Header & Filter Buttons -->
     <header class="page-header">
         <h1>แฟ้มสะสมผลงาน <span class="gold-text">(Portfolio)</span></h1>
-        <p>รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยีของ นายปกป้อง พงษ์เฒ่าพงษ์</p>
+        <p>รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยี</p>
 
         <div class="filter-container">
             <button class="filter-btn active" onclick="filterPortfolio('all', event)">ทั้งหมด</button>
@@ -658,7 +655,7 @@
         </div>
     </header>
 
-    <!-- Portfolio Grid (ปรับปรุงการ์ดแนวตั้ง ทรงสูงเรียบหรู) -->
+    <!-- Portfolio Grid -->
     <section class="portfolio-grid" id="portfolioDeck">
 
         <!-- 1. PERSONAL PORTFOLIO WEBSITE -->
@@ -905,39 +902,33 @@
 
     </section>
 
-    <!-- Near Full-Screen Modal Popup -->
+    <!-- Modal Popup -->
     <div class="modal-overlay" id="cardModal" onclick="closeModalOnOuterClick(event)">
         <div class="modal-container">
             <button class="modal-close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
             
-            <!-- รูปภาพหลักด้านบน -->
             <div class="modal-image-area" id="modalImageContainer"></div>
 
-            <!-- รายละเอียดเนื้อหาใน Modal -->
             <div class="modal-body">
                 <span class="modal-tag" id="modalTag">TAG NAME</span>
                 <h2 class="modal-title" id="modalTitle">Project Title</h2>
                 <p class="modal-description" id="modalDesc">Project description text goes here...</p>
 
-                <!-- กล่องหมวดหมู่ (ลบส่วนวันที่ออกแล้ว) -->
                 <div class="modal-category-box">
                     <h4>หมวดหมู่ (CATEGORY)</h4>
                     <p id="modalCategory">-</p>
                 </div>
 
-                <!-- หัวข้อเพิ่มเติม 1: ฟีเจอร์เด่น / จุดเน้น -->
                 <div class="modal-section" id="modalFeaturesSection">
                     <h3 class="modal-section-title"><i class="fa-solid fa-circle-check"></i> จุดเด่นและเนื้อหาสำคัญ (Highlights)</h3>
                     <ul class="modal-section-list" id="modalFeaturesList"></ul>
                 </div>
 
-                <!-- หัวข้อเพิ่มเติม 2: เครื่องมือ / เทคโนโลยี -->
                 <div class="modal-section" id="modalTechSection">
                     <h3 class="modal-section-title"><i class="fa-solid fa-layer-group"></i> เทคโนโลยีและทักษะที่เกี่ยวข้อง (Tech Stack & Skills)</h3>
                     <div class="tech-tags-container" id="modalTechContainer"></div>
                 </div>
 
-                <!-- หัวข้อเพิ่มเติม 3: รูปภาพประกอบเพิ่มเติม (Gallery) -->
                 <div class="modal-section" id="modalGallerySection" style="display: none;">
                     <h3 class="modal-section-title"><i class="fa-solid fa-images"></i> รูปภาพเกียรติบัตร / กิจกรรมเพิ่มเติม (Gallery)</h3>
                     <div class="gallery-grid" id="modalGalleryGrid"></div>
@@ -948,7 +939,7 @@
     </div>
 
     <footer>
-        <p>© 2026 นายปกป้อง พงษ์เฒ่าพงษ์ | Designed for University Admissions Portfolio</p>
+        <p>© 2026 NATTAPHUM | Designed for University Admissions Portfolio</p>
     </footer>
 
     <script>
@@ -962,7 +953,6 @@
             });
         });
 
-        // Filter Portfolio
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.portfolio-item');
             const buttons = document.querySelectorAll('.filter-btn');
@@ -984,7 +974,6 @@
             });
         }
 
-        // Open Modal
         function openModal(cardElement) {
             if (cardElement.classList.contains('inactive')) return;
 
@@ -1004,7 +993,6 @@
             document.getElementById('modalDesc').innerText = desc;
             document.getElementById('modalCategory').innerText = category || '-';
 
-            // 1. แสดงรูปภาพปกหลักใน Modal ด้านบน
             const imgContainer = document.getElementById('modalImageContainer');
             if (imgSrc && imgSrc.trim() !== '') {
                 imgContainer.innerHTML = `<img src="${imgSrc}" alt="${title}">`;
@@ -1017,7 +1005,6 @@
                 `;
             }
 
-            // 2. แสดงรายการจุดเด่น (Features / Highlights)
             const featuresList = document.getElementById('modalFeaturesList');
             featuresList.innerHTML = '';
             if (featuresRaw.trim() !== '') {
@@ -1030,7 +1017,6 @@
                 document.getElementById('modalFeaturesSection').style.display = 'none';
             }
 
-            // 3. แสดงแฮชแท็ก/เทคโนโลยี (Tech Stack)
             const techContainer = document.getElementById('modalTechContainer');
             techContainer.innerHTML = '';
             if (techRaw.trim() !== '') {
@@ -1043,7 +1029,6 @@
                 document.getElementById('modalTechSection').style.display = 'none';
             }
 
-            // 4. แสดงรูปแกลเลอรีเพิ่มเติม (ถ้ามี)
             const galleryGrid = document.getElementById('modalGalleryGrid');
             galleryGrid.innerHTML = '';
             if (galleryRaw.trim() !== '') {
