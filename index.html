@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nattaphum Chawiangwat | Academic Portfolio</title>
+    <title>NATTAPHUM | Academic Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -12,12 +12,13 @@
     <style>
         :root {
             --bg-color: #0b0d14;
-            --card-bg: rgba(22, 27, 38, 0.75);
-            --border-gold: rgba(212, 175, 55, 0.25);
+            --card-bg: rgba(20, 25, 36, 0.85);
+            --card-border: rgba(255, 255, 255, 0.08);
             --gold-primary: #d4af37;
-            --gold-light: #f3e5ab;
+            --gold-light: #f5e6ab;
             --text-main: #f0f4f8;
-            --text-muted: #94a3b8;
+            --text-muted: #8b9bb4;
+            --sidebar-width: 280px;
         }
 
         * {
@@ -26,348 +27,377 @@
             box-sizing: border-box;
             font-family: 'Prompt', sans-serif;
             scroll-behavior: smooth;
-            -webkit-font-smoothing: antialiased;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            overflow-x: hidden;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* ANIMATIONS */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes floatProfile {
-            0% { transform: translateY(0); box-shadow: 0 0 25px rgba(212, 175, 55, 0.3); }
-            50% { transform: translateY(-8px); box-shadow: 0 0 40px rgba(212, 175, 55, 0.5); }
-            100% { transform: translateY(0); box-shadow: 0 0 25px rgba(212, 175, 55, 0.3); }
-        }
-
-        @keyframes pulseGlow {
-            0% { opacity: 0.5; transform: translateX(-50%) scale(0.95); }
-            100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
-        }
-
-        /* BACKGROUND GLOW */
+        /* Ambient Glow Effect */
         .ambient-glow {
             position: fixed;
-            width: 850px;
-            height: 850px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(0,0,0,0) 70%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(0,0,0,0) 70%);
             top: -200px;
             left: 50%;
             transform: translateX(-50%);
             z-index: -1;
             pointer-events: none;
-            animation: pulseGlow 6s ease-in-out infinite alternate;
         }
 
-        /* NAVIGATION BAR */
-        nav {
+        /* Top Header */
+        header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1.2rem 6%;
-            background: rgba(11, 13, 20, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             position: fixed;
-            width: 100%;
             top: 0;
-            z-index: 1000;
+            width: 100%;
+            z-index: 900;
+            background: rgba(11, 13, 20, 0.85);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .menu-toggle-btn {
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle-btn:hover {
+            background: var(--gold-primary);
+            color: #0b0d14;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
         }
 
         .logo {
             font-size: 1.25rem;
             font-weight: 700;
-            letter-spacing: 1.5px;
-            background: linear-gradient(135deg, #fff 30%, var(--gold-primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            color: #fff;
             text-decoration: none;
         }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
+        /* Left Popup Sidebar Menu (Drawer) */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
         }
 
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+        .sidebar-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--gold-primary);
-        }
-
-        /* HERO SECTION */
-        .hero {
+        .side-popup-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100%;
+            background: rgba(15, 19, 29, 0.98);
+            border-right: 1px solid rgba(212, 175, 55, 0.25);
+            z-index: 999;
+            padding: 2rem 1.5rem;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .side-popup-menu.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+        }
+
+        .nav-menu-list {
+            list-style: none;
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .nav-menu-item a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 0.9rem 1.2rem;
+            color: var(--text-main);
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 0.98rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
+        }
+
+        .nav-menu-item a i {
+            color: var(--gold-primary);
+            font-size: 1.1rem;
+            width: 22px;
             text-align: center;
-            padding: 8rem 1.5rem 3rem;
-            max-width: 1100px;
+        }
+
+        .nav-menu-item a:hover, .nav-menu-item a.active {
+            background: rgba(212, 175, 55, 0.12);
+            border-color: rgba(212, 175, 55, 0.3);
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .sidebar-footer {
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1050px;
             margin: 0 auto;
-            width: 100%;
+            padding: 7rem 1.5rem 4rem;
+        }
+
+        /* Hero Profile Section */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
         }
 
         .profile-img-container {
-            position: relative;
-            margin-bottom: 1.2rem;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 1.2rem;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--gold-primary), rgba(212, 175, 55, 0.2));
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
         }
 
-        .profile-img {
-            width: 135px;
-            height: 135px;
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--gold-primary);
-            animation: floatProfile 5s ease-in-out infinite;
+            border: 3px solid var(--bg-color);
         }
 
-        .badge-dek70 {
+        .badge-dek {
             display: inline-block;
-            background: rgba(212, 175, 55, 0.12);
-            border: 1px solid var(--border-gold);
-            color: var(--gold-light);
-            padding: 0.35rem 1.1rem;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold-primary);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 0.35rem 1rem;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
-            letter-spacing: 1.2px;
+            letter-spacing: 1px;
             margin-bottom: 1rem;
-            text-transform: uppercase;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
         }
 
-        .hero h1 {
-            font-size: 2.3rem;
+        .hero-name {
+            font-size: 2rem;
             font-weight: 700;
+            color: #fff;
             margin-bottom: 0.8rem;
-            line-height: 1.3;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
         }
 
-        .gold-text {
-            background: linear-gradient(135deg, #ffffff 10%, var(--gold-primary) 70%, var(--gold-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
+        .hero-bio {
             color: var(--text-muted);
-            font-size: 0.98rem;
-            max-width: 680px;
-            line-height: 1.7;
+            font-size: 0.95rem;
+            max-width: 650px;
+            margin: 0 auto 1.8rem;
             font-weight: 300;
-            margin-bottom: 1.8rem;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+            line-height: 1.7;
         }
 
-        .cta-btn {
+        .btn-portfolio {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(135deg, #d4af37 0%, #a6810a 100%);
+            background: linear-gradient(135deg, #d4af37, #a6810a);
             color: #0b0d14;
-            padding: 0.85rem 2rem;
+            font-weight: 600;
+            padding: 0.75rem 1.8rem;
             border-radius: 30px;
             text-decoration: none;
-            font-weight: 600;
             font-size: 0.95rem;
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
         }
 
-        .cta-btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.5);
-            background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 100%);
+        .btn-portfolio:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.45);
         }
 
-        /* PERSONAL INFO & GPAX GRID */
+        /* Info Grid Cards */
         .info-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1.2rem;
-            width: 100%;
-            margin: 2.5rem 0 1rem;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+            margin-bottom: 2.5rem;
         }
 
         .info-card {
-            background: rgba(22, 27, 38, 0.85);
-            border: 1px solid var(--border-gold);
-            padding: 1.1rem 1.6rem;
-            border-radius: 18px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.4rem;
             display: flex;
             align-items: center;
             gap: 1.2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(212, 175, 55, 0.05);
-            transition: transform 0.35s ease, border-color 0.35s ease;
-            text-align: left;
+            backdrop-filter: blur(10px);
+            transition: border-color 0.3s, transform 0.3s;
         }
 
         .info-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--gold-primary);
-            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-2px);
         }
 
         .info-icon {
             width: 48px;
             height: 48px;
-            min-width: 48px;
-            background: rgba(212, 175, 55, 0.12);
-            border: 1px solid var(--border-gold);
-            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--gold-primary);
-            font-size: 1.25rem;
+            font-size: 1.2rem;
+            flex-shrink: 0;
         }
 
         .info-details {
             display: flex;
             flex-direction: column;
-            justify-content: center;
         }
 
         .info-label {
             font-size: 0.78rem;
             color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            font-weight: 500;
-            margin-bottom: 2px;
+            margin-bottom: 0.2rem;
+            font-weight: 400;
         }
 
         .info-value {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 600;
             color: #fff;
-            line-height: 1.35;
         }
 
-        .info-subtext {
-            font-size: 0.82rem;
-            color: var(--gold-light);
-            font-weight: 400;
-            margin-top: 1px;
+        .info-sub {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
         }
 
-        .gpax-value-text {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #ffffff 20%, var(--gold-light) 60%, var(--gold-primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-family: 'Prompt', sans-serif;
-            line-height: 1;
-        }
-
-        /* SKILL HIGHLIGHT CARDS */
+        /* Skill Cards Grid */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            width: 100%;
-            margin-top: 1.5rem;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.05s forwards;
+            gap: 1.2rem;
         }
 
         .skill-card {
             background: var(--card-bg);
-            border: 1px solid var(--border-gold);
-            padding: 1.8rem 1.4rem;
+            border: 1px solid var(--card-border);
             border-radius: 16px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            text-align: left;
-            transition: all 0.35s ease;
+            padding: 1.5rem 1.2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
         .skill-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--gold-primary);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.2);
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-4px);
         }
 
         .skill-icon {
-            font-size: 1.6rem;
             color: var(--gold-primary);
+            font-size: 1.5rem;
             margin-bottom: 1rem;
         }
 
-        .skill-card h3 {
-            font-size: 1.05rem;
+        .skill-title {
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
             color: #fff;
         }
 
-        .skill-card p {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            line-height: 1.6;
-            margin-bottom: 0;
-            font-weight: 300;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 850px) {
+        @media (max-width: 768px) {
             .info-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
             }
-
             .skills-grid {
                 grid-template-columns: 1fr;
-                gap: 1.2rem;
             }
-
-            .hero h1 {
-                font-size: 1.8rem;
+            .hero-name {
+                font-size: 1.6rem;
             }
         }
     </style>
@@ -376,35 +406,76 @@
 
     <div class="ambient-glow"></div>
 
-    <!-- Navigation Bar -->
-    <nav>
-        <a href="index.html" class="logo">NATTAPHUM</a>
-        <ul class="nav-links">
-            <li><a href="index.html" class="active">เกี่ยวกับผม</a></li>
-            <li><a href="portfolio.html">แฟ้มสะสมผลงาน</a></li>
-            <li><a href="portfolio.html#education">ประวัติการศึกษา</a></li>
-        </ul>
-    </nav>
+    <!-- Navigation Header with Left Menu Toggle Button -->
+    <header>
+        <div class="header-left">
+            <button class="menu-toggle-btn" id="openSidebar" aria-label="Open Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <a href="#" class="logo">NATTAPHUM</a>
+        </div>
+    </header>
 
-    <!-- Hero Main Content -->
-    <section class="hero">
-        <div class="profile-img-container">
-            <img src="my02.jpg" alt="นายณัฐภูมิ เฉวียงวาท" class="profile-img">
+    <!-- Overlay Background -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Left Pop-up Sliding Menu (Drawer) -->
+    <aside class="side-popup-menu" id="sidebarMenu">
+        <div>
+            <div class="sidebar-header">
+                <span class="sidebar-title"><i class="fa-solid fa-compass"></i> เมนูหลัก</span>
+                <button class="close-btn" id="closeSidebar"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <ul class="nav-menu-list">
+                <li class="nav-menu-item">
+                    <a href="#about" class="active" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-user"></i>
+                        <span>เกี่ยวกับผม</span>
+                    </a>
+                </li>
+                <li class="nav-menu-item">
+                    <a href="portfolio.html" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <span>แฟ้มสะสมผลงาน</span>
+                    </a>
+                </li>
+                <li class="nav-menu-item">
+                    <a href="portfolio.html#education" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>ประวัติการศึกษา</span>
+                    </a>
+                </li>
+            </ul>
         </div>
 
-        <span class="badge-dek70">DEK70 ACADEMIC PORTFOLIO</span>
+        <div class="sidebar-footer">
+            <p>© 2026 NATTAPHUM</p>
+        </div>
+    </aside>
 
-        <h1>สวัสดีครับ ผม <span class="gold-text">นายณัฐภูมิ เฉวียงวาท</span></h1>
+    <!-- Main Content -->
+    <main class="container">
 
-        <p>นักเรียนผู้มีความสนใจด้านสถาปัตยกรรมคอมพิวเตอร์ ระบบฮาร์ดแวร์ วิทยาการคอมพิวเตอร์ และการพัฒนาซอฟต์แวร์ เตรียมความพร้อมสำหรับการศึกษาต่อระดับอุดมศึกษา</p>
+        <!-- Hero Section -->
+        <section class="hero-section" id="about">
+            <div class="profile-img-container">
+                <img src="my02.jpg" alt="นายณัฐภูมิ เฉวียงเวท">
+            </div>
+            <div>
+                <span class="badge-dek">DEK70 ACADEMIC PORTFOLIO</span>
+            </div>
+            <h1 class="hero-name">สวัสดีครับ ผม นายณัฐภูมิ เฉวียงเวท</h1>
+            <p class="hero-bio">
+                นักเรียนผู้มีความสนใจด้านสถาปัตยกรรมคอมพิวเตอร์ ระบบฮาร์ดแวร์ วิทยาการคอมพิวเตอร์ และการพัฒนาซอฟต์แวร์ เตรียมความพร้อมสำหรับการศึกษาต่อระดับอุดมศึกษา
+            </p>
+            <a href="portfolio.html" class="btn-portfolio">
+                <i class="fa-solid fa-folder-open"></i> เข้าชมแฟ้มสะสมผลงานจริง
+            </a>
+        </section>
 
-        <a href="portfolio.html" class="cta-btn">
-            <i class="fa-solid fa-folder-open"></i> เข้าชมแฟ้มสะสมผลงานจริง
-        </a>
-
-        <!-- PERSONAL INFO & GPAX GRID (สลับตำแหน่งโรงเรียนและ GPAX แล้ว) -->
-        <div class="info-grid">
-            <!-- School & Program -->
+        <!-- Personal Info Cards Grid -->
+        <section class="info-grid">
             <div class="info-card">
                 <div class="info-icon">
                     <i class="fa-solid fa-school"></i>
@@ -412,22 +483,20 @@
                 <div class="info-details">
                     <span class="info-label">สถานศึกษา</span>
                     <span class="info-value">โรงเรียนบ้านบึง "อุตสาหกรรมนุเคราะห์"</span>
-                    <span class="info-subtext">สายการเรียน วิทย์-คณิตคอมพิวเตอร์</span>
+                    <span class="info-sub">สายการเรียน วิทย์-คณิตคอมพิวเตอร์</span>
                 </div>
             </div>
 
-            <!-- GPAX -->
             <div class="info-card">
                 <div class="info-icon">
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
                 <div class="info-details">
                     <span class="info-label">เกรดเฉลี่ยสะสม (GPAX)</span>
-                    <span class="gpax-value-text" id="gpaxCounter">0.00</span>
+                    <span class="info-value">3.68</span>
                 </div>
             </div>
 
-            <!-- Birthdate -->
             <div class="info-card">
                 <div class="info-icon">
                     <i class="fa-solid fa-cake-candles"></i>
@@ -438,7 +507,6 @@
                 </div>
             </div>
 
-            <!-- Age -->
             <div class="info-card">
                 <div class="info-icon">
                     <i class="fa-solid fa-user"></i>
@@ -448,61 +516,48 @@
                     <span class="info-value">17 ปี</span>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- 3 Highlights Cards -->
-        <div class="skills-grid">
+        <!-- Tech Skills Section -->
+        <section class="skills-grid">
             <div class="skill-card">
-                <div class="skill-icon"><i class="fa-solid fa-code"></i></div>
-                <h3>Programming & Dev</h3>
-                <p>พัฒนาเว็บไซต์และแอปพลิเคชัน การทำงานร่วมกับข้อมูล และการประยุกต์ใช้โค้ดในการแก้ปัญหา</p>
+                <div class="skill-icon">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+                <div class="skill-title">Programming & Dev</div>
             </div>
 
             <div class="skill-card">
-                <div class="skill-icon"><i class="fa-solid fa-microchip"></i></div>
-                <h3>Computer Systems</h3>
-                <p>วิเคราะห์สถาปัตยกรรมคอมพิวเตอร์ ความเข้าใจในด้านฮาร์ดแวร์ ระบบ และประสิทธิภาพ</p>
+                <div class="skill-icon">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div class="skill-title">Computer Systems</div>
             </div>
 
             <div class="skill-card">
-                <div class="skill-icon"><i class="fa-solid fa-lightbulb"></i></div>
-                <h3>Problem Solving</h3>
-                <p>การคิดเชิงคำนวณอย่างเป็นระบบ พร้อมเรียนรู้เทคโนโลยีใหม่ๆ และปรับตัวสำหรับการทำงานจริง</p>
+                <div class="skill-icon">
+                    <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <div class="skill-title">Problem Solving</div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer>
-        <p>© 2026 นายณัฐภูมิ เฉวียงวาท | Designed for University Admissions Portfolio</p>
-    </footer>
+    </main>
 
-    <!-- JavaScript สำหรับนับ GPAX เป็น 3.68 -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const counterElement = document.getElementById('gpaxCounter');
-            const targetGPA = 3.68;
-            const duration = 1800; 
-            const steps = 60;
-            const stepTime = duration / steps;
-            let currentStep = 0;
+        const openBtn = document.getElementById('openSidebar');
+        const closeBtn = document.getElementById('closeSidebar');
+        const sidebar = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('sidebarOverlay');
 
-            setTimeout(() => {
-                const timer = setInterval(() => {
-                    currentStep++;
-                    const progress = currentStep / steps;
-                    const easeOutProgress = 1 - Math.pow(1 - progress, 3);
-                    const currentValue = (targetGPA * easeOutProgress).toFixed(2);
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
 
-                    counterElement.innerText = currentValue;
-
-                    if (currentStep >= steps) {
-                        counterElement.innerText = targetGPA.toFixed(2);
-                        clearInterval(timer);
-                    }
-                }, stepTime);
-            }, 700);
-        });
+        openBtn.addEventListener('click', toggleSidebar);
+        closeBtn.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
     </script>
 </body>
 </html>
-
