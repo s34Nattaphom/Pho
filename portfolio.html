@@ -27,7 +27,6 @@
             box-sizing: border-box;
             font-family: 'Prompt', sans-serif;
             scroll-behavior: smooth;
-            -webkit-font-smoothing: antialiased;
         }
 
         body {
@@ -41,44 +40,11 @@
             position: relative;
         }
 
-        /* ANIMATIONS */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes floatUpNavProfile {
-            0% { opacity: 0; transform: translateY(20px) scale(0.85); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        @keyframes cardEntrance {
-            0% { opacity: 0; transform: translateY(40px) scale(0.92); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
         @keyframes pulseGlow {
             0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
             100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
         }
 
-        @keyframes slideGoldIndicator {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* BACKGROUND GLOW */
         .ambient-glow {
             position: fixed;
             width: 850px;
@@ -92,7 +58,7 @@
             animation: pulseGlow 6s ease-in-out infinite alternate;
         }
 
-        /* NAVIGATION BAR & BACK BUTTON */
+        /* NAVIGATION BAR */
         nav {
             display: flex;
             justify-content: space-between;
@@ -106,7 +72,6 @@
             top: 0;
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .logo {
@@ -150,11 +115,9 @@
             border: 2px solid var(--gold-primary);
             object-fit: cover;
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            animation: floatUpNavProfile 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
-            opacity: 0;
         }
 
-        /* SIDEBAR MENU (แก้ไข: ปิด Fade In ซ้ำ + เพิ่มแอนิเมชันเลื่อนลงของแถบสีเหลือง) */
+        /* SIDEBAR MENU (Liquid Glass Active Indicator) */
         .side-menu-panel {
             position: fixed;
             top: 5.5rem;
@@ -168,9 +131,6 @@
             padding: 1.5rem 1rem;
             z-index: 900;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            /* ปิดการใช้ animation fadeInDown เพื่อไม่ให้เมนูกระพริบ/จางซ้ำ */
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .side-menu-list {
@@ -178,7 +138,6 @@
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
-            position: relative;
         }
 
         .side-menu-list a {
@@ -194,15 +153,12 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid transparent;
             position: relative;
-            z-index: 1;
-            overflow: hidden;
         }
 
         .side-menu-list a i {
             color: var(--gold-primary);
             width: 20px;
             text-align: center;
-            transition: transform 0.3s ease;
         }
 
         .side-menu-list a:hover {
@@ -211,28 +167,26 @@
             border-color: rgba(212, 175, 55, 0.2);
         }
 
-        /* แถบไฮไลต์สีเหลืองสำหรับ Active State ให้ความรู้สึกเลื่อนลงมา */
+        /* Apple Liquid Glass Circle Active Indicator */
         .side-menu-list a.active {
             color: #fff;
             background: rgba(212, 175, 55, 0.15);
-            border-color: rgba(212, 175, 55, 0.3);
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
         }
 
-        .side-menu-list a.active::before {
+        .side-menu-list a.active::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
+            right: 14px;
+            width: 8px;
+            height: 8px;
             background: var(--gold-primary);
+            border-radius: 50%;
             box-shadow: 0 0 10px var(--gold-primary);
-            border-radius: 4px 0 0 4px;
-            animation: slideGoldIndicator 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* PAGE HEADER & MAIN CONTENT WRAPPER */
+        /* MAIN CONTAINER */
         .main-container-wrapper {
             margin-left: calc(var(--sidebar-width) + 3rem);
             transition: all 0.3s ease;
@@ -247,8 +201,6 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 0.6rem;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
         }
 
         .gold-text {
@@ -263,8 +215,6 @@
             max-width: 680px;
             margin: 0 auto;
             font-weight: 300;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
         }
 
         .filter-container {
@@ -273,8 +223,6 @@
             gap: 0.8rem;
             margin: 2.2rem 0 1.5rem;
             flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
         }
 
         .filter-btn {
@@ -297,7 +245,7 @@
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
         }
 
-        /* PORTFOLIO GRID */
+        /* PORTFOLIO GRID & CARDS */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
@@ -306,7 +254,6 @@
             max-width: 1320px;
             margin: 0 auto;
             width: 100%;
-            perspective: 1000px;
         }
 
         .portfolio-item {
@@ -315,39 +262,30 @@
             border-radius: 18px;
             overflow: hidden;
             backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            position: relative;
             cursor: pointer;
             display: flex;
             flex-direction: column;
             height: 100%;
-            transform-origin: center bottom;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.35s ease, 
-                        box-shadow 0.35s ease;
-            opacity: 0;
-            animation: cardEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, opacity 0.4s ease;
         }
 
         .portfolio-item.inactive {
             opacity: 0.15 !important;
-            filter: blur(6px) grayscale(50%) !important;
-            transform: rotateX(55deg) translateY(40px) scale(0.88) !important;
+            filter: blur(5px) grayscale(50%) !important;
             pointer-events: none;
         }
 
         .portfolio-item:not(.inactive):hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-8px);
             border-color: var(--gold-primary);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.35);
         }
 
+        /* จัดกึ่งกลางภาพใบเกียรติบัตรในการ์ดผลงานให้เป๊ะ */
         .item-img {
             width: 100%;
             aspect-ratio: 4 / 3;
-            background-color: rgba(15, 18, 28, 0.95);
+            background-color: rgba(10, 13, 20, 0.95);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -362,7 +300,9 @@
         .item-img img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* ปรับให้เห็นเต็มใบและจัดกึ่งกลางอัตโนมัติ */
+            object-position: center;
+            background: #000;
             transition: transform 0.5s ease;
         }
 
@@ -402,7 +342,6 @@
             text-transform: uppercase;
             letter-spacing: 0.8px;
             margin-bottom: 0.4rem;
-            display: block;
             font-weight: 600;
         }
 
@@ -431,7 +370,6 @@
             inset: 0;
             background: rgba(5, 7, 12, 0.92);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             z-index: 2000;
             display: flex;
             align-items: center;
@@ -467,11 +405,6 @@
             width: 8px;
         }
 
-        .modal-container::-webkit-scrollbar-track {
-            background: rgba(11, 13, 20, 0.6);
-            border-radius: 0 22px 22px 0;
-        }
-
         .modal-container::-webkit-scrollbar-thumb {
             background: var(--gold-primary);
             border-radius: 4px;
@@ -492,10 +425,6 @@
             color: var(--text-main);
             width: 46px;
             height: 46px;
-            min-width: 46px;
-            min-height: 46px;
-            padding: 0;
-            flex-shrink: 0;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -509,14 +438,15 @@
         .modal-close-btn:hover {
             background: var(--gold-primary);
             color: #0b0d14;
-            border-color: transparent;
             transform: rotate(90deg);
         }
 
+        /* จัดกึ่งกลางภาพใน Modal ให้สวยงามเป๊ะทุกรูป */
         .modal-image-area {
             width: 100%;
-            min-height: 280px;
-            background-color: rgba(10, 13, 20, 0.95);
+            min-height: 350px;
+            max-height: 520px;
+            background-color: #000000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -528,10 +458,12 @@
 
         .modal-image-area img {
             width: 100%;
-            height: auto;
+            height: 100%;
             max-height: 500px;
-            object-fit: contain;
-            background: #000;
+            object-fit: contain; /* รักษาขนาดสัดส่วนใบเกียรติบัตรและจัดกึ่งกลางพอดี */
+            object-position: center;
+            display: block;
+            margin: auto;
         }
 
         .modal-placeholder-icon {
@@ -542,12 +474,6 @@
             align-items: center;
             gap: 14px;
             padding: 3.5rem 1rem;
-        }
-
-        .modal-placeholder-icon span {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            font-weight: 300;
         }
 
         .modal-body {
@@ -562,7 +488,6 @@
             text-transform: uppercase;
             letter-spacing: 1.2px;
             margin-bottom: 0.5rem;
-            display: block;
         }
 
         .modal-title {
@@ -570,7 +495,6 @@
             font-weight: 700;
             color: #fff;
             margin-bottom: 1.2rem;
-            line-height: 1.3;
         }
 
         .modal-description {
@@ -578,7 +502,6 @@
             font-size: 1.02rem;
             line-height: 1.85;
             margin-bottom: 1.8rem;
-            font-weight: 300;
             white-space: pre-line;
         }
 
@@ -595,7 +518,6 @@
             color: var(--gold-primary);
             margin-bottom: 0.3rem;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
         }
 
         .modal-category-box p {
@@ -639,7 +561,6 @@
         .modal-section-list li i {
             color: var(--gold-primary);
             margin-top: 4px;
-            font-size: 0.85rem;
         }
 
         .tech-tags-container {
@@ -659,33 +580,6 @@
             font-weight: 500;
         }
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.2rem;
-            margin-top: 1rem;
-        }
-
-        .gallery-img-item {
-            width: 100%;
-            height: 220px;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: #000;
-        }
-
-        .gallery-img-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transition: transform 0.4s ease;
-        }
-
-        .gallery-img-item:hover img {
-            transform: scale(1.05);
-        }
-
         footer {
             text-align: center;
             padding: 2.2rem;
@@ -695,33 +589,8 @@
         }
 
         @media (max-width: 992px) {
-            .side-menu-panel {
-                display: none;
-            }
-
-            .main-container-wrapper {
-                margin-left: 0;
-            }
-        }
-
-        @media (max-width: 850px) {
-            .portfolio-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 1.5rem;
-            }
-
-            .modal-container {
-                width: 98vw;
-                height: 95vh;
-            }
-
-            .modal-body {
-                padding: 1.8rem 1.5rem 2.5rem;
-            }
-
-            .modal-title {
-                font-size: 1.6rem;
-            }
+            .side-menu-panel { display: none; }
+            .main-container-wrapper { margin-left: 0; }
         }
     </style>
 </head>
@@ -729,16 +598,13 @@
 
     <div class="ambient-glow"></div>
 
-    <!-- Navigation Bar -->
     <nav>
         <a href="index.html" class="logo"><i class="fa-solid fa-arrow-left"></i> NATTAPHUM</a>
-
         <div class="nav-profile-wrapper">
             <img src="my02.jpg" alt="Profile" class="nav-profile-img">
         </div>
     </nav>
 
-    <!-- Side Menu Panel -->
     <aside class="side-menu-panel">
         <ul class="side-menu-list">
             <li>
@@ -762,10 +628,7 @@
         </ul>
     </aside>
 
-    <!-- Main Container Wrapper -->
     <div class="main-container-wrapper">
-
-        <!-- Header & Filter Buttons -->
         <header class="page-header">
             <h1>แฟ้มสะสมผลงาน <span class="gold-text">(Portfolio)</span></h1>
             <p>รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยี</p>
@@ -778,18 +641,15 @@
             </div>
         </header>
 
-        <!-- Portfolio Grid -->
         <section class="portfolio-grid" id="portfolioDeck">
-
             <!-- 1. PERSONAL PORTFOLIO WEBSITE -->
             <div class="portfolio-item projects" onclick="openModal(this)"
                  data-title="Personal Portfolio Website"
                  data-tag="Project / Web Development"
-                 data-desc="เว็บไซต์แฟ้มสะสมผลงานส่วนตัว ออกแบบและพัฒนาขึ้นเพื่อนำเสนอประวัติการศึกษา โครงงาน และกิจกรรมทางด้านเทคโนโลยี พัฒนาโครงสร้างด้วย HTML5, CSS3 และ JavaScript โฮสต์บนระบบ GitHub Pages เน้นดีไซน์ Luxury Glassmorphism พร้อมรองรับการแสดงผลทุกหน้าจอ (Responsive Design)"
+                 data-desc="เว็บไซต์แฟ้มสะสมผลงานส่วนตัว ออกแบบและพัฒนาขึ้นเพื่อนำเสนอประวัติการศึกษา โครงงาน และกิจกรรมทางด้านเทคโนโลยี พัฒนาโครงสร้างด้วย HTML5, CSS3 และ JavaScript โฮสต์บนระบบ GitHub Pages เน้นดีไซน์ Luxury Glassmorphism พร้อมรองรับการแสดงผลทุกหน้าจอ"
                  data-img="" 
-                 data-features="ออกแบบสไตล์ Luxury Glassmorphic ผสมผสานความหรูหราและเรียบหรู|มีระบบตัวกรองผลงาน (Category Filter) พร้อมเอฟเฟกต์ 3D Lay-Down|ระบบหน้าต่าง Pop-up แสดงรายละเอียดผลงานแบบใกล้เคียงเต็มจอ (Near Full-Screen Modal)|รองรับการแสดงผลบนสมาร์ตโฟน แท็บเล็ต และคอมพิวเตอร์อย่างสมบูรณ์"
+                 data-features="ออกแบบสไตล์ Luxury Glassmorphic ผสมผสานความหรูหรา|มีระบบตัวกรองผลงาน (Category Filter)|ระบบหน้าต่าง Pop-up แสดงรายละเอียดผลงานเต็มจอ|รองรับการแสดงผลบนสมาร์ตโฟน แท็บเล็ต และคอมพิวเตอร์"
                  data-tech="HTML5, CSS3, JavaScript, GitHub Pages, FontAwesome"
-                 data-gallery=""
                  data-icon="fa-laptop-code"
                  data-category="โครงงาน / โปรเจกต์">
                 <div class="item-img">
@@ -807,11 +667,10 @@
             <div class="portfolio-item projects" onclick="openModal(this)"
                  data-title="Computer Systems & Hardware Analysis"
                  data-tag="Project / Hardware"
-                 data-desc="การศึกษา เปรียบเทียบ และวิเคราะห์ประสิทธิภาพของชิ้นส่วนคอมพิวเตอร์ (Hardware Architecture) ทั้งหน่วยประมวลผลกลาง (CPU) หน่วยประมวลผลกราฟิก (GPU) ชิปเซ็ตเมนบอร์ด และระบบกักเก็บข้อมูลแบบ NVMe PCIe SSD เพื่อความเข้าใจในการเลือกใช้ทรัพยากรฮาร์ดแวร์ให้เหมาะสมกับงานประเภทต่างๆ"
+                 data-desc="การศึกษา เปรียบเทียบ และวิเคราะห์ประสิทธิภาพของชิ้นส่วนคอมพิวเตอร์ (Hardware Architecture) ทั้งหน่วยประมวลผลกลาง (CPU) หน่วยประมวลผลกราฟิก (GPU) และระบบกักเก็บข้อมูลแบบ NVMe PCIe SSD"
                  data-img="" 
-                 data-features="เปรียบเทียบสเปกการทำงานของชิปประมวลผลรุ่นสถาปัตยกรรมต่างยุคสมัย|วิเคราะห์ความเร็วการรับส่งข้อมูลระหว่าง NVMe PCIe SSD กับ SSD รูปแบบเดิม|ศึกษาความเข้ากันได้ของเมนบอร์ดและหน่วยความจำแรม (RAM Bus Speeds)|จัดทำสรุปรายงานสเปกคอมพิวเตอร์เพื่อการประมวลผลระดับสูง"
-                 data-tech="CPU/GPU Benchmarking, NVMe Architecture, Motherboard Compatibility, PC Building"
-                 data-gallery=""
+                 data-features="เปรียบเทียบสเปกการทำงานของชิปประมวลผลรุ่นสถาปัตยกรรมต่างยุคสมัย|วิเคราะห์ความเร็วการรับส่งข้อมูลระหว่าง NVMe PCIe SSD กับ SSD ทั่วไป|ศึกษาความเข้ากันได้ของเมนบอร์ดและหน่วยความจำแรม"
+                 data-tech="CPU/GPU Benchmarking, NVMe Architecture, PC Building"
                  data-icon="fa-server"
                  data-category="โครงงาน / สถาปัตยกรรมคอมพิวเตอร์">
                 <div class="item-img">
@@ -825,16 +684,14 @@
                 </div>
             </div>
 
-            <!-- 3. K-ENGINEERING: BASIC AI (A1.jpg) -->
+            <!-- 3. K-ENGINEERING: BASIC AI -->
             <div class="portfolio-item workshops" onclick="openModal(this)"
                  data-title="K-Engineering: Basic AI Workshop"
                  data-tag="Workshop / Engineering"
                  data-desc="การเข้าร่วมอบรมเชิงปฏิบัติการทางด้านปัญญาประดิษฐ์ขั้นพื้นฐาน (Basic AI) ในงาน K-Engineering World Tour and Competency Challenge จัดโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง (KMITL)"
                  data-img="A1.jpg" 
-                 data-features="เรียนรู้หลักการทำงานของ AI และ Machine Learning เบื้องต้น|ทดลองใช้งานเครื่องมือและอัลกอริทึมประมวลผลข้อมูล|ได้รับวุฒิบัตรรับรองจากคณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"
+                 data-features="เรียนรู้หลักการทำงานของ AI และ Machine Learning เบื้องต้น|ทดลองใช้งานเครื่องมือและอัลกอริทึมประมวลผลข้อมูล|ได้รับวุฒิบัตรรับรองจากคณะวิศวกรรมศาสตร์ KMITL"
                  data-tech="Artificial Intelligence, Machine Learning, Data Analytics, KMITL"
-                 data-gallery=""
-                 data-icon="fa-brain"
                  data-category="การอบรม / กิจกรรม">
                 <div class="item-img">
                     <img src="A1.jpg" alt="K-Engineering Basic AI">
@@ -847,7 +704,7 @@
                 </div>
             </div>
 
-            <!-- 4. K-ENGINEERING: CYBERSECURITY (A2.jpg) -->
+            <!-- 4. K-ENGINEERING: CYBERSECURITY -->
             <div class="portfolio-item workshops" onclick="openModal(this)"
                  data-title="K-Engineering: Cybersecurity Competency Challenge"
                  data-tag="Workshop / Cybersecurity"
@@ -855,8 +712,6 @@
                  data-img="A2.jpg" 
                  data-features="ศึกษากรณีตัวอย่างการโจมตีทางไซเบอร์และภัยคุกคามในระบบดิจิทัล|ฝึกปฏิบัติการวิเคราะห์ความเสี่ยงและการปกป้องข้อมูลส่วนบุคคล|ได้รับวุฒิบัตรการเข้าร่วมกิจกรรมจากคณะวิศวกรรมศาสตร์ KMITL"
                  data-tech="Cybersecurity, Data Privacy, Network Security, KMITL"
-                 data-gallery=""
-                 data-icon="fa-shield-halved"
                  data-category="การอบรม / กิจกรรม">
                 <div class="item-img">
                     <img src="A2.jpg" alt="K-Engineering Cybersecurity">
@@ -869,7 +724,7 @@
                 </div>
             </div>
 
-            <!-- 5. K-ENGINEERING: BASIC PLC (A3.jpg) -->
+            <!-- 5. K-ENGINEERING: BASIC PLC -->
             <div class="portfolio-item workshops" onclick="openModal(this)"
                  data-title="K-Engineering: Basic PLC Workshop"
                  data-tag="Workshop / Engineering"
@@ -877,8 +732,6 @@
                  data-img="A3.jpg" 
                  data-features="ศึกษาโครงสร้างการทำงานของโปรแกรม PLC และอุปกรณ์อินพุต/เอาต์พุต|เขียนโค้ดภาษา Ladder Diagram ควบคุมการทำงานตามเงื่อนไข|ทดลองจำลองวงจรควบคุมอุตสาหกรรมในห้องปฏิบัติการวิศวกรรม"
                  data-tech="PLC, Programmable Logic Controller, Automation, Control Systems"
-                 data-gallery=""
-                 data-icon="fa-microchip"
                  data-category="การอบรม / กิจกรรม">
                 <div class="item-img">
                     <img src="A3.jpg" alt="K-Engineering Basic PLC">
@@ -891,16 +744,14 @@
                 </div>
             </div>
 
-            <!-- 6. THAILAND UNIVERSITY EXPO 2024 (A4.jpg) -->
+            <!-- 6. THAILAND UNIVERSITY EXPO 2024 -->
             <div class="portfolio-item certificates" onclick="openModal(this)"
                  data-title="Thailand University Expo 2024"
                  data-tag="Certificate / Workshop"
                  data-desc="เกียรติบัตรผ่านการเข้าร่วมกิจกรรมพัฒนาทักษะวิชาการและกิจกรรมเชิงปฏิบัติการ ในกลุ่มสาระ 'เทคโนโลยีสารสนเทศ นวัตกรรม' ภายใต้โครงการ Thailand University Expo 2024 ออกโดย สถาบันวิชาการ เจ โนว์เลจ ณ จังหวัดชลบุรี"
                  data-img="A4.jpg" 
-                 data-features="เข้าร่วมกิจกรรมพัฒนาทักษะทางวิชาการด้านเทคโนโลยีสารสนเทศและนวัตกรรมดิจิทัล|ผ่านการประเมินและได้รับเกียรติบัตรรับรองจากสถาบันวิชาการ เจ โนว์เลจ|เตรียมความพร้อมการศึกษาต่อระดับอุดมศึกษาด้านคอมพิวเตอร์และไอที"
+                 data-features="เข้าร่วมกิจกรรมพัฒนาทักษะทางวิชาการด้านเทคโนโลยีสารสนเทศและนวัตกรรมดิจิทัล|ผ่านการประเมินและได้รับเกียรติบัตรรับรองจากสถาบันวิชาการ เจ โนว์เลจ|เตรียมความพร้อมการศึกษาต่อระดับอุดมศึกษา"
                  data-tech="Information Technology, Innovation, Academic Workshop, J-Knowledge"
-                 data-gallery=""
-                 data-icon="fa-graduation-cap"
                  data-category="เกียรติบัตร / การอบรมวิชาการ">
                 <div class="item-img">
                     <img src="A4.jpg" alt="Thailand University Expo 2024">
@@ -913,16 +764,14 @@
                 </div>
             </div>
 
-            <!-- 7. FAB LAB INNOVATION & TECH SEMINAR (A6.jpg) -->
+            <!-- 7. FAB LAB INNOVATION & TECH SEMINAR -->
             <div class="portfolio-item workshops" onclick="openModal(this)"
                  data-title="Fab Lab Innovation & Tech Seminar"
                  data-tag="Workshop / Innovation"
                  data-desc="เข้าร่วมงานสัมมนาเชิงปฏิบัติการการพัฒนานวัตกรรมดิจิทัล Fab Lab ได้รับความรู้เกี่ยวกับกระบวนการคิดเชิงออกแบบ (Design Thinking) และเทคโนโลยีการขึ้นรูปชิ้นงานด้วยเครื่องมือดิจิทัล"
                  data-img="A6.jpg" 
-                 data-features="เรียนรู้กระบวนการสร้างนวัตกรรมดิจิทัลผ่านศูนย์ปฏิบัติการ Fab Lab|สัมผัสเทคโนโลยีการผลิตชิ้นงาน 3D Printing และเครื่องมือขึ้นรูปชิ้นงานดิจิทัล|แลกเปลี่ยนไอเดียการประยุกต์ใช้เทคโนโลยีในการแก้ปัญหาจริง"
+                 data-features="เรียนรู้กระบวนการสร้างนวัตกรรมดิจิทัลผ่านศูนย์ปฏิบัติการ Fab Lab|สัมผัสเทคโนโลยีการผลิตชิ้นงาน 3D Printing|แลกเปลี่ยนไอเดียการประยุกต์ใช้เทคโนโลยีในการแก้ปัญหาจริง"
                  data-tech="Fab Lab, Design Thinking, Prototyping, Digital Fabrication"
-                 data-gallery=""
-                 data-icon="fa-lightbulb"
                  data-category="การอบรม / กิจกรรม">
                 <div class="item-img">
                     <img src="A6.jpg" alt="Fab Lab Innovation & Tech Seminar">
@@ -935,16 +784,14 @@
                 </div>
             </div>
 
-            <!-- 8. BE FAST E-SEARCHING COMPETITION 2025 (A7.jpg) -->
+            <!-- 8. BE FAST E-SEARCHING COMPETITION 2025 -->
             <div class="portfolio-item certificates" onclick="openModal(this)"
                  data-title="Be Fast E-Searching Competition 2025"
                  data-tag="Certificate / Competition"
                  data-desc="วุฒิบัตรการเข้าร่วมการแข่งขันค้นหาข้อมูลสารสนเทศออนไลน์ Be Fast E-Searching แสดงถึงความสามารถในการสืบค้น คัดกรอง และประเมินความน่าเชื่อถือของข้อมูลดิจิทัลได้อย่างรวดเร็วและแม่นยำ"
                  data-img="A7.jpg" 
-                 data-features="ผ่านการทดสอบทักษะการสืบค้นข้อมูลเชิงลึกด้วย Search Engine และฐานข้อมูลออนไลน์|ทดสอบความเร็วและความแม่นยำในการวิเคราะห์คำตอบจากแหล่งข้อมูลดิจิทัล|ฝึกทักษะการประเมินความน่าเชื่อถือของแหล่งข้อมูล (Information Literacy)"
+                 data-features="ผ่านการทดสอบทักษะการสืบค้นข้อมูลเชิงลึกด้วย Search Engine|ทดสอบความเร็วและความแม่นยำในการวิเคราะห์คำตอบจากแหล่งข้อมูลดิจิทัล|ฝึกทักษะการประเมินความน่าเชื่อถือของแหล่งข้อมูล"
                  data-tech="Information Searching, Search Engine Literacy, Digital Research"
-                 data-gallery=""
-                 data-icon="fa-magnifying-glass"
                  data-category="เกียรติบัตร / การแข่งขัน">
                 <div class="item-img">
                     <img src="A7.jpg" alt="Be Fast E-Searching Competition">
@@ -957,16 +804,14 @@
                 </div>
             </div>
 
-            <!-- 9. วิทยากรนิทรรศการวันวิทยาศาสตร์ (A8.jpg) -->
+            <!-- 9. วิทยากรนิทรรศการวันวิทยาศาสตร์ -->
             <div class="portfolio-item certificates" onclick="openModal(this)"
                  data-title="วิทยากรจัดแสดงนิทรรศการวันวิทยาศาสตร์แห่งชาติ"
                  data-tag="Certificate / Presenter"
                  data-desc="เกียรติบัตรแสดงความขอบคุณในฐานะวิทยากรประจำฐานกิจกรรม นำเสนอความรู้ทางเทคโนโลยี สื่อดิจิทัล และวิทยาศาสตร์ ให้แก่ผู้เข้าร่วมงานวันวิทยาศาสตร์แห่งชาติ"
                  data-img="A8.jpg" 
-                 data-features="ปฏิบัติหน้าที่วิทยากรบรรยายและสาธิตสิ่งประดิษฐ์เทคโนโลยี|ฝึกทักษะการสื่อสารสารสนเทศทางวิทยาศาสตร์ให้เข้าใจง่าย (Science Communication)|สร้างกระบวนการเรียนรู้และถ่ายทอดความรู้แก่ผู้เข้าชมงาน"
+                 data-features="ปฏิบัติหน้าที่วิทยากรบรรยายและสาธิตสิ่งประดิษฐ์เทคโนโลยี|ฝึกทักษะการสื่อสารสารสนเทศทางวิทยาศาสตร์ให้เข้าใจง่าย|สร้างกระบวนการเรียนรู้และถ่ายทอดความรู้แก่ผู้เข้าชมงาน"
                  data-tech="Presentation, Science Communication, Public Speaking, Exhibition Setup"
-                 data-gallery=""
-                 data-icon="fa-chalkboard-user"
                  data-category="เกียรติบัตร / กิจกรรมพิเศษ">
                 <div class="item-img">
                     <img src="A8.jpg" alt="วิทยากรจัดแสดงนิทรรศการวันวิทยาศาสตร์แห่งชาติ">
@@ -979,16 +824,14 @@
                 </div>
             </div>
 
-            <!-- 10. ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน (A9.jpg) -->
+            <!-- 10. ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน -->
             <div class="portfolio-item certificates" onclick="openModal(this)"
                  data-title="ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน"
                  data-tag="Certificate / Activity"
                  data-desc="เกียรติบัตรผ่านการเข้าร่วมโครงการค่ายพัฒนาคุณธรรม จริยธรรม และภาวะผู้นำนักเรียน เพื่อส่งเสริมจิตสาธารณะ การทำงานร่วมกับผู้อื่น และความรับผิดชอบต่อสังคม"
                  data-img="A9.jpg" 
-                 data-features="ผ่านการอบรมปลูกฝังจิตสำนึกคุณธรรม จริยธรรม และวินัยในตนเอง|ฝึกทักษะการทำงานเป็นทีม และการเป็นผู้นำ-ผู้ตามที่ดีในกิจกรรมกลุ่ม|ได้รับเกียรติบัตรรับรองการเข้าร่วมโครงการพัฒนาผู้เรียน"
+                 data-features="ผ่านการอบรมปลูกฝังจิตสำนึกคุณธรรม จริยธรรม และวินัยในตนเอง|ฝึกทักษะการทำงานเป็นทีม และการเป็นผู้นำ-ผู้ตามที่ดี|ได้รับเกียรติบัตรรับรองการเข้าร่วมโครงการ"
                  data-tech="Leadership, Teamwork, Ethics, Social Responsibility"
-                 data-gallery=""
-                 data-icon="fa-hands-praying"
                  data-category="เกียรติบัตร / กิจกรรมพัฒนาผู้เรียน">
                 <div class="item-img">
                     <img src="A9.jpg" alt="ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน">
@@ -1001,16 +844,14 @@
                 </div>
             </div>
 
-            <!-- 11. อบรมทักษะดิจิทัลและวิทยาการคอมพิวเตอร์ (A11.jpg) -->
+            <!-- 11. อบรมทักษะดิจิทัลและวิทยาการคอมพิวเตอร์ -->
             <div class="portfolio-item certificates" onclick="openModal(this)"
                  data-title="การอบรมทักษะดิจิทัลและวิทยาการคอมพิวเตอร์"
                  data-tag="Certificate / Academic"
                  data-desc="วุฒิบัตรรับรองการผ่านการทดสอบอบรมความรู้พื้นฐานด้านวิทยาการคอมพิวเตอร์ การคิดเชิงคำนวณ (Computational Thinking) กระบวนการแก้ปัญหาเชิงตรรกะ และหลักการรักษาความปลอดภัยของข้อมูล"
                  data-img="A11.jpg" 
-                 data-features="ผ่านเกณฑ์การประเมินความรู้ด้านการคิดเชิงคำนวณและการแก้ปัญหาเชิงอัลกอริทึม|เรียนรู้หลักการคุ้มครองข้อมูลส่วนบุคคลและการใช้งานไอทีอย่างปลอดภัย|เสริมสร้างฐานความรู้เตรียมความพร้อมศึกษาสาขาวิชาวิทยาการคอมพิวเตอร์"
+                 data-features="ผ่านเกณฑ์การประเมินความรู้ด้านการคิดเชิงคำนวณและการแก้ปัญหาเชิงอัลกอริทึม|เรียนรู้หลักการคุ้มครองข้อมูลส่วนบุคคลและการใช้งานไอที|เสริมสร้างฐานความรู้เตรียมความพร้อมศึกษาวิทยาการคอมพิวเตอร์"
                  data-tech="Computational Thinking, Logic & Algorithm, Cyber Literacy, Computer Science"
-                 data-gallery=""
-                 data-icon="fa-award"
                  data-category="เกียรติบัตร / วิชาการ">
                 <div class="item-img">
                     <img src="A11.jpg" alt="การอบรมทักษะดิจิทัลและวิทยาการคอมพิวเตอร์">
@@ -1022,13 +863,11 @@
                     <p class="item-desc">วุฒิบัตรผ่านการอบรมทักษะพื้นฐานด้านการคิดเชิงคำนวณ วิทยาการคอมพิวเตอร์ และความปลอดภัยไซเบอร์</p>
                 </div>
             </div>
-
         </section>
 
         <footer>
             <p>© 2026 NATTAPHUM | Designed for University Admissions Portfolio</p>
         </footer>
-
     </div>
 
     <!-- Modal Popup -->
@@ -1057,27 +896,11 @@
                     <h3 class="modal-section-title"><i class="fa-solid fa-layer-group"></i> เทคโนโลยีและทักษะที่เกี่ยวข้อง (Tech Stack & Skills)</h3>
                     <div class="tech-tags-container" id="modalTechContainer"></div>
                 </div>
-
-                <div class="modal-section" id="modalGallerySection" style="display: none;">
-                    <h3 class="modal-section-title"><i class="fa-solid fa-images"></i> รูปภาพเกียรติบัตร / กิจกรรมเพิ่มเติม (Gallery)</h3>
-                    <div class="gallery-grid" id="modalGalleryGrid"></div>
-                </div>
-
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.portfolio-item');
-            cards.forEach(card => {
-                card.addEventListener('animationend', () => {
-                    card.style.animation = 'none';
-                    card.style.opacity = '1';
-                });
-            });
-        });
-
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.portfolio-item');
             const buttons = document.querySelectorAll('.filter-btn');
@@ -1086,11 +909,7 @@
             if (evt) evt.currentTarget.classList.add('active');
 
             items.forEach((item) => {
-                item.style.animation = 'none';
-                item.style.opacity = '1';
-
                 const matches = category === 'all' || item.classList.contains(category);
-
                 if (matches) {
                     item.classList.remove('inactive');
                 } else {
@@ -1111,7 +930,6 @@
             
             const featuresRaw = cardElement.getAttribute('data-features') || '';
             const techRaw = cardElement.getAttribute('data-tech') || '';
-            const galleryRaw = cardElement.getAttribute('data-gallery') || '';
 
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalTag').innerText = tag;
@@ -1152,22 +970,6 @@
                 document.getElementById('modalTechSection').style.display = 'block';
             } else {
                 document.getElementById('modalTechSection').style.display = 'none';
-            }
-
-            const galleryGrid = document.getElementById('modalGalleryGrid');
-            galleryGrid.innerHTML = '';
-            if (galleryRaw.trim() !== '') {
-                const galleryArray = galleryRaw.split(',');
-                galleryArray.forEach(img => {
-                    galleryGrid.innerHTML += `
-                        <div class="gallery-img-item">
-                            <img src="${img.trim()}" alt="ภาพประกอบ">
-                        </div>
-                    `;
-                });
-                document.getElementById('modalGallerySection').style.display = 'block';
-            } else {
-                document.getElementById('modalGallerySection').style.display = 'none';
             }
 
             const modal = document.getElementById('cardModal');
