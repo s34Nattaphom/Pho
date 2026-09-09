@@ -13,9 +13,9 @@
         :root {
             /* Palette สีส้มอ่อน-ขาว */
             --orange-main: #E35205;      
-            --orange-light: #FF7026;     
+            --orange-light: #FF661A;     
             --orange-soft-bg: #FFF0E6;   
-            --orange-glow: rgba(227, 82, 5, 0.25);
+            --orange-glow: rgba(227, 82, 5, 0.35);
             
             --bg-color: #FAFAFA;         
             --card-bg: rgba(255, 255, 255, 0.88);
@@ -72,7 +72,7 @@
             100% { opacity: 1; transform: translateX(-50%) scale(1.15); }
         }
 
-        /* ================= ANIMATIONS & FADE-IN ================= */
+        /* ================= ANIMATIONS ================= */
         @keyframes slowPageFadeIn {
             0% {
                 opacity: 0;
@@ -90,6 +90,14 @@
             0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
             40% { transform: translateY(-10px) translateX(-50%); }
             60% { transform: translateY(-5px) translateX(-50%); }
+        }
+
+        /* แอนิเมชันให้หยดน้ำมีการบิดรูปทรงเด้งดึ๋งๆ สไตล์ของเหลว */
+        @keyframes liquidWobble {
+            0% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; }
+            33% { border-radius: 58% 42% 38% 62% / 55% 60% 40% 45%; }
+            66% { border-radius: 50% 50% 45% 55% / 40% 60% 40% 60%; }
+            100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; }
         }
 
         .slow-fade-in {
@@ -189,7 +197,7 @@
             padding-top: 5rem;
         }
 
-        /* Profile Image Container & Droplet Element */
+        /* Profile Image Container & Liquid Droplet */
         .profile-img-container {
             position: relative;
             width: 145px;
@@ -212,20 +220,20 @@
             z-index: 2;
         }
 
-        /* หยดวงกลมส้มเรืองแสงที่จะหยดหล่นลงมา */
+        /* หยดน้ำสีส้มยืดเด้งดึ๋ง */
         .droplet-sphere {
             position: absolute;
-            bottom: 10px;
+            bottom: 2px;
             left: 50%;
             transform: translateX(-50%) scale(0);
-            width: 26px;
-            height: 26px;
-            background: radial-gradient(circle, var(--orange-light) 0%, var(--orange-main) 100%);
-            border-radius: 50%;
-            box-shadow: 0 0 18px var(--orange-main), 0 0 30px rgba(227, 82, 5, 0.6);
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle at 35% 35%, #FF9966 0%, var(--orange-main) 70%, #C43E00 100%);
+            box-shadow: 0 0 20px rgba(227, 82, 5, 0.8), 0 0 35px rgba(227, 82, 5, 0.5);
             z-index: 1;
             pointer-events: none;
             opacity: 0;
+            animation: liquidWobble 2s ease-in-out infinite;
             transition: opacity 0.2s ease, transform 0.05s linear;
         }
 
@@ -279,7 +287,7 @@
             box-shadow: 0 12px 30px rgba(227, 82, 5, 0.45);
         }
 
-        /* Scroll Down Indicator */
+        /* Scroll Indicator */
         .scroll-indicator {
             position: absolute;
             bottom: 2.5rem;
@@ -301,9 +309,9 @@
             font-size: 1.2rem;
         }
 
-        /* ================= FOREWORD SECTION (ส่วนคำนำที่ขยายจากหยดส้ม) ================= */
+        /* ================= FOREWORD SECTION (กรอบส้ม-ตัวหนังสือขาวใหญ่ขึ้น) ================= */
         .foreword-section {
-            margin: 1rem 0 3.5rem 0;
+            margin: 1.5rem 0 4rem 0;
             display: flex;
             justify-content: center;
             position: relative;
@@ -311,23 +319,26 @@
 
         .foreword-card {
             width: 100%;
-            background: var(--card-bg);
-            border: 2px solid var(--orange-main);
-            border-radius: 24px;
-            padding: 2.2rem 2.5rem;
-            box-shadow: 0 15px 40px rgba(227, 82, 5, 0.15), 0 4px 15px rgba(0, 0, 0, 0.02);
+            max-width: 920px; /* ขยายความกว้างกล่อง */
+            /* พื้นหลังสีส้มสดเดียวกับหยดน้ำ */
+            background: linear-gradient(135deg, #E35205 0%, #FF661A 60%, #D14200 100%);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 28px;
+            padding: 2.8rem 3rem; /* เพิ่มขนาดระยะห่าง */
+            color: var(--text-white);
+            box-shadow: 0 20px 50px rgba(227, 82, 5, 0.35), 0 5px 20px rgba(0, 0, 0, 0.08);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             
-            /* สภาพเริ่มต้นก่อนแอนิเมชันเด้งขยาย */
+            /* สภาพเริ่มต้นก่อนกลืนหยดน้ำแล้วขยายร่าง */
             opacity: 0;
-            transform: scale(0.08) translateY(-120px);
+            transform: scale(0.05) translateY(-80px);
             transform-origin: top center;
-            transition: all 0.85s cubic-bezier(0.34, 1.56, 0.64, 1); /* Elastic Spring Bounce */
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy Spring Bounce */
             pointer-events: none;
         }
 
-        /* Class เพิ่มโดย JS เมื่อหยดวงกลมส้มตกลงมาถึง */
+        /* แสดงผลเต็มรูปแบบเมื่อรวมร่าง */
         .foreword-card.expanded {
             opacity: 1;
             transform: scale(1) translateY(0);
@@ -337,29 +348,38 @@
         .foreword-header {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 1.2rem;
-            border-bottom: 1px solid rgba(227, 82, 5, 0.15);
-            padding-bottom: 0.8rem;
+            gap: 14px;
+            margin-bottom: 1.4rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+            padding-bottom: 1rem;
         }
 
         .foreword-header i {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             color: var(--orange-main);
+            background: #FFFFFF;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         }
 
         .foreword-header h2 {
-            font-size: 1.4rem;
+            font-size: 1.6rem; /* ขยายขนาดหัวข้อ */
             font-weight: 700;
-            color: var(--text-main);
+            color: #FFFFFF;
+            letter-spacing: 0.5px;
         }
 
         .foreword-text {
-            color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.96); /* ตัวหนังสือขาว คมชัด อ่านง่าย */
+            font-size: 1.15rem; /* ขยายขนาดข้อความเนื้อหา */
+            line-height: 2;
             font-weight: 400;
-            text-indent: 2rem;
+            text-indent: 2.5rem;
         }
 
         /* Content Section below Hero */
@@ -499,7 +519,11 @@
             }
 
             .foreword-card {
-                padding: 1.5rem 1.4rem;
+                padding: 1.8rem 1.5rem;
+            }
+
+            .foreword-text {
+                font-size: 1rem;
             }
         }
     </style>
@@ -542,10 +566,10 @@
 
         <!-- Full Viewport Hero Landing Section -->
         <section class="hero-section" id="about">
-            <!-- Profile Image + Droplet Element -->
+            <!-- Profile Image + Liquid Droplet Element -->
             <div class="profile-img-container" id="profileContainer">
                 <img src="my02.jpg" alt="นายณัฐภูมิ เฉวียงวาท">
-                <!-- วงกลมส้มที่จะหล่นลงมาจากรูปโปรไฟล์ -->
+                <!-- หยดน้ำส้มเด้งดึ๋ง -->
                 <div class="droplet-sphere" id="dropletSphere"></div>
             </div>
 
@@ -570,7 +594,7 @@
         <!-- Main Details Section -->
         <div class="content-section" id="details">
             
-            <!-- โซนกรอบข้อความ "คำนำ" (ขยายร่างแบบสมูทเด้งมาจากหยดวงกลมส้ม) -->
+            <!-- โซนคำนำสีส้มสด ตัวหนังสือขาวใหญ่ (ขยายเด้งดึ๋งกลืนมาจากหยดน้ำ) -->
             <section class="foreword-section" id="forewordSection">
                 <div class="foreword-card" id="forewordCard">
                     <div class="foreword-header">
@@ -654,7 +678,7 @@
 
     </div>
 
-    <!-- JavaScript สำหรับ Particle และ Scroll Droplet/Morphing Effect -->
+    <!-- JavaScript สำหรับ Particle และ Liquid Drip/Merge Animation -->
     <script>
         /* -------------------------------------------------------------
            1. Particle Line Floating Background
@@ -725,7 +749,7 @@
 
 
         /* -------------------------------------------------------------
-           2. Scroll Droplet & Elastic Morph Animation Logic
+           2. Liquid Drip & Elastic Merge Animation
         ------------------------------------------------------------- */
         const profileContainer = document.getElementById('profileContainer');
         const droplet = document.getElementById('dropletSphere');
@@ -739,36 +763,45 @@
             const profileRect = profileContainer.getBoundingClientRect();
             const forewordRect = forewordSection.getBoundingClientRect();
 
-            // คำนวณระยะการหล่นของวงกลมส้ม
-            const startScroll = 60; // เริ่มหยดเมื่อเลื่อนลงมาเกิน 60px
-            const dropDistance = forewordRect.top - profileRect.bottom + 40;
+            const startScroll = 40; 
+            const dropDistance = forewordRect.top - profileRect.bottom + 10;
 
-            if (scrollY > startScroll && forewordRect.top > window.innerHeight * 0.35) {
-                // คำนวณอัตราส่วนการหล่นตามระยะ Scroll
-                let progress = (scrollY - startScroll) / (forewordSection.offsetTop - profileContainer.offsetTop - 150);
+            if (scrollY > startScroll && forewordRect.top > window.innerHeight * 0.3) {
+                // คำนวณระยะการเลื่อนลง
+                let progress = (scrollY - startScroll) / (forewordSection.offsetTop - profileContainer.offsetTop - 120);
                 progress = Math.min(Math.max(progress, 0), 1);
 
                 const currentY = progress * dropDistance;
-                const currentScale = 1 + progress * 0.5;
+
+                // คำนวณความยืด (Scale Y ยืดออกตามแนวยาว และ Scale X แคบลงขณะตก)
+                let stretchFactor = Math.sin(progress * Math.PI); // ยืดสูงสุดช่วงกลางทาง
+                let scaleY = 1 + stretchFactor * 0.55; 
+                let scaleX = 1 - stretchFactor * 0.25;
 
                 droplet.style.opacity = '1';
-                droplet.style.transform = `translateX(-50%) translateY(${currentY}px) scale(${currentScale})`;
+                droplet.style.transform = `translateX(-50%) translateY(${currentY}px) scale(${scaleX}, ${scaleY})`;
             } else if (scrollY <= startScroll) {
                 droplet.style.opacity = '0';
-                droplet.style.transform = 'translateX(-50%) translateY(0) scale(0)';
+                droplet.style.transform = 'translateX(-50%) translateY(0) scale(0, 0)';
             }
 
-            // เมื่อวงกลมส้มตกลงมาถึงพื้นที่คำนำ ให้สั่งระเบิดขยายกล่องข้อความ (Bouncy Morphing)
-            if (forewordRect.top <= window.innerHeight * 0.75) {
+            // เมื่อหยดน้ำสัมผัสขอบบนของกล่องคำนำ -> รวมร่างกลืนหาย และเด้งขยายการ์ด
+            if (forewordRect.top <= window.innerHeight * 0.68) {
                 if (!isCardExpanded) {
                     isCardExpanded = true;
-                    droplet.style.opacity = '0'; // ซ่อนหยดส้ม
-                    forewordCard.classList.add('expanded'); // ขยายกล่องคำนำพร้อมแรงเด้ง
+                    
+                    // เอฟเฟกต์หยดน้ำกระจายแล้วจมเข้าไปในกล่อง
+                    droplet.style.transform += ' scale(2, 0.5)';
+                    droplet.style.opacity = '0';
+
+                    setTimeout(() => {
+                        forewordCard.classList.add('expanded');
+                    }, 50);
                 }
             } else {
-                if (isCardExpanded && forewordRect.top > window.innerHeight * 0.85) {
+                if (isCardExpanded && forewordRect.top > window.innerHeight * 0.82) {
                     isCardExpanded = false;
-                    forewordCard.classList.remove('expanded'); // หุบกล่องเก็บ
+                    forewordCard.classList.remove('expanded');
                 }
             }
         });
