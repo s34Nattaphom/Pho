@@ -41,7 +41,7 @@
         }
 
         /* ----------------------------------------------------
-           ANIMATION SYSTEM (Smooth Staggered Fade-In)
+           1. ENTRANCE FADE-IN SYSTEM (Hero Section)
         ---------------------------------------------------- */
         .fade-init {
             opacity: 0;
@@ -51,19 +51,55 @@
             will-change: opacity, transform;
         }
 
-        /* เมื่อหน้าเว็บโหลดเสร็จ ค่อยๆ สว่างและลอยขึ้น */
         body.loaded .fade-init {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* หน่วงเวลาการขึ้นของแต่ละชิ้นส่วนให้เรียงลำดับอย่างเป็นธรรมชาติ */
         .delay-nav { transition-delay: 0.1s; }
         .delay-1   { transition-delay: 0.3s; }
         .delay-2   { transition-delay: 0.5s; }
         .delay-3   { transition-delay: 0.7s; }
         .delay-4   { transition-delay: 0.9s; }
         .delay-5   { transition-delay: 1.1s; }
+
+        /* ----------------------------------------------------
+           2. POP & BOUNCE ANIMATION (Foreword & CTA Button)
+        ---------------------------------------------------- */
+        .pop-target {
+            opacity: 0;
+            transform: scale(0.3) translateY(60px);
+            pointer-events: none;
+            will-change: transform, opacity;
+        }
+
+        .foreword-card.popped {
+            pointer-events: auto;
+            animation: bounceInPop 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .cta-wrapper.popped {
+            pointer-events: auto;
+            animation: bounceInPop 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.18s forwards;
+        }
+
+        @keyframes bounceInPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) translateY(70px);
+            }
+            60% {
+                opacity: 1;
+                transform: scale(1.06) translateY(-12px);
+            }
+            80% {
+                transform: scale(0.97) translateY(4px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
 
         /* Canvas Particle Background */
         #particle-canvas {
@@ -166,9 +202,7 @@
             position: relative;
         }
 
-        /* ----------------------------------------------------
-           HERO SECTION
-        ---------------------------------------------------- */
+        /* HERO SECTION */
         .hero-section {
             min-height: 90vh;
             display: flex;
@@ -211,7 +245,7 @@
             background: radial-gradient(circle at 35% 30%, #FF9966 0%, var(--orange-main) 70%, #B83B00 100%);
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
             box-shadow: 0 8px 20px rgba(227, 82, 5, 0.45);
-            z-index: 2;
+            z-index: 30;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.15s ease;
@@ -252,7 +286,6 @@
             z-index: 10;
         }
 
-        /* ปุ่มเลื่อนลงเพื่อดูข้อมูลคำนำ */
         .btn-scroll-down {
             display: inline-flex;
             align-items: center;
@@ -288,9 +321,7 @@
             transform: translateY(4px);
         }
 
-        /* ----------------------------------------------------
-           FOREWORD SECTION
-        ---------------------------------------------------- */
+        /* FOREWORD SECTION */
         .foreword-section {
             min-height: 90vh;
             display: flex;
@@ -352,9 +383,7 @@
             text-indent: 2.8rem;
         }
 
-        /* ----------------------------------------------------
-           ปุ่ม "เข้าชมแฟ้มสะสมผลงานจริง" 3D Glassmorphism
-        ---------------------------------------------------- */
+        /* ปุ่ม "เข้าชมแฟ้มสะสมผลงานจริง" */
         .cta-wrapper {
             margin-top: 2.8rem;
             width: 100%;
@@ -379,7 +408,7 @@
             border: 2px solid rgba(255, 255, 255, 0.6);
             box-shadow: 0 12px 35px rgba(227, 82, 5, 0.45);
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, background 0.4s ease;
             cursor: pointer;
             animation: pulseGlow 2.5s infinite;
         }
@@ -494,9 +523,9 @@
             </button>
         </section>
 
-        <!-- Foreword Section -->
+        <!-- Foreword Section (ตั้งค่าซ่อนไว้ในตอนแรกผ่าน pop-target) -->
         <section class="foreword-section" id="forewordSection">
-            <div class="foreword-card" id="forewordCard">
+            <div class="foreword-card pop-target" id="forewordCard">
                 <div class="foreword-header">
                     <i class="fa-solid fa-quote-left"></i>
                     <h2>คำนำ (Foreword)</h2>
@@ -506,7 +535,7 @@
                 </p>
             </div>
 
-            <div class="cta-wrapper">
+            <div class="cta-wrapper pop-target" id="ctaWrapper">
                 <a href="portfolio.html" class="btn-portfolio-cool">
                     <span class="icon-box">
                         <i class="fa-solid fa-folder-open"></i>
@@ -520,15 +549,14 @@
     </div>
 
     <script>
-        /* Trigger Entrance Animations smooth when Page Loads */
+        /* Trigger Entrance Animations on Page Load */
         window.addEventListener('DOMContentLoaded', () => {
-            // ให้เวลาบราวเซอร์เตรียมองค์ประกอบเล็กน้อย แล้วเริ่มเล่นแอนิเมชันเฟดอิน
             setTimeout(() => {
                 document.body.classList.add('loaded');
             }, 100);
         });
 
-        /* Background Canvas */
+        /* Background Canvas Particle */
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -587,7 +615,7 @@
         }
         drawAndAnimate();
 
-        /* Smooth Scroll to Centered Foreword Section */
+        /* Smooth Scroll to Foreword Section */
         document.getElementById('btnScrollToForeword').addEventListener('click', function() {
             document.getElementById('forewordSection').scrollIntoView({
                 behavior: 'smooth',
@@ -595,34 +623,49 @@
             });
         });
 
-        /* Dynamic Droplet Movement Calculations */
+        /* Dynamic Droplet Movement & Bounce Trigger Calculations */
         const profileContainer = document.getElementById('profileContainer');
         const droplet = document.getElementById('dropletSphere');
+        const forewordSection = document.getElementById('forewordSection');
         const forewordCard = document.getElementById('forewordCard');
+        const ctaWrapper = document.getElementById('ctaWrapper');
 
         function updateDropletPosition() {
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             
             const profileRect = profileContainer.getBoundingClientRect();
-            const forewordRect = forewordCard.getBoundingClientRect();
+            const sectionRect = forewordSection.getBoundingClientRect();
 
             const profileBottomY = profileRect.bottom + scrollTop - 45;
-            const forewordTopY = forewordRect.top + scrollTop + 10;
+            // คำนวณจุดเป้าหมายด้านบนสุดของส่วนคำนำ
+            const targetY = sectionRect.top + scrollTop + 20;
 
             const startScroll = profileRect.top + scrollTop - 80;
-            const endScroll = forewordRect.top + scrollTop - (window.innerHeight * 0.5);
+            const endScroll = sectionRect.top + scrollTop - (window.innerHeight * 0.45);
 
-            if (scrollTop > startScroll && scrollTop < endScroll + 400) {
+            if (scrollTop > startScroll) {
                 let progress = (scrollTop - startScroll) / (endScroll - startScroll);
                 progress = Math.min(Math.max(progress, 0), 1);
 
-                const currentDropletY = profileBottomY + (progress * (forewordTopY - profileBottomY));
+                const currentDropletY = profileBottomY + (progress * (targetY - profileBottomY));
                 droplet.style.top = `${currentDropletY}px`;
 
-                if (progress < 0.94) {
+                // ตรวจสอบเมื่อหยดน้ำเดินทางถึงเป้าหมาย (90%+)
+                if (progress >= 0.88) {
+                    forewordCard.classList.add('popped');
+                    ctaWrapper.classList.add('popped');
+                } else if (scrollTop < startScroll + 30) {
+                    // หากเลื่อนกลับไปด้านบนสุด ให้รีเซ็ตสถานะเพื่อเด้งใหม่ได้เมื่อเลื่อนลงมาอีก
+                    forewordCard.classList.remove('popped');
+                    ctaWrapper.classList.remove('popped');
+                }
+
+                // ควบคุมความโปร่งใสของหยดน้ำเมื่อถึงจุดชนกระทบ
+                if (progress < 0.88) {
                     droplet.style.opacity = `${Math.min(progress * 4, 1)}`;
                 } else {
-                    let fade = 1 - ((progress - 0.94) / 0.06);
+                    // หยดน้ำจะสแปลชสลายไปพร้อมๆ กับที่กล่องคำนำเด้งโผล่ขึ้นมา
+                    let fade = 1 - ((progress - 0.88) / 0.12);
                     droplet.style.opacity = `${Math.max(fade, 0)}`;
                 }
             } else {
