@@ -11,13 +11,19 @@
 
     <style>
         :root {
-            --bg-color: #080a0f;
-            --card-bg: rgba(18, 23, 35, 0.75);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --gold-primary: #d4af37;
-            --gold-light: #f5e6ab;
-            --text-main: #f0f4f8;
-            --text-muted: #8b9bb4;
+            /* Palette จากภาพอ้างอิง */
+            --orange-main: #E35205;      /* Main Orange */
+            --orange-light: #FF7026;     /* Bright Light Orange */
+            --orange-soft-bg: #FFF0E6;   /* Very Soft Orange Accent */
+            --orange-glow: rgba(227, 82, 5, 0.15);
+            
+            --bg-color: #FAFAFA;         /* White Light Background */
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(227, 82, 5, 0.18);
+            
+            --text-main: #222222;       /* Dark charcoal for high contrast text */
+            --text-muted: #666666;      /* Secondary grey from image */
+            --text-white: #FFFFFF;
         }
 
         * {
@@ -36,32 +42,24 @@
             position: relative;
         }
 
-        /* ================= BACKGROUND TECH EFFECTS ================= */
-        .bg-grid {
+        /* ================= BACKGROUND CANVAS & GLOW ================= */
+        #particle-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(212, 175, 55, 0.04) 1px, transparent 1px);
-            background-size: 50px 50px;
             z-index: -2;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 50px 50px; }
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFF5F0 50%, #FFEBE0 100%);
+            pointer-events: none;
         }
 
         .ambient-glow {
             position: fixed;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(8, 10, 15, 0) 70%);
-            top: -200px;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(227, 82, 5, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
+            top: -150px;
             left: 50%;
             transform: translateX(-50%);
             z-index: -1;
@@ -70,7 +68,7 @@
         }
 
         @keyframes pulseGlow {
-            0% { opacity: 0.4; transform: translateX(-50%) scale(0.9); }
+            0% { opacity: 0.5; transform: translateX(-50%) scale(0.9); }
             100% { opacity: 1; transform: translateX(-50%) scale(1.15); }
         }
 
@@ -95,7 +93,7 @@
         }
 
         .slow-fade-in {
-            animation: slowPageFadeIn 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: slowPageFadeIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         /* ================= TOP FLOATING PILL NAVBAR ================= */
@@ -112,31 +110,32 @@
         }
 
         .pill-navbar {
-            background: rgba(18, 23, 33, 0.8);
+            background: rgba(255, 255, 255, 0.82);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--card-border);
             border-radius: 50px;
             padding: 0.5rem 1.8rem;
             display: flex;
             align-items: center;
             gap: 2rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.15);
-            transition: border-color 0.3s;
+            box-shadow: 0 10px 30px rgba(227, 82, 5, 0.08), 0 2px 10px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
         }
 
         .pill-navbar:hover {
-            border-color: rgba(212, 175, 55, 0.4);
+            border-color: rgba(227, 82, 5, 0.4);
+            box-shadow: 0 12px 35px rgba(227, 82, 5, 0.15);
         }
 
         .nav-logo {
-            color: #ffffff;
+            color: var(--orange-main);
             font-weight: 700;
             font-size: 1.1rem;
             letter-spacing: 1.5px;
             text-decoration: none;
             padding-right: 1rem;
-            border-right: 1px solid rgba(255, 255, 255, 0.15);
+            border-right: 1px solid rgba(227, 82, 5, 0.2);
         }
 
         .nav-menu-list {
@@ -155,19 +154,19 @@
             text-decoration: none;
             border-radius: 25px;
             font-size: 0.9rem;
-            font-weight: 400;
+            font-weight: 500;
             transition: all 0.3s ease;
         }
 
         .nav-menu-item a i {
             font-size: 0.95rem;
-            color: var(--gold-primary);
+            color: var(--orange-main);
         }
 
         .nav-menu-item a:hover, .nav-menu-item a.active {
-            color: #ffffff;
-            background: rgba(212, 175, 55, 0.2);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+            color: var(--orange-main);
+            background: var(--orange-soft-bg);
+            box-shadow: 0 2px 12px rgba(227, 82, 5, 0.12);
         }
 
         /* ================= MAIN CONTENT WRAPPER ================= */
@@ -178,7 +177,7 @@
             padding: 0 1.5rem;
         }
 
-        /* Hero Section (Full Viewport Height) */
+        /* Hero Section */
         .hero-section {
             min-height: 100vh;
             display: flex;
@@ -196,8 +195,8 @@
             margin: 0 auto 1.5rem;
             border-radius: 50%;
             padding: 4px;
-            background: linear-gradient(135deg, var(--gold-primary), rgba(212, 175, 55, 0.2));
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.35);
+            background: linear-gradient(135deg, var(--orange-main), #FFB088);
+            box-shadow: 0 10px 30px rgba(227, 82, 5, 0.25);
         }
 
         .profile-img-container img {
@@ -205,28 +204,28 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--bg-color);
+            border: 3px solid #FFFFFF;
         }
 
         .badge-dek {
             display: inline-block;
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--gold-primary);
-            border: 1px solid rgba(212, 175, 55, 0.35);
+            background: var(--orange-soft-bg);
+            color: var(--orange-main);
+            border: 1px solid rgba(227, 82, 5, 0.3);
             padding: 0.4rem 1.2rem;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
             letter-spacing: 1px;
             margin-bottom: 1.2rem;
+            box-shadow: 0 2px 8px rgba(227, 82, 5, 0.08);
         }
 
         .hero-name {
             font-size: 2.3rem;
             font-weight: 700;
-            color: #fff;
+            color: var(--text-main);
             margin-bottom: 1rem;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
         }
 
         .hero-bio {
@@ -234,7 +233,7 @@
             font-size: 1rem;
             max-width: 680px;
             margin: 0 auto 2rem;
-            font-weight: 300;
+            font-weight: 400;
             line-height: 1.8;
         }
 
@@ -242,20 +241,20 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(135deg, #d4af37, #a6810a);
-            color: #0b0d14;
+            background: linear-gradient(135deg, var(--orange-main), var(--orange-light));
+            color: var(--text-white);
             font-weight: 600;
             padding: 0.85rem 2.2rem;
             border-radius: 30px;
             text-decoration: none;
             font-size: 0.95rem;
             transition: all 0.35s ease;
-            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 8px 25px rgba(227, 82, 5, 0.3);
         }
 
         .btn-portfolio:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(227, 82, 5, 0.45);
         }
 
         /* Scroll Down Indicator */
@@ -276,7 +275,7 @@
         }
 
         .scroll-indicator i {
-            color: var(--gold-primary);
+            color: var(--orange-main);
             font-size: 1.2rem;
         }
 
@@ -303,32 +302,33 @@
             gap: 1.2rem;
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 8px 24px rgba(227, 82, 5, 0.05);
             transition: all 0.35s ease;
         }
 
         .info-card:hover {
-            border-color: rgba(212, 175, 55, 0.45);
-            transform: translateY(-5px);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.18);
+            border-color: var(--orange-main);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(227, 82, 5, 0.15);
         }
 
         .info-icon {
             width: 52px;
             height: 52px;
-            background: rgba(212, 175, 55, 0.12);
+            background: var(--orange-soft-bg);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--gold-primary);
+            color: var(--orange-main);
             font-size: 1.3rem;
             flex-shrink: 0;
             transition: all 0.3s;
         }
 
         .info-card:hover .info-icon {
-            background: var(--gold-primary);
-            color: #0b0d14;
+            background: var(--orange-main);
+            color: var(--text-white);
         }
 
         .info-details {
@@ -345,7 +345,7 @@
         .info-value {
             font-size: 1.1rem;
             font-weight: 600;
-            color: #fff;
+            color: var(--text-main);
         }
 
         .info-sub {
@@ -369,17 +369,18 @@
             text-align: center;
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 8px 24px rgba(227, 82, 5, 0.05);
             transition: all 0.35s ease;
         }
 
         .skill-card:hover {
-            border-color: rgba(212, 175, 55, 0.5);
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.2);
+            border-color: var(--orange-main);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(227, 82, 5, 0.15);
         }
 
         .skill-icon {
-            color: var(--gold-primary);
+            color: var(--orange-main);
             font-size: 1.8rem;
             margin-bottom: 0.8rem;
         }
@@ -387,7 +388,7 @@
         .skill-title {
             font-size: 1.05rem;
             font-weight: 600;
-            color: #fff;
+            color: var(--text-main);
         }
 
         /* Responsive Design */
@@ -418,8 +419,8 @@
 </head>
 <body class="slow-fade-in">
 
-    <!-- Tech Grid & Ambient Glow Background -->
-    <div class="bg-grid"></div>
+    <!-- Floating Line Particle Background Canvas -->
+    <canvas id="particle-canvas"></canvas>
     <div class="ambient-glow"></div>
 
     <!-- Top Floating Pill Navigation -->
@@ -475,7 +476,7 @@
             </a>
         </section>
 
-        <!-- Main Details Section (Appears when scrolling down) -->
+        <!-- Main Details Section -->
         <div class="content-section" id="details">
             <!-- Personal Info Cards Grid -->
             <section class="info-grid">
@@ -548,5 +549,76 @@
 
     </div>
 
+    <!-- JavaScript สำหรับสร้างเอฟเฟกต์ Floating Long Line Particles ด้านหลัง -->
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // สร้างข้อมูลเส้นลอยละล่อง
+        const lines = [];
+        const lineCount = 40; // จำนวนเส้นที่ต้องการให้ลอยอยู่ด้านหลัง
+
+        for (let i = 0; i < lineCount; i++) {
+            lines.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                length: Math.random() * 100 + 70,     // ความยาวของเส้น (70px - 170px)
+                angle: Math.random() * Math.PI * 2,    // ทิศทางเอียง
+                speed: Math.random() * 0.35 + 0.12,    // ความเร็วในการลอยช้าๆ
+                width: Math.random() * 2 + 1,          // ความหนาเส้น
+                opacity: Math.random() * 0.35 + 0.12,  // ความโปร่งแสง
+                rotSpeed: (Math.random() - 0.5) * 0.002 // ความเร็วการหมุนช้าๆ
+            });
+        }
+
+        function drawAndAnimate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            lines.forEach(line => {
+                // เคลื่อนที่
+                line.x += Math.cos(line.angle) * line.speed;
+                line.y += Math.sin(line.angle) * line.speed;
+                line.angle += line.rotSpeed;
+
+                // เมื่อทะลุขอบจอ ให้กลับเข้ามาอีกฝั่ง
+                if (line.x < -150) line.x = canvas.width + 150;
+                if (line.x > canvas.width + 150) line.x = -150;
+                if (line.y < -150) line.y = canvas.height + 150;
+                if (line.y > canvas.height + 150) line.y = -150;
+
+                // วาดเส้นแบบ Gradient จางตรงหัวและท้าย
+                ctx.save();
+                ctx.translate(line.x, line.y);
+                ctx.rotate(line.angle);
+
+                const grad = ctx.createLinearGradient(0, 0, line.length, 0);
+                grad.addColorStop(0, 'rgba(227, 82, 5, 0)');
+                grad.addColorStop(0.5, `rgba(227, 82, 5, ${line.opacity})`);
+                grad.addColorStop(1, 'rgba(227, 82, 5, 0)');
+
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = line.width;
+                ctx.lineCap = 'round';
+
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(line.length, 0);
+                ctx.stroke();
+
+                ctx.restore();
+            });
+
+            requestAnimationFrame(drawAndAnimate);
+        }
+
+        drawAndAnimate();
+    </script>
 </body>
 </html>
