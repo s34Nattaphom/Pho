@@ -41,7 +41,7 @@
             position: relative;
         }
 
-        /* Background Canvas & Ambient Glow */
+        /* Particle Canvas & Ambient Background */
         #particle-canvas {
             position: fixed;
             top: 0;
@@ -82,19 +82,19 @@
             60% { transform: translateY(-5px) translateX(-50%); }
         }
 
-        /* รูปทรงหยดน้ำเด้งดึ๋ง */
+        /* ทรงหยดน้ำพลิ้วไหว */
         @keyframes liquidWobble {
-            0% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; }
-            33% { border-radius: 58% 42% 38% 62% / 55% 60% 40% 45%; }
-            66% { border-radius: 50% 50% 45% 55% / 40% 60% 40% 60%; }
-            100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; }
+            0% { border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
+            33% { border-radius: 45% 55% 60% 40% / 55% 45% 55% 45%; }
+            66% { border-radius: 55% 45% 40% 60% / 45% 55% 45% 55%; }
+            100% { border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
         }
 
         .slow-fade-in {
             animation: slowPageFadeIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Navigation Bar */
+        /* Top Navigation Bar */
         .top-nav-wrapper {
             position: fixed;
             top: 1.5rem;
@@ -159,7 +159,7 @@
             background: var(--orange-soft-bg);
         }
 
-        /* Container & Layout */
+        /* Page Layout */
         .page-container {
             width: 100%;
             max-width: 960px;
@@ -168,7 +168,7 @@
         }
 
         .hero-section {
-            min-height: 100vh;
+            min-height: 85vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -178,11 +178,11 @@
             padding-top: 5rem;
         }
 
-        /* Profile Image */
+        /* Profile Container & Liquid Neck SVG */
         .profile-img-container {
             position: relative;
-            width: 145px;
-            height: 145px;
+            width: 150px;
+            height: 150px;
             margin: 0 auto 1.5rem;
             border-radius: 50%;
             padding: 4px;
@@ -201,21 +201,38 @@
             z-index: 2;
         }
 
-        /* หยดน้ำส้มปรับแต่งตำแหน่งตั้งต้นและการไหลลง */
+        /* SVG สำหรับสร้างคอยืดหยดน้ำออกจากขอบโปรไฟล์ */
+        .liquid-neck-svg {
+            position: absolute;
+            top: 125px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 150px;
+            z-index: 18;
+            pointer-events: none;
+            overflow: visible;
+        }
+
+        .liquid-neck-svg path {
+            fill: var(--orange-main);
+            transition: opacity 0.1s ease;
+        }
+
+        /* ตัวหยดน้ำทรงอิสระ */
         .droplet-sphere {
             position: absolute;
-            top: 100%;
+            top: 135px;
             left: 50%;
             transform: translateX(-50%) scale(0);
             width: 32px;
             height: 38px;
             background: radial-gradient(circle at 35% 30%, #FF9966 0%, var(--orange-main) 70%, #B83B00 100%);
             box-shadow: 0 6px 20px rgba(227, 82, 5, 0.6), 0 0 15px rgba(227, 82, 5, 0.4);
-            z-index: 15;
+            z-index: 19;
             pointer-events: none;
             opacity: 0;
-            animation: liquidWobble 2.2s ease-in-out infinite;
-            transition: opacity 0.15s ease-out;
+            animation: liquidWobble 2s ease-in-out infinite;
             will-change: transform, opacity;
         }
 
@@ -265,7 +282,7 @@
 
         .scroll-indicator {
             position: absolute;
-            bottom: 2.5rem;
+            bottom: 1rem;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -282,9 +299,10 @@
             color: var(--orange-main);
         }
 
-        /* Foreword Section & Card */
+        /* Foreword Section (ขยับห่างออกไปเพื่อให้เลื่อนยาวขึ้น) */
         .foreword-section {
-            margin: 2rem 0 4rem 0;
+            margin-top: 14rem; /* ขยับลงมาให้ไกลขึ้นเห็นจังหวะหยดน้ำได้ชัดเจน */
+            margin-bottom: 5rem;
             display: flex;
             justify-content: center;
             position: relative;
@@ -301,7 +319,7 @@
             box-shadow: 0 20px 50px rgba(227, 82, 5, 0.35);
             backdrop-filter: blur(16px);
             
-            /* เริ่มต้นหดตัวซ่อนอยู่ */
+            /* หดตัวรอการละลายของหยดน้ำ */
             opacity: 0;
             transform: scale(0.08) translateY(-60px);
             transform-origin: top center;
@@ -309,7 +327,6 @@
             pointer-events: none;
         }
 
-        /* ขยายตัวเต็มเมื่อหยดน้ำละลายลงมา */
         .foreword-card.expanded {
             opacity: 1;
             transform: scale(1) translateY(0);
@@ -354,7 +371,7 @@
             padding-bottom: 5rem;
         }
 
-        /* Info Grid Cards */
+        /* Info Grid */
         .info-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -440,6 +457,7 @@
             .hero-name { font-size: 1.7rem; }
             .foreword-card { padding: 1.8rem 1.5rem; }
             .foreword-text { font-size: 1rem; }
+            .foreword-section { margin-top: 8rem; }
         }
     </style>
 </head>
@@ -463,9 +481,15 @@
         <section class="hero-section" id="about">
             <div class="profile-img-container" id="profileContainer">
                 <img src="my02.jpg" alt="นายณัฐภูมิ เฉวียงวาท">
-                <!-- หยดน้ำส้ม -->
-                <div class="droplet-sphere" id="dropletSphere"></div>
             </div>
+
+            <!-- SVG สำหรับสร้างคอยืดของหยดน้ำออกจากขอบรูป -->
+            <svg class="liquid-neck-svg" id="liquidNeckSvg" viewBox="0 0 120 150">
+                <path id="neckPath" d="M 15 0 Q 60 0 105 0 L 60 0 Z" />
+            </svg>
+
+            <!-- หยดน้ำส้ม -->
+            <div class="droplet-sphere" id="dropletSphere"></div>
 
             <div>
                 <span class="badge-dek">DEK70 ACADEMIC PORTFOLIO</span>
@@ -486,7 +510,6 @@
 
         <div class="content-section" id="details">
             
-            <!-- กรอบคำนำส้มสดขยายร่างจากการละลายของหยดน้ำ -->
             <section class="foreword-section" id="forewordSection">
                 <div class="foreword-card" id="forewordCard">
                     <div class="foreword-header">
@@ -552,7 +575,7 @@
     </div>
 
     <script>
-        /* Particle Background Canvas */
+        /* Particle Lines Background Canvas */
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -611,9 +634,10 @@
         }
         drawAndAnimate();
 
-        /* Smooth Drip & Dissolve Scroll Animation Logic */
+        /* Advanced Liquid Pinching & Long Distance Scroll Logic */
         const profileContainer = document.getElementById('profileContainer');
         const droplet = document.getElementById('dropletSphere');
+        const neckPath = document.getElementById('neckPath');
         const forewordSection = document.getElementById('forewordSection');
         const forewordCard = document.getElementById('forewordCard');
 
@@ -624,48 +648,78 @@
             const profileRect = profileContainer.getBoundingClientRect();
             const forewordRect = forewordSection.getBoundingClientRect();
 
-            // จุดเริ่มต้นยืดหยดน้ำ
-            const startScroll = 20; 
-            const totalDropDistance = forewordRect.top - profileRect.bottom + 10;
+            // คำนวณระยะทางรวมทั้งหมด
+            const startScroll = 15;
+            const targetYDistance = forewordRect.top - profileRect.bottom + 10;
 
-            if (scrollY > startScroll && forewordRect.top > window.innerHeight * 0.35) {
-                // คำนวณ Progress (0 ถึง 1) ให้มีช่วงระยะที่กว้างขึ้น มองทันได้ชัดเจน
-                let progress = (scrollY - startScroll) / (forewordSection.offsetTop - profileContainer.offsetTop - 100);
+            if (scrollY > startScroll && forewordRect.top > window.innerHeight * 0.25) {
+                let progress = (scrollY - startScroll) / (forewordSection.offsetTop - profileContainer.offsetTop - 120);
                 progress = Math.min(Math.max(progress, 0), 1);
 
-                const currentY = progress * totalDropDistance;
+                const currentY = progress * targetYDistance;
 
-                // ช่วงที่ยังลงมาไม่ถึงกล่องคำนำ: แสดงตัวหยดน้ำยืดเด้งดึ๋ง
-                if (progress < 0.92) {
-                    let stretchFactor = Math.sin(progress * Math.PI);
-                    let scaleY = 1 + stretchFactor * 0.6; 
-                    let scaleX = 1 - stretchFactor * 0.22;
+                // --- เฟสที่ 1: คอยืดออกจากวงกลมโปรไฟล์ (Pinch Neck Effect) ---
+                const neckDetachThreshold = 0.22; // จังหวะที่หยดน้ำขาดออกจากรูปโปรไฟล์
 
-                    droplet.style.opacity = `${Math.min(progress * 2.5, 1)}`;
-                    droplet.style.transform = `translateX(-50%) translateY(${currentY}px) scale(${scaleX}, ${scaleY})`;
+                if (progress <= neckDetachThreshold) {
+                    let neckProgress = progress / neckDetachThreshold; 
+                    let neckY = neckProgress * 85; 
+
+                    // วาดสายคอยืด SVG ให้สอบโค้งบีบลงมาหาหัวหยดน้ำตามรูปร่าง
+                    let leftX = 20 + neckProgress * 30;  
+                    let rightX = 100 - neckProgress * 30; 
+                    let tipX = 60;
+
+                    neckPath.setAttribute('d', 
+                        `M ${leftX} 0 ` +
+                        `Q 60 ${neckY * 0.4} ${tipX - (15 * (1 - neckProgress))} ${neckY} ` +
+                        `L ${tipX + (15 * (1 - neckProgress))} ${neckY} ` +
+                        `Q 60 ${neckY * 0.4} ${rightX} 0 Z`
+                    );
+                    neckPath.style.opacity = `${1 - neckProgress * 0.3}`;
+
+                    // ตำแหน่งหยดน้ำติดอยู่กับปลายคอยืด
+                    droplet.style.opacity = `${Math.min(neckProgress * 3, 1)}`;
+                    droplet.style.transform = `translateX(-50%) translateY(${neckY}px) scale(${1 - neckProgress * 0.15}, ${1 + neckProgress * 0.4})`;
+
                 } else {
-                    // ช่วงแตะขอบกล่องคำนำ (0.92 - 1.0): ละลายกลืนหายไปกับช่องข้อความ
-                    let meltProgress = (progress - 0.92) / 0.08;
-                    let splashX = 1 + meltProgress * 2.5; // แบนกว้างออกข้าง
-                    let splashY = Math.max(1 - meltProgress * 0.9, 0.1); // ยุบตัวลง
-                    let fadeOut = 1 - meltProgress; // จางหาย
+                    // สายคอยืดขาดหายไปอย่างเนียนๆ
+                    neckPath.style.opacity = '0';
 
-                    droplet.style.opacity = `${fadeOut}`;
-                    droplet.style.transform = `translateX(-50%) translateY(${currentY}px) scale(${splashX}, ${splashY})`;
+                    // --- เฟสที่ 2: หยดน้ำหลุดเป็นอิสระและหยดลงมายาวๆ ---
+                    if (progress < 0.93) {
+                        let stretchFactor = Math.sin((progress - neckDetachThreshold) / (1 - neckDetachThreshold) * Math.PI);
+                        let scaleY = 1.1 + stretchFactor * 0.5;
+                        let scaleX = 0.9 - stretchFactor * 0.2;
+
+                        droplet.style.opacity = '1';
+                        droplet.style.transform = `translateX(-50%) translateY(${currentY}px) scale(${scaleX}, ${scaleY})`;
+
+                    } else {
+                        // --- เฟสที่ 3: ละลายซึมลงกรอบคำนำสีส้มด้านล่าง ---
+                        let meltProgress = (progress - 0.93) / 0.07;
+                        let splashX = 1 + meltProgress * 3.0; // แบนขยายออกข้าง
+                        let splashY = Math.max(1 - meltProgress * 0.95, 0.05); // ยุบตัวลง
+                        let fadeOut = 1 - meltProgress;
+
+                        droplet.style.opacity = `${fadeOut}`;
+                        droplet.style.transform = `translateX(-50%) translateY(${currentY}px) scale(${splashX}, ${splashY})`;
+                    }
                 }
             } else if (scrollY <= startScroll) {
+                neckPath.style.opacity = '0';
                 droplet.style.opacity = '0';
                 droplet.style.transform = 'translateX(-50%) translateY(0) scale(0, 0)';
             }
 
-            // จังหวะผุดกล่องคำนำขึ้นมาหลังจากหยดน้ำเริ่มละลาย
+            // แอนิเมชันเด้งผุดขึ้นของกรอบคำนำ
             if (forewordRect.top <= window.innerHeight * 0.65) {
                 if (!isCardExpanded) {
                     isCardExpanded = true;
                     forewordCard.classList.add('expanded');
                 }
             } else {
-                if (isCardExpanded && forewordRect.top > window.innerHeight * 0.8) {
+                if (isCardExpanded && forewordRect.top > window.innerHeight * 0.82) {
                     isCardExpanded = false;
                     forewordCard.classList.remove('expanded');
                 }
