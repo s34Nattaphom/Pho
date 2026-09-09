@@ -57,11 +57,6 @@
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        @keyframes cardEntrance {
-            0% { opacity: 0; transform: translateY(40px) scale(0.92); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
         @keyframes pulseGlow {
             0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
             100% { opacity: 1; transform: translateX(-50%) scale(1.05); }
@@ -76,6 +71,19 @@
                 transform: translateY(0);
                 opacity: 1;
             }
+        }
+
+        /* Floating Orb Animation (วงกลมลอยๆ) */
+        @keyframes orbFloat {
+            0% { transform: translateY(0px) scale(0.45) rotate(0deg); }
+            50% { transform: translateY(-12px) scale(0.48) rotate(2deg); }
+            100% { transform: translateY(0px) scale(0.45) rotate(0deg); }
+        }
+
+        @keyframes bounceScroll {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
         }
 
         /* BACKGROUND GLOW */
@@ -154,7 +162,7 @@
             opacity: 0;
         }
 
-        /* SIDEBAR MENU (แก้ไข: ปิด Fade In ซ้ำ + เพิ่มแอนิเมชันเลื่อนลงของแถบสีเหลือง) */
+        /* SIDEBAR MENU */
         .side-menu-panel {
             position: fixed;
             top: 5.5rem;
@@ -168,7 +176,6 @@
             padding: 1.5rem 1rem;
             z-index: 900;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            /* ปิดการใช้ animation fadeInDown เพื่อไม่ให้เมนูกระพริบ/จางซ้ำ */
             opacity: 1;
             transform: translateY(0);
         }
@@ -211,7 +218,6 @@
             border-color: rgba(212, 175, 55, 0.2);
         }
 
-        /* แถบไฮไลต์สีเหลืองสำหรับ Active State ให้ความรู้สึกเลื่อนลงมา */
         .side-menu-list a.active {
             color: #fff;
             background: rgba(212, 175, 55, 0.15);
@@ -238,17 +244,38 @@
             transition: all 0.3s ease;
         }
 
-        .page-header {
-            padding: 7.5rem 5% 1rem;
+        /* HERO / BLANK SPACE (พื้นที่เว้นว่างตอนกดเข้ามาหน้าแรก) */
+        .hero-space-container {
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            padding: 7rem 1rem 2rem;
+            position: relative;
+        }
+
+        .hero-space-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.12);
+            color: var(--gold-primary);
+            border: 1px solid var(--border-gold);
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 1.2rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
         }
 
         .page-header h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 700;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.8rem;
             opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
         }
 
         .gold-text {
@@ -259,22 +286,45 @@
 
         .page-header p {
             color: var(--text-muted);
-            font-size: 1rem;
+            font-size: 1.05rem;
             max-width: 680px;
             margin: 0 auto;
             font-weight: 300;
+            line-height: 1.6;
             opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+
+        .scroll-down-hint {
+            margin-top: 3.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: var(--gold-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            animation: bounceScroll 2s infinite;
+            opacity: 0.85;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-down-hint:hover {
+            opacity: 1;
+        }
+
+        /* FILTER BUTTONS CONTAINER */
+        .filter-section {
+            padding-top: 2rem;
+            text-align: center;
         }
 
         .filter-container {
             display: flex;
             justify-content: center;
             gap: 0.8rem;
-            margin: 2.2rem 0 1.5rem;
+            margin: 1.5rem 0 2rem;
             flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
         }
 
         .filter-btn {
@@ -297,22 +347,23 @@
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
         }
 
-        /* PORTFOLIO GRID */
+        /* PORTFOLIO GRID & FLOATING ORB EFFECT */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
             gap: 2rem;
-            padding: 2rem 5% 6rem;
+            padding: 1rem 5% 6rem;
             max-width: 1320px;
             margin: 0 auto;
             width: 100%;
             perspective: 1000px;
         }
 
+        /* PORTFOLIO CARD (เริ่มต้นเป็นวงกลมลอยๆ) */
         .portfolio-item {
             background: var(--card-bg);
             border: 1px solid var(--border-gold);
-            border-radius: 18px;
+            border-radius: 50%;
             overflow: hidden;
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
@@ -321,14 +372,40 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            transform-origin: center bottom;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+            min-height: 280px;
+
+            /* Initial Floating Orb State (ลอยๆ เป็นวงกลม) */
+            opacity: 0;
+            transform: translateY(80px) scale(0.4);
+            filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.15);
+
+            transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
+                        filter 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-radius 0.85s cubic-bezier(0.16, 1, 0.3, 1),
                         border-color 0.35s ease, 
                         box-shadow 0.35s ease;
-            opacity: 0;
-            animation: cardEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        /* เอฟเฟกต์ลอยละล่อง */
+        .portfolio-item.orb-floating {
+            animation: orbFloat 4s ease-in-out infinite alternate;
+        }
+
+        /* REVEALED STATE (คลี่ขยายเป็น Card สมบูรณ์เมื่อเลื่อนมาถึง) */
+        .portfolio-item.revealed {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            border-radius: 18px;
+            filter: blur(0px);
+            animation: none;
+        }
+
+        .portfolio-item.revealed:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--gold-primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.35);
         }
 
         .portfolio-item.inactive {
@@ -336,12 +413,6 @@
             filter: blur(6px) grayscale(50%) !important;
             transform: rotateX(55deg) translateY(40px) scale(0.88) !important;
             pointer-events: none;
-        }
-
-        .portfolio-item:not(.inactive):hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: var(--gold-primary);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.35);
         }
 
         .item-img {
@@ -765,24 +836,33 @@
     <!-- Main Container Wrapper -->
     <div class="main-container-wrapper">
 
-        <!-- Header & Filter Buttons -->
-        <header class="page-header">
+        <!-- 1. BLANK HERO INTRO SPACE (พื้นที่ว่างส่วนบน เลื่อนลงมาเปิดผลงาน) -->
+        <section class="hero-space-container page-header">
+            <span class="hero-space-badge">PORTFOLIO COLLECTION</span>
             <h1>แฟ้มสะสมผลงาน <span class="gold-text">(Portfolio)</span></h1>
             <p>รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยี</p>
 
+            <div class="scroll-down-hint" id="scrollToPortfolio">
+                <span>เลื่อนลงเพื่อสำรวจผลงาน</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- 2. FILTER BUTTONS -->
+        <div class="filter-section" id="portfolioSection">
             <div class="filter-container">
                 <button class="filter-btn active" onclick="filterPortfolio('all', event)">ทั้งหมด</button>
                 <button class="filter-btn" onclick="filterPortfolio('projects', event)">โครงงาน / โปรเจกต์</button>
                 <button class="filter-btn" onclick="filterPortfolio('workshops', event)">การอบรม / กิจกรรม</button>
                 <button class="filter-btn" onclick="filterPortfolio('certificates', event)">เกียรติบัตร</button>
             </div>
-        </header>
+        </div>
 
-        <!-- Portfolio Grid -->
+        <!-- 3. PORTFOLIO GRID (การ์ดเริ่มต้นเป็นวงกลมลอยๆ พอเลื่อนมาถึงจะขยายแสดงผล) -->
         <section class="portfolio-grid" id="portfolioDeck">
 
             <!-- 1. PERSONAL PORTFOLIO WEBSITE -->
-            <div class="portfolio-item projects" onclick="openModal(this)"
+            <div class="portfolio-item projects orb-floating" onclick="openModal(this)"
                  data-title="Personal Portfolio Website"
                  data-tag="Project / Web Development"
                  data-desc="เว็บไซต์แฟ้มสะสมผลงานส่วนตัว ออกแบบและพัฒนาขึ้นเพื่อนำเสนอประวัติการศึกษา โครงงาน และกิจกรรมทางด้านเทคโนโลยี พัฒนาโครงสร้างด้วย HTML5, CSS3 และ JavaScript โฮสต์บนระบบ GitHub Pages เน้นดีไซน์ Luxury Glassmorphism พร้อมรองรับการแสดงผลทุกหน้าจอ (Responsive Design)"
@@ -804,7 +884,7 @@
             </div>
 
             <!-- 2. COMPUTER HARDWARE ANALYSIS -->
-            <div class="portfolio-item projects" onclick="openModal(this)"
+            <div class="portfolio-item projects orb-floating" onclick="openModal(this)"
                  data-title="Computer Systems & Hardware Analysis"
                  data-tag="Project / Hardware"
                  data-desc="การศึกษา เปรียบเทียบ และวิเคราะห์ประสิทธิภาพของชิ้นส่วนคอมพิวเตอร์ (Hardware Architecture) ทั้งหน่วยประมวลผลกลาง (CPU) หน่วยประมวลผลกราฟิก (GPU) ชิปเซ็ตเมนบอร์ด และระบบกักเก็บข้อมูลแบบ NVMe PCIe SSD เพื่อความเข้าใจในการเลือกใช้ทรัพยากรฮาร์ดแวร์ให้เหมาะสมกับงานประเภทต่างๆ"
@@ -826,7 +906,7 @@
             </div>
 
             <!-- 3. K-ENGINEERING: BASIC AI (A1.jpg) -->
-            <div class="portfolio-item workshops" onclick="openModal(this)"
+            <div class="portfolio-item workshops orb-floating" onclick="openModal(this)"
                  data-title="K-Engineering: Basic AI Workshop"
                  data-tag="Workshop / Engineering"
                  data-desc="การเข้าร่วมอบรมเชิงปฏิบัติการทางด้านปัญญาประดิษฐ์ขั้นพื้นฐาน (Basic AI) ในงาน K-Engineering World Tour and Competency Challenge จัดโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง (KMITL)"
@@ -848,7 +928,7 @@
             </div>
 
             <!-- 4. K-ENGINEERING: CYBERSECURITY (A2.jpg) -->
-            <div class="portfolio-item workshops" onclick="openModal(this)"
+            <div class="portfolio-item workshops orb-floating" onclick="openModal(this)"
                  data-title="K-Engineering: Cybersecurity Competency Challenge"
                  data-tag="Workshop / Cybersecurity"
                  data-desc="การเข้าร่วมอบรมและทดสอบทักษะความมั่นคงปลอดภัยทางไซเบอร์ ในงาน K-Engineering World Tour and Competency Challenge ณ คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"
@@ -870,7 +950,7 @@
             </div>
 
             <!-- 5. K-ENGINEERING: BASIC PLC (A3.jpg) -->
-            <div class="portfolio-item workshops" onclick="openModal(this)"
+            <div class="portfolio-item workshops orb-floating" onclick="openModal(this)"
                  data-title="K-Engineering: Basic PLC Workshop"
                  data-tag="Workshop / Engineering"
                  data-desc="การเข้าร่วมอบรมเชิงปฏิบัติการควบคุมอุปกรณ์อุตสาหกรรมด้วยโปรแกรม PLC (Programmable Logic Controller) ขั้นพื้นฐาน เรียนรู้การเขียนโปรแกรมควบคุมวงจรอัตโนมัติในระบบวิศวกรรม"
@@ -892,7 +972,7 @@
             </div>
 
             <!-- 6. THAILAND UNIVERSITY EXPO 2024 (A4.jpg) -->
-            <div class="portfolio-item certificates" onclick="openModal(this)"
+            <div class="portfolio-item certificates orb-floating" onclick="openModal(this)"
                  data-title="Thailand University Expo 2024"
                  data-tag="Certificate / Workshop"
                  data-desc="เกียรติบัตรผ่านการเข้าร่วมกิจกรรมพัฒนาทักษะวิชาการและกิจกรรมเชิงปฏิบัติการ ในกลุ่มสาระ 'เทคโนโลยีสารสนเทศ นวัตกรรม' ภายใต้โครงการ Thailand University Expo 2024 ออกโดย สถาบันวิชาการ เจ โนว์เลจ ณ จังหวัดชลบุรี"
@@ -914,7 +994,7 @@
             </div>
 
             <!-- 7. FAB LAB INNOVATION & TECH SEMINAR (A6.jpg) -->
-            <div class="portfolio-item workshops" onclick="openModal(this)"
+            <div class="portfolio-item workshops orb-floating" onclick="openModal(this)"
                  data-title="Fab Lab Innovation & Tech Seminar"
                  data-tag="Workshop / Innovation"
                  data-desc="เข้าร่วมงานสัมมนาเชิงปฏิบัติการการพัฒนานวัตกรรมดิจิทัล Fab Lab ได้รับความรู้เกี่ยวกับกระบวนการคิดเชิงออกแบบ (Design Thinking) และเทคโนโลยีการขึ้นรูปชิ้นงานด้วยเครื่องมือดิจิทัล"
@@ -936,7 +1016,7 @@
             </div>
 
             <!-- 8. BE FAST E-SEARCHING COMPETITION 2025 (A7.jpg) -->
-            <div class="portfolio-item certificates" onclick="openModal(this)"
+            <div class="portfolio-item certificates orb-floating" onclick="openModal(this)"
                  data-title="Be Fast E-Searching Competition 2025"
                  data-tag="Certificate / Competition"
                  data-desc="วุฒิบัตรการเข้าร่วมการแข่งขันค้นหาข้อมูลสารสนเทศออนไลน์ Be Fast E-Searching แสดงถึงความสามารถในการสืบค้น คัดกรอง และประเมินความน่าเชื่อถือของข้อมูลดิจิทัลได้อย่างรวดเร็วและแม่นยำ"
@@ -958,7 +1038,7 @@
             </div>
 
             <!-- 9. วิทยากรนิทรรศการวันวิทยาศาสตร์ (A8.jpg) -->
-            <div class="portfolio-item certificates" onclick="openModal(this)"
+            <div class="portfolio-item certificates orb-floating" onclick="openModal(this)"
                  data-title="วิทยากรจัดแสดงนิทรรศการวันวิทยาศาสตร์แห่งชาติ"
                  data-tag="Certificate / Presenter"
                  data-desc="เกียรติบัตรแสดงความขอบคุณในฐานะวิทยากรประจำฐานกิจกรรม นำเสนอความรู้ทางเทคโนโลยี สื่อดิจิทัล และวิทยาศาสตร์ ให้แก่ผู้เข้าร่วมงานวันวิทยาศาสตร์แห่งชาติ"
@@ -980,7 +1060,7 @@
             </div>
 
             <!-- 10. ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน (A9.jpg) -->
-            <div class="portfolio-item certificates" onclick="openModal(this)"
+            <div class="portfolio-item certificates orb-floating" onclick="openModal(this)"
                  data-title="ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน"
                  data-tag="Certificate / Activity"
                  data-desc="เกียรติบัตรผ่านการเข้าร่วมโครงการค่ายพัฒนาคุณธรรม จริยธรรม และภาวะผู้นำนักเรียน เพื่อส่งเสริมจิตสาธารณะ การทำงานร่วมกับผู้อื่น และความรับผิดชอบต่อสังคม"
@@ -1002,7 +1082,7 @@
             </div>
 
             <!-- 11. อบรมทักษะดิจิทัลและวิทยาการคอมพิวเตอร์ (A11.jpg) -->
-            <div class="portfolio-item certificates" onclick="openModal(this)"
+            <div class="portfolio-item certificates orb-floating" onclick="openModal(this)"
                  data-title="การอบรมทักษะดิจิทัลและวิทยาการคอมพิวเตอร์"
                  data-tag="Certificate / Academic"
                  data-desc="วุฒิบัตรรับรองการผ่านการทดสอบอบรมความรู้พื้นฐานด้านวิทยาการคอมพิวเตอร์ การคิดเชิงคำนวณ (Computational Thinking) กระบวนการแก้ปัญหาเชิงตรรกะ และหลักการรักษาความปลอดภัยของข้อมูล"
@@ -1070,14 +1150,43 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const cards = document.querySelectorAll('.portfolio-item');
-            cards.forEach(card => {
-                card.addEventListener('animationend', () => {
-                    card.style.animation = 'none';
-                    card.style.opacity = '1';
+            const scrollHint = document.getElementById('scrollToPortfolio');
+            const portfolioSection = document.getElementById('portfolioSection');
+
+            // 1. Smooth Scroll เมื่อกดปุ่ม Hint ด้านบน
+            if (scrollHint && portfolioSection) {
+                scrollHint.addEventListener('click', () => {
+                    portfolioSection.scrollIntoView({ behavior: 'smooth' });
                 });
-            });
+            }
+
+            // 2. IntersectionObserver: แปลงการ์ดจาก "วงกลมลอยๆ (Orb Floating)" เป็น "การ์ดเต็ม (Revealed)" เมื่อเลื่อนมาถึง
+            const observerOptions = {
+                root: null,
+                threshold: 0.12
+            };
+
+            const cardObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const index = Array.from(cards).indexOf(target);
+                        const delay = (index % 3) * 120; // เพิ่มความเหลื่อมเวลานุ่มนวล (Staggered Animation)
+
+                        setTimeout(() => {
+                            target.classList.remove('orb-floating');
+                            target.classList.add('revealed');
+                        }, delay);
+
+                        observer.unobserve(target);
+                    }
+                });
+            }, observerOptions);
+
+            cards.forEach(card => cardObserver.observe(card));
         });
 
+        // 3. Filter System Support with Floating Re-Entrance
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.portfolio-item');
             const buttons = document.querySelectorAll('.filter-btn');
@@ -1085,20 +1194,25 @@
             buttons.forEach(btn => btn.classList.remove('active'));
             if (evt) evt.currentTarget.classList.add('active');
 
-            items.forEach((item) => {
-                item.style.animation = 'none';
-                item.style.opacity = '1';
-
+            items.forEach((item, idx) => {
                 const matches = category === 'all' || item.classList.contains(category);
 
                 if (matches) {
                     item.classList.remove('inactive');
+                    item.classList.remove('revealed');
+                    item.classList.add('orb-floating');
+                    
+                    setTimeout(() => {
+                        item.classList.remove('orb-floating');
+                        item.classList.add('revealed');
+                    }, idx * 60);
                 } else {
                     item.classList.add('inactive');
                 }
             });
         }
 
+        // 4. Modal Handler
         function openModal(cardElement) {
             if (cardElement.classList.contains('inactive')) return;
 
