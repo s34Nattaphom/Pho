@@ -163,7 +163,7 @@
             padding: 4px;
             background: linear-gradient(135deg, var(--orange-main), #FFB088);
             box-shadow: 0 10px 30px rgba(227, 82, 5, 0.28);
-            z-index: 20; /* รูปโปรไฟล์อยู่ชั้นบนสุด */
+            z-index: 20;
         }
 
         .profile-img-container img {
@@ -174,7 +174,7 @@
             border: 3px solid #FFFFFF;
         }
 
-        /* หยดน้ำส้ม (อยู่ชั้นหลังสุด z-index: 2) */
+        /* หยดน้ำส้ม (เลเยอร์อยู่หลังสุด z-index: 2) */
         .droplet-sphere {
             position: absolute;
             left: 50%;
@@ -184,13 +184,13 @@
             background: radial-gradient(circle at 35% 30%, #FF9966 0%, var(--orange-main) 70%, #B83B00 100%);
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
             box-shadow: 0 6px 18px rgba(227, 82, 5, 0.45);
-            z-index: 2; /* อยู่หลังเนื้อหาและป้ายกำกับ */
+            z-index: 2;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.15s ease;
         }
 
-        /* เนื้อหาตัวหนังสือและปุ่ม (กำหนด z-index: 10 บังหยดน้ำขณะเลื่อนผ่าน) */
+        /* องค์ประกอบต่างๆ ด้านบน (z-index: 10 เพื่อบังหยดน้ำระหว่างเลื่อนลงมา) */
         .badge-dek {
             display: inline-block;
             background: var(--orange-soft-bg);
@@ -259,10 +259,10 @@
 
         .scroll-indicator i { color: var(--orange-main); }
 
-        /* Section คำนำ (Foreword Section) */
+        /* Section คำนำ (ปรับ margin-top เพิ่มระยะห่างให้ขยับลงไปไกลๆ) */
         .foreword-section {
-            margin-top: 6rem;
-            margin-bottom: 4rem;
+            margin-top: 25rem; /* ขยับลงมาข้างล่างให้ไกลขึ้น */
+            margin-bottom: 5rem;
             display: flex;
             justify-content: center;
             position: relative;
@@ -281,7 +281,7 @@
             backdrop-filter: blur(16px);
             position: relative;
             z-index: 15;
-            opacity: 1; /* แสดงผลปกติ ไม่ซ่อน */
+            opacity: 1;
         }
 
         .foreword-header {
@@ -395,7 +395,7 @@
             .hero-name { font-size: 1.7rem; }
             .foreword-card { padding: 1.8rem 1.5rem; }
             .foreword-text { font-size: 1rem; }
-            .foreword-section { margin-top: 4rem; }
+            .foreword-section { margin-top: 15rem; }
         }
     </style>
 </head>
@@ -576,12 +576,11 @@
         function updateDropletPosition() {
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             
-            // พิกัดจริงของรูปโปรไฟล์และกล่องคำนำบนหน้าเว็บ
             const profileRect = profileContainer.getBoundingClientRect();
             const forewordRect = forewordCard.getBoundingClientRect();
 
-            const profileBottomY = profileRect.bottom + scrollTop - 35; // จุดเริ่มต้น (ซ่อนหลังโปรไฟล์)
-            const forewordTopY = forewordRect.top + scrollTop + 10;     // จุดสิ้นสุด (ขอบบนกล่องคำนำ)
+            const profileBottomY = profileRect.bottom + scrollTop - 35;
+            const forewordTopY = forewordRect.top + scrollTop + 10;
 
             const startScroll = profileRect.top + scrollTop - 80;
             const endScroll = forewordRect.top + scrollTop - (window.innerHeight * 0.4);
@@ -590,16 +589,13 @@
                 let progress = (scrollTop - startScroll) / (endScroll - startScroll);
                 progress = Math.min(Math.max(progress, 0), 1);
 
-                // คำนวณระยะหยดน้ำเลื่อนลง
                 const currentDropletY = profileBottomY + (progress * (forewordTopY - profileBottomY));
                 droplet.style.top = `${currentDropletY}px`;
 
-                if (progress < 0.92) {
-                    // อยู่ระหว่างทาง: แสดงหยดน้ำปกติอยู่ชั้นหลังสุด
+                if (progress < 0.94) {
                     droplet.style.opacity = `${Math.min(progress * 4, 1)}`;
                 } else {
-                    // ถึงกล่องคำนำแล้ว: ค่อยๆ จางหายลงในกล่องคำนำ
-                    let fade = 1 - ((progress - 0.92) / 0.08);
+                    let fade = 1 - ((progress - 0.94) / 0.06);
                     droplet.style.opacity = `${Math.max(fade, 0)}`;
                 }
             } else {
