@@ -61,6 +61,48 @@
             transform: translateX(-50%);
             z-index: -1;
             pointer-events: none;
+            animation: pulseAmbient 8s ease-in-out infinite alternate;
+        }
+
+        /* ===== Keyframe Animations ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.85) translateY(20px);
+            }
+            70% {
+                transform: scale(1.03) translateY(-4px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes pulseAmbient {
+            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.08); }
+        }
+
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(227, 82, 5, 0.15); }
+            50% { box-shadow: 0 0 25px rgba(227, 82, 5, 0.35); }
         }
 
         /* Top Navigation Bar */
@@ -75,6 +117,7 @@
             align-items: center;
             padding: 0 1rem;
             transform: translateX(5px);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .pill-navbar {
@@ -88,6 +131,7 @@
             align-items: center;
             gap: 2rem;
             box-shadow: 0 10px 30px rgba(227, 82, 5, 0.08);
+            transition: all 0.3s ease;
         }
 
         .nav-logo {
@@ -98,6 +142,11 @@
             text-decoration: none;
             padding-right: 1.2rem;
             border-right: 1px solid rgba(227, 82, 5, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.05);
         }
 
         .nav-menu-list {
@@ -117,13 +166,20 @@
             border-radius: 25px;
             font-size: 0.95rem;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .nav-menu-item a i { color: var(--orange-main); }
-        .nav-menu-item a:hover, .nav-menu-item a.active {
+        .nav-menu-item a i { color: var(--orange-main); transition: transform 0.25s ease; }
+        .nav-menu-item a:hover {
             color: var(--orange-main);
             background: var(--orange-soft-bg);
+            transform: translateY(-2px);
+        }
+        .nav-menu-item a:hover i {
+            transform: scale(1.2) rotate(8deg);
+        }
+        .nav-menu-item a:active {
+            transform: scale(0.95);
         }
 
         /* Container Layout */
@@ -137,6 +193,7 @@
         .header-title-wrapper {
             text-align: center;
             margin-bottom: 3.5rem;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
         }
 
         .badge-category {
@@ -150,6 +207,7 @@
             font-weight: 600;
             letter-spacing: 1.5px;
             margin-bottom: 0.8rem;
+            animation: floatBadge 4s ease-in-out infinite;
         }
 
         .page-title {
@@ -171,7 +229,7 @@
             align-items: start;
         }
 
-        /* Left Card - ปรับแต่งให้รองรับการกดแล้วเด้ง Pop-up */
+        /* Left Card - ปรับแต่งการเด้งและแอนิเมชัน */
         .left-profile-card {
             background: #FFFFFF;
             border: 1px solid var(--card-border);
@@ -181,14 +239,20 @@
             box-shadow: 0 15px 35px rgba(227, 82, 5, 0.08);
             position: relative;
             cursor: pointer;
-            transition: all 0.35s ease;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             user-select: none;
+            animation: popIn 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s both;
         }
 
         .left-profile-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-8px) scale(1.02);
             border-color: var(--orange-main);
-            box-shadow: 0 20px 45px rgba(227, 82, 5, 0.2);
+            box-shadow: 0 22px 45px rgba(227, 82, 5, 0.22);
+        }
+
+        .left-profile-card:active {
+            transform: translateY(-2px) scale(0.98) !important;
+            transition: transform 0.1s ease !important;
         }
 
         .uni-badge-tag {
@@ -226,6 +290,11 @@
             filter: drop-shadow(0 8px 16px rgba(227, 82, 5, 0.15));
             animation: coinSpin3D 10s linear infinite;
             transform-style: preserve-3d;
+            transition: filter 0.3s ease;
+        }
+
+        .left-profile-card:hover .profile-image-frame img {
+            filter: drop-shadow(0 12px 22px rgba(227, 82, 5, 0.35));
         }
 
         @keyframes coinSpin3D {
@@ -260,12 +329,15 @@
             border-radius: 20px;
             border: 1px dashed rgba(227, 82, 5, 0.4);
             transition: all 0.3s ease;
+            animation: floatBadge 3s ease-in-out infinite;
         }
 
         .left-profile-card:hover .click-hint-badge {
             background: var(--orange-main);
             color: #FFFFFF;
             border-color: var(--orange-main);
+            transform: scale(1.05);
+            animation: none;
         }
 
         .info-cards-grid {
@@ -274,6 +346,7 @@
             gap: 1.2rem;
         }
 
+        /* Staggered entrance for info cards */
         .info-card {
             background: #FFFFFF;
             border: 1px solid var(--card-border);
@@ -283,12 +356,27 @@
             align-items: center;
             gap: 1.2rem;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
+        .info-card:nth-child(1) { animation-delay: 0.25s; }
+        .info-card:nth-child(2) { animation-delay: 0.32s; }
+        .info-card:nth-child(3) { animation-delay: 0.39s; }
+        .info-card:nth-child(4) { animation-delay: 0.46s; }
+        .info-card:nth-child(5) { animation-delay: 0.53s; }
+        .info-card:nth-child(6) { animation-delay: 0.60s; }
+        .info-card:nth-child(7) { animation-delay: 0.67s; }
+
         .info-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(227, 82, 5, 0.12);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 14px 30px rgba(227, 82, 5, 0.15);
+            border-color: var(--orange-main);
+        }
+
+        .info-card:active {
+            transform: scale(0.97) !important;
+            transition: transform 0.1s ease !important;
         }
 
         .info-card.full-width {
@@ -306,6 +394,13 @@
             justify-content: center;
             font-size: 1.25rem;
             flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover .info-icon-box {
+            background: var(--orange-main);
+            color: #FFFFFF;
+            transform: rotate(6deg) scale(1.1);
         }
 
         .info-details {
@@ -345,6 +440,7 @@
             border-radius: 28px;
             padding: 2.5rem;
             box-shadow: 0 15px 35px rgba(227, 82, 5, 0.06);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
         }
 
         .section-header-inline {
@@ -357,6 +453,7 @@
         .section-header-inline i {
             font-size: 1.6rem;
             color: var(--orange-main);
+            animation: floatBadge 3s ease-in-out infinite;
         }
 
         .section-header-inline h2 {
@@ -379,14 +476,26 @@
             display: flex;
             align-items: flex-start;
             gap: 1.2rem;
-            transition: all 0.35s ease;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: popIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
+        .talent-card:nth-child(1) { animation-delay: 0.55s; }
+        .talent-card:nth-child(2) { animation-delay: 0.62s; }
+        .talent-card:nth-child(3) { animation-delay: 0.69s; }
+        .talent-card:nth-child(4) { animation-delay: 0.76s; }
+        .talent-card:nth-child(5) { animation-delay: 0.83s; }
+
         .talent-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px) scale(1.02);
             background: #FFFFFF;
             border-color: var(--orange-main);
-            box-shadow: 0 12px 30px rgba(227, 82, 5, 0.15);
+            box-shadow: 0 14px 32px rgba(227, 82, 5, 0.16);
+        }
+
+        .talent-card:active {
+            transform: scale(0.97) !important;
+            transition: transform 0.1s ease !important;
         }
 
         .talent-icon-wrapper {
@@ -401,6 +510,11 @@
             font-size: 1.35rem;
             flex-shrink: 0;
             box-shadow: 0 6px 16px rgba(227, 82, 5, 0.28);
+            transition: transform 0.3s ease;
+        }
+
+        .talent-card:hover .talent-icon-wrapper {
+            transform: scale(1.1) rotate(-8deg);
         }
 
         .talent-info {
@@ -432,9 +546,57 @@
             border-radius: 12px;
             width: fit-content;
             border: 1px solid rgba(227, 82, 5, 0.2);
+            transition: all 0.3s ease;
         }
 
-        /* ===== Modal Popup Styling ===== */
+        .talent-card:hover .talent-badge {
+            background: var(--orange-main);
+            color: #FFFFFF;
+        }
+
+        /* ปุ่มเปลี่ยนหน้า */
+        .next-step-container {
+            margin-top: 5rem;
+            text-align: center;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
+        }
+
+        .btn-next-page {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #FF661A 0%, #E35205 100%);
+            color: #FFFFFF;
+            padding: 1.1rem 2.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 10px 28px rgba(227, 82, 5, 0.35);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-next-page i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-next-page:hover {
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 18px 38px rgba(227, 82, 5, 0.5);
+        }
+
+        .btn-next-page:hover i {
+            transform: translateX(6px);
+        }
+
+        .btn-next-page:active {
+            transform: translateY(-1px) scale(0.97) !important;
+            transition: transform 0.1s ease !important;
+        }
+
+        /* ===== Modal Popup Styling & Animations ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -451,7 +613,7 @@
             padding: 1.5rem;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
         }
 
         .modal-overlay.active {
@@ -468,9 +630,9 @@
             max-height: 88vh;
             overflow-y: auto;
             padding: 2.5rem;
-            box-shadow: 0 25px 60px rgba(227, 82, 5, 0.22);
-            transform: translateY(25px) scale(0.95);
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 25px 60px rgba(227, 82, 5, 0.25);
+            transform: translateY(40px) scale(0.88);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
 
@@ -493,13 +655,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .modal-close-btn:hover {
             background: var(--orange-main);
             color: #FFFFFF;
-            transform: rotate(90deg);
+            transform: rotate(90deg) scale(1.15);
+        }
+
+        .modal-close-btn:active {
+            transform: scale(0.9);
         }
 
         .modal-header-tag {
@@ -542,6 +708,8 @@
 
         .modal-section-title i {
             color: var(--orange-main);
+            animation: pulseGlow 2s infinite alternate;
+            border-radius: 50%;
         }
 
         .reason-cards-list {
@@ -555,11 +723,26 @@
             border-left: 4px solid var(--orange-main);
             border-radius: 16px;
             padding: 1.2rem 1.4rem;
-            transition: transform 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: translateX(-20px);
         }
 
+        /* Pop in staggered for modal items */
+        .modal-overlay.active .reason-item-card {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .modal-overlay.active .reason-item-card:nth-child(1) { transition-delay: 0.15s; }
+        .modal-overlay.active .reason-item-card:nth-child(2) { transition-delay: 0.25s; }
+        .modal-overlay.active .reason-item-card:nth-child(3) { transition-delay: 0.35s; }
+        .modal-overlay.active .reason-item-card:nth-child(4) { transition-delay: 0.45s; }
+
         .reason-item-card:hover {
-            transform: translateX(4px);
+            transform: translateX(8px) scale(1.01);
+            background: #FFE8DA;
+            box-shadow: 0 6px 18px rgba(227, 82, 5, 0.12);
         }
 
         .reason-item-header {
@@ -581,31 +764,6 @@
             font-size: 0.92rem;
             color: var(--text-muted);
             line-height: 1.55;
-        }
-
-        .next-step-container {
-            margin-top: 8rem;
-            text-align: center;
-        }
-
-        .btn-next-page {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: linear-gradient(135deg, #FF661A 0%, #E35205 100%);
-            color: #FFFFFF;
-            padding: 1.1rem 2.8rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            box-shadow: 0 10px 28px rgba(227, 82, 5, 0.35);
-            transition: all 0.3s ease;
-        }
-
-        .btn-next-page:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(227, 82, 5, 0.48);
         }
 
         @media (max-width: 850px) {
