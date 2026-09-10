@@ -40,7 +40,7 @@
             position: relative;
         }
 
-        /* Particle Background Canvas */
+        /* Canvas พื้นหลัง */
         #particle-canvas {
             position: fixed;
             top: 0;
@@ -64,7 +64,7 @@
             pointer-events: none;
         }
 
-        /* Top Navigation Bar */
+        /* Top Navigation Bar - ขยับมาทางซ้ายเล็กน้อยตามคำสั่ง */
         .top-nav-wrapper {
             position: fixed;
             top: 1.5rem;
@@ -75,6 +75,8 @@
             justify-content: center;
             align-items: center;
             padding: 0 1rem;
+            /* ขยับแถบเมนูไปทางซ้ายเล็กน้อย (-15px) */
+            transform: translateX(-15px);
         }
 
         .pill-navbar {
@@ -131,7 +133,7 @@
             width: 100%;
             max-width: 1100px;
             margin: 0 auto;
-            padding: 8.5rem 1.5rem 5rem;
+            padding: 8.5rem 1.5rem 6rem;
         }
 
         .header-title-wrapper {
@@ -172,61 +174,61 @@
             align-items: start;
         }
 
-        /* Left Card: Profile Image & Name */
+        /* การ์ดฝั่งซ้าย: เปลี่ยนเป็น "มหาวิทยาลัยที่อยากเข้า" */
         .left-profile-card {
             background: #FFFFFF;
             border: 1px solid var(--card-border);
             border-radius: 28px;
-            padding: 2.5rem 1.5rem;
+            padding: 2.2rem 1.5rem;
             text-align: center;
             box-shadow: 0 15px 35px rgba(227, 82, 5, 0.08);
             position: relative;
         }
 
+        .uni-badge-tag {
+            display: inline-block;
+            background: var(--orange-soft-bg);
+            color: var(--orange-main);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.3rem 1rem;
+            border-radius: 15px;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+
         .profile-image-frame {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 1.5rem;
-            border-radius: 50%;
-            padding: 4px;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 1.2rem;
+            border-radius: 20px; /* ทรงสี่เหลี่ยมโค้งมนเหมาะกับตรามหาวิทยาลัย */
+            padding: 6px;
             background: linear-gradient(135deg, var(--orange-main), #FFB088);
-            box-shadow: 0 10px 25px rgba(227, 82, 5, 0.25);
+            box-shadow: 0 10px 25px rgba(227, 82, 5, 0.2);
         }
 
         .profile-image-frame img {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #FFFFFF;
+            border-radius: 16px;
+            object-fit: contain;
+            background: #FFFFFF;
+            padding: 8px;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
-        /* แก้ปัญหาคำตัดขอบ / ชื่อขาด โดยใช้ inline-block ป้องกันการตัดกลางคำ */
         .profile-card-name {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .uni-detail-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
             line-height: 1.5;
-            word-break: keep-all;
-        }
-
-        .profile-card-name span {
-            display: inline-block;
-            white-space: nowrap;
-        }
-
-        .nickname-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--orange-main);
-            color: #FFFFFF;
-            padding: 0.4rem 1.4rem;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(227, 82, 5, 0.3);
         }
 
         /* Right Side Info Cards Grid */
@@ -299,9 +301,56 @@
             letter-spacing: 0.5px;
         }
 
-        /* Navigation Button to Next Step */
+        /* ส่วนความสามารถพิเศษ (Special Talents Section) เตรียมไว้ด้านล่าง */
+        .special-talents-section {
+            margin-top: 4rem;
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(227, 82, 5, 0.06);
+        }
+
+        .section-header-inline {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header-inline i {
+            font-size: 1.6rem;
+            color: var(--orange-main);
+        }
+
+        .section-header-inline h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .talents-placeholder-box {
+            border: 2px dashed rgba(227, 82, 5, 0.3);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: var(--orange-soft-bg);
+            color: var(--orange-main);
+        }
+
+        .talents-placeholder-box i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .talents-placeholder-box p {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* ปุ่มเข้าชมแฟ้มสะสมผลงาน - เลื่อนลงมาข้างล่างไกลๆ ตามที่ต้องการ */
         .next-step-container {
-            margin-top: 3.5rem;
+            margin-top: 8rem; /* เพิ่มระยะห่างให้เลื่อนลงไปด้านล่าง */
             text-align: center;
         }
 
@@ -311,7 +360,7 @@
             gap: 12px;
             background: linear-gradient(135deg, #FF661A 0%, #E35205 100%);
             color: #FFFFFF;
-            padding: 1rem 2.5rem;
+            padding: 1.1rem 2.8rem;
             border-radius: 50px;
             text-decoration: none;
             font-size: 1.1rem;
@@ -334,6 +383,9 @@
         }
 
         @media (max-width: 850px) {
+            .top-nav-wrapper {
+                transform: translateX(0); /* ยกเลิก offset บนมือถือ */
+            }
             .profile-grid-container {
                 grid-template-columns: 1fr;
             }
@@ -351,7 +403,7 @@
     <canvas id="particle-canvas"></canvas>
     <div class="ambient-glow"></div>
 
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar (ขยับมาทางซ้ายนิดนึงแล้ว) -->
     <div class="top-nav-wrapper">
         <nav class="pill-navbar">
             <a href="index.html" class="nav-logo">NATTAPHUM</a>
@@ -372,27 +424,28 @@
             <p class="page-subtitle">ประวัติส่วนตัวและรายละเอียดการติดต่อ</p>
         </div>
 
-        <!-- Main Content -->
+        <!-- Main Content Grid -->
         <div class="profile-grid-container">
             
-            <!-- Left Side Card -->
+            <!-- ฝั่งซ้าย: เปลี่ยนเป็น มหาวิทยาลัยที่อยากเข้า -->
             <div class="left-profile-card">
+                <span class="uni-badge-tag"><i class="fa-solid fa-graduation-cap"></i> TARGET UNIVERSITY</span>
+                
                 <div class="profile-image-frame">
-                    <!-- อัปเดตชื่อรูปเป็น rr.jpg ตามที่แจ้ง -->
-                    <img src="rr.jpg" alt="นายณัฐภูมิ เฉวียงวาท">
+                    <!-- สามารถเปลี่ยนชื่อไฟล์รูปภาพมหาวิทยาลัยตรง src="university.jpg" ได้เลย -->
+                    <img src="university.jpg" alt="มหาวิทยาลัยที่อยากเข้า" id="uni-logo-img">
                 </div>
                 
-                <!-- จัดเรียงชื่อ-นามสกุล แยกคำให้สวยงาม ไม่ให้คำขาดกลาง -->
                 <h2 class="profile-card-name">
-                    <span>นายณัฐภูมิ</span> <span>เฉวียงวาท</span>
+                    มหาวิทยาลัยที่อยากเข้า
                 </h2>
 
-                <div class="nickname-badge">
-                    <span>ชื่อเล่น: โฮ้</span>
+                <div class="uni-detail-desc">
+                    <p style="font-weight: 600; color: var(--orange-main);">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
                 </div>
             </div>
 
-            <!-- Right Side Info Cards -->
+            <!-- ฝั่งขวา: รายละเอียดข้อมูลส่วนตัว -->
             <div class="info-cards-grid">
                 
                 <!-- Card 1: ชื่อ - นามสกุล -->
@@ -402,7 +455,6 @@
                     </div>
                     <div class="info-details">
                         <span class="info-label">ชื่อ - นามสกุล</span>
-                        <!-- ป้องกันคำขาดกลางบรรทัด -->
                         <span class="info-value"><span>นายณัฐภูมิ</span> <span>เฉวียงวาท</span></span>
                     </div>
                 </div>
@@ -462,7 +514,7 @@
                     </div>
                 </div>
 
-                <!-- Card 7: เบอร์โทรศัพท์ (Full Width) -->
+                <!-- Card 7: เบอร์โทรศัพท์ -->
                 <div class="info-card full-width">
                     <div class="info-icon-box">
                         <i class="fa-solid fa-phone"></i>
@@ -477,7 +529,19 @@
 
         </div>
 
-        <!-- ปุ่มไปยังหน้าถัดไปตามลำดับ (แฟ้มสะสมผลงาน) -->
+        <!-- ส่วนความสามารถพิเศษ (เตรียมพื้นที่ไว้สำหรับใส่เนื้อหาต่อ) -->
+        <div class="special-talents-section">
+            <div class="section-header-inline">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <h2>ความสามารถพิเศษ</h2>
+            </div>
+            <div class="talents-placeholder-box">
+                <i class="fa-solid fa-plus-circle"></i>
+                <p>พื้นที่สำหรับใส่ข้อมูลความสามารถพิเศษเพิ่มเติม</p>
+            </div>
+        </div>
+
+        <!-- ปุ่มเข้าชมแฟ้มสะสมผลงาน (เลื่อนลงมาอยู่ด้านล่างสุด) -->
         <div class="next-step-container">
             <a href="portfolio.html" class="btn-next-page">
                 <span>เข้าชมแฟ้มสะสมผลงาน</span>
