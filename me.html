@@ -64,7 +64,7 @@
             pointer-events: none;
         }
 
-        /* Top Navigation Bar - ขยับมาทางซ้ายเล็กน้อยตามคำสั่ง */
+        /* Top Navigation Bar - ขยับมาทางขวาเล็กน้อย (+12px) ตามที่สั่ง */
         .top-nav-wrapper {
             position: fixed;
             top: 1.5rem;
@@ -75,8 +75,7 @@
             justify-content: center;
             align-items: center;
             padding: 0 1rem;
-            /* ขยับแถบเมนูไปทางซ้ายเล็กน้อย (-15px) */
-            transform: translateX(-15px);
+            transform: translateX(12px);
         }
 
         .pill-navbar {
@@ -174,7 +173,6 @@
             align-items: start;
         }
 
-        /* การ์ดฝั่งซ้าย: เปลี่ยนเป็น "มหาวิทยาลัยที่อยากเข้า" */
         .left-profile-card {
             background: #FFFFFF;
             border: 1px solid var(--card-border);
@@ -197,24 +195,38 @@
             letter-spacing: 0.5px;
         }
 
+        /* กรอบโลโก้มหาวิทยาลัย - เอาพื้นหลังส้มออก */
         .profile-image-frame {
-            width: 160px;
-            height: 160px;
+            width: 170px;
+            height: 170px;
             margin: 0 auto 1.2rem;
-            border-radius: 20px; /* ทรงสี่เหลี่ยมโค้งมนเหมาะกับตรามหาวิทยาลัย */
-            padding: 6px;
-            background: linear-gradient(135deg, var(--orange-main), #FFB088);
-            box-shadow: 0 10px 25px rgba(227, 82, 5, 0.2);
+            border-radius: 50%;
+            padding: 0;
+            background: transparent;
+            box-shadow: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
+        /* โลโก้หมุนช้าๆ ต่อเนื่อง 360 องศา */
         .profile-image-frame img {
             width: 100%;
             height: 100%;
-            border-radius: 16px;
             object-fit: contain;
-            background: #FFFFFF;
-            padding: 8px;
-            border: 1px solid rgba(0,0,0,0.05);
+            background: transparent;
+            border: none;
+            filter: drop-shadow(0 8px 16px rgba(227, 82, 5, 0.15));
+            animation: slowRotate 25s linear infinite;
+        }
+
+        @keyframes slowRotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .profile-card-name {
@@ -301,7 +313,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* ส่วนความสามารถพิเศษ (Special Talents Section) เตรียมไว้ด้านล่าง */
+        /* ส่วนความสามารถพิเศษ */
         .special-talents-section {
             margin-top: 4rem;
             background: #FFFFFF;
@@ -348,9 +360,9 @@
             font-weight: 600;
         }
 
-        /* ปุ่มเข้าชมแฟ้มสะสมผลงาน - เลื่อนลงมาข้างล่างไกลๆ ตามที่ต้องการ */
+        /* ปุ่มเข้าชมแฟ้มสะสมผลงาน (เลื่อนลงด้านล่าง) */
         .next-step-container {
-            margin-top: 8rem; /* เพิ่มระยะห่างให้เลื่อนลงไปด้านล่าง */
+            margin-top: 8rem;
             text-align: center;
         }
 
@@ -384,7 +396,7 @@
 
         @media (max-width: 850px) {
             .top-nav-wrapper {
-                transform: translateX(0); /* ยกเลิก offset บนมือถือ */
+                transform: translateX(0);
             }
             .profile-grid-container {
                 grid-template-columns: 1fr;
@@ -403,7 +415,7 @@
     <canvas id="particle-canvas"></canvas>
     <div class="ambient-glow"></div>
 
-    <!-- Navigation Bar (ขยับมาทางซ้ายนิดนึงแล้ว) -->
+    <!-- Navigation Bar (ขยับมาทางขวาแล้ว) -->
     <div class="top-nav-wrapper">
         <nav class="pill-navbar">
             <a href="index.html" class="nav-logo">NATTAPHUM</a>
@@ -427,13 +439,12 @@
         <!-- Main Content Grid -->
         <div class="profile-grid-container">
             
-            <!-- ฝั่งซ้าย: เปลี่ยนเป็น มหาวิทยาลัยที่อยากเข้า -->
+            <!-- การ์ดฝั่งซ้าย: โลโก้มหาวิทยาลัย Mo.svg.webp แบบไม่มีพื้นหลังส้ม หมุนช้าๆ -->
             <div class="left-profile-card">
                 <span class="uni-badge-tag"><i class="fa-solid fa-graduation-cap"></i> TARGET UNIVERSITY</span>
                 
                 <div class="profile-image-frame">
-                    <!-- สามารถเปลี่ยนชื่อไฟล์รูปภาพมหาวิทยาลัยตรง src="university.jpg" ได้เลย -->
-                    <img src="university.jpg" alt="มหาวิทยาลัยที่อยากเข้า" id="uni-logo-img">
+                    <img src="Mo.svg.webp" alt="โลโก้มหาวิทยาลัย" id="uni-logo-img">
                 </div>
                 
                 <h2 class="profile-card-name">
@@ -529,7 +540,7 @@
 
         </div>
 
-        <!-- ส่วนความสามารถพิเศษ (เตรียมพื้นที่ไว้สำหรับใส่เนื้อหาต่อ) -->
+        <!-- ส่วนความสามารถพิเศษ -->
         <div class="special-talents-section">
             <div class="section-header-inline">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
@@ -541,7 +552,7 @@
             </div>
         </div>
 
-        <!-- ปุ่มเข้าชมแฟ้มสะสมผลงาน (เลื่อนลงมาอยู่ด้านล่างสุด) -->
+        <!-- ปุ่มเข้าชมแฟ้มสะสมผลงาน -->
         <div class="next-step-container">
             <a href="portfolio.html" class="btn-next-page">
                 <span>เข้าชมแฟ้มสะสมผลงาน</span>
