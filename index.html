@@ -204,7 +204,7 @@
 
         /* HERO SECTION */
         .hero-section {
-            min-height: 85vh;
+            min-height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -322,68 +322,10 @@
         }
 
         /* ----------------------------------------------------
-           CARDS OVERVIEW GRID (ส่วนช่องเมนูหลัก)
-        ---------------------------------------------------- */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0 5rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        .card-box {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 2rem;
-            box-shadow: 0 10px 25px rgba(227, 82, 5, 0.05);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .card-box:hover {
-            transform: translateY(-6px);
-            border-color: var(--orange-main);
-            box-shadow: 0 15px 35px rgba(227, 82, 5, 0.15);
-            background: #FFFFFF;
-        }
-
-        .card-icon {
-            width: 55px;
-            height: 55px;
-            border-radius: 18px;
-            background: var(--orange-soft-bg);
-            color: var(--orange-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .card-desc {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* ----------------------------------------------------
            FOREWORD SECTION
         ---------------------------------------------------- */
         .foreword-section {
-            min-height: 80vh;
+            min-height: 85vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -443,7 +385,7 @@
             text-indent: 2.8rem;
         }
 
-        /* CTA Wrapper & Button */
+        /* CTA Wrapper & Button (นำทางไปตามลำดับขั้น: me.html) */
         .cta-wrapper {
             margin-top: 2.8rem;
             width: 100%;
@@ -527,105 +469,6 @@
             100% { box-shadow: 0 12px 35px rgba(227, 82, 5, 0.45), 0 0 0 0 rgba(227, 82, 5, 0); }
         }
 
-        /* ----------------------------------------------------
-           EDUCATION SECTION
-        ---------------------------------------------------- */
-        .education-section {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: 28px;
-            padding: 2.5rem 2rem;
-            box-shadow: 0 15px 35px rgba(227, 82, 5, 0.06);
-            margin: 4rem 0;
-            position: relative;
-            z-index: 10;
-        }
-
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-main);
-        }
-
-        .section-title i {
-            color: var(--orange-main);
-        }
-
-        .timeline {
-            border-left: 2px solid rgba(227, 82, 5, 0.2);
-            padding-left: 1.5rem;
-            margin-left: 0.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .timeline-item {
-            position: relative;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2rem;
-            top: 0.4rem;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--orange-main);
-            box-shadow: 0 0 0 4px var(--orange-soft-bg);
-        }
-
-        .timeline-year {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--orange-main);
-        }
-
-        .timeline-degree {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        .timeline-school {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-
-        /* Bottom CTA Section to me.html */
-        .bottom-cta-container {
-            text-align: center;
-            margin-top: 3rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        .cta-button-orange {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: linear-gradient(135deg, var(--orange-main), var(--orange-light));
-            color: #FFFFFF;
-            padding: 1.1rem 2.8rem;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-decoration: none;
-            box-shadow: 0 10px 25px var(--orange-glow);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .cta-button-orange:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 15px 35px var(--orange-glow);
-        }
-
         @media (max-width: 768px) {
             .pill-navbar { padding: 0.5rem 1rem; gap: 0.5rem; }
             .nav-logo { display: none; }
@@ -645,7 +488,7 @@
     <canvas id="particle-canvas"></canvas>
     <div class="ambient-glow"></div>
 
-    <!-- Navigation Bar (เพิ่มเส้นทางไป me.html และปรับเปลี่ยนให้สมบูรณ์) -->
+    <!-- Navigation Bar -->
     <div class="top-nav-wrapper fade-init delay-nav">
         <nav class="pill-navbar">
             <a href="index.html" class="nav-logo">NATTAPHUM</a>
@@ -653,12 +496,11 @@
                 <li class="nav-menu-item"><a href="index.html" class="active"><i class="fa-solid fa-house"></i><span>หน้าแรก</span></a></li>
                 <li class="nav-menu-item"><a href="me.html"><i class="fa-solid fa-user"></i><span>ข้อมูลส่วนตัว</span></a></li>
                 <li class="nav-menu-item"><a href="portfolio.html"><i class="fa-solid fa-folder-open"></i><span>แฟ้มสะสมผลงาน</span></a></li>
-                <li class="nav-menu-item"><a href="#education"><i class="fa-solid fa-graduation-cap"></i><span>ประวัติการศึกษา</span></a></li>
             </ul>
         </nav>
     </div>
 
-    <!-- หยดน้ำส้มวิเศษ -->
+    <!-- หยดน้ำส้ม -->
     <div class="droplet-sphere" id="dropletSphere"></div>
 
     <div class="page-container">
@@ -685,28 +527,7 @@
             </button>
         </section>
 
-        <!-- Cards Overview Grid (เพิ่มช่องเมนูหลัก 3 ช่อง เชื่อมต่อไปยัง me.html) -->
-        <div class="cards-grid fade-init delay-3">
-            <a href="me.html" class="card-box">
-                <div class="card-icon"><i class="fa-solid fa-user"></i></div>
-                <h3 class="card-title">ข้อมูลส่วนตัว</h3>
-                <p class="card-desc">ประวัติส่วนตัว รายละเอียดการติดต่อ วันเกิด อายุ สัญชาติ และข้อมูลสำคัญเกี่ยวกับผม</p>
-            </a>
-
-            <a href="portfolio.html" class="card-box">
-                <div class="card-icon"><i class="fa-solid fa-folder-open"></i></div>
-                <h3 class="card-title">แฟ้มสะสมผลงาน</h3>
-                <p class="card-desc">รวบรวมผลงาน กิจกรรม และโครงการต่าง ๆ ที่เคยได้เข้าร่วมและลงมือทำ</p>
-            </a>
-
-            <a href="#education" class="card-box">
-                <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                <h3 class="card-title">ประวัติการศึกษา</h3>
-                <p class="card-desc">ประวัติและเส้นทางการศึกษาระดับชั้นต่างๆ ตั้งแต่ระดับพื้นฐานจนถึงปัจจุบัน</p>
-            </a>
-        </div>
-
-        <!-- Foreword Section (กล่องคำนำพร้อม Bounce Animation และหยดน้ำส้ม) -->
+        <!-- Foreword Section -->
         <section class="foreword-section" id="forewordSection">
             <div class="foreword-card pop-target" id="forewordCard">
                 <div class="foreword-header">
@@ -718,36 +539,17 @@
                 </p>
             </div>
 
+            <!-- ปุ่มเปลี่ยนเส้นทางไปยัง me.html ตามลำดับขั้นตอน -->
             <div class="cta-wrapper pop-target" id="ctaWrapper">
-                <a href="portfolio.html" class="btn-portfolio-cool">
+                <a href="me.html" class="btn-portfolio-cool">
                     <span class="icon-box">
-                        <i class="fa-solid fa-folder-open"></i>
+                        <i class="fa-solid fa-user"></i>
                     </span>
-                    <span>เข้าชมแฟ้มสะสมผลงานจริง</span>
+                    <span>เข้าชมข้อมูลส่วนตัว</span>
                     <i class="fa-solid fa-chevron-right arrow-icon"></i>
                 </a>
             </div>
         </section>
-
-        <!-- Education Section (ส่วนประวัติการศึกษา) -->
-        <div class="education-section fade-init delay-4" id="education">
-            <h2 class="section-title"><i class="fa-solid fa-graduation-cap"></i> ประวัติการศึกษา</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <span class="timeline-year">มัธยมศึกษาตอนปลาย</span>
-                    <h3 class="timeline-degree">ชั้นมัธยมศึกษาปีที่ 5 - 6</h3>
-                    <p class="timeline-school">นักเรียนสายวิทยาศาสตร์ - คณิตศาสตร์ (Dek70)</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom CTA Button (ปุ่มลิงก์นำทางไปยัง me.html) -->
-        <div class="bottom-cta-container fade-init delay-5">
-            <a href="me.html" class="cta-button-orange">
-                <span>เข้าชมข้อมูลส่วนตัวทั้งหมด</span>
-                <i class="fa-solid fa-arrow-right"></i>
-            </a>
-        </div>
 
     </div>
 
