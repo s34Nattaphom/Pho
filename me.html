@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NATTAPHUM | Personal Profile (me.html)</title>
+    <title>ข้อมูลส่วนตัว | NATTAPHUM</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -14,10 +14,10 @@
             --orange-main: #E35205;      
             --orange-light: #FF661A;     
             --orange-soft-bg: #FFF0E6;   
-            --orange-glow: rgba(227, 82, 5, 0.4);
+            --orange-glow: rgba(227, 82, 5, 0.15);
             
             --bg-color: #FAFAFA;         
-            --card-border: rgba(227, 82, 5, 0.2);
+            --card-border: rgba(227, 82, 5, 0.18);
             
             --text-main: #222222;       
             --text-muted: #666666;      
@@ -40,25 +40,7 @@
             position: relative;
         }
 
-        /* Entrance Animation Fade-In */
-        .fade-init {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-                        transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
-        }
-
-        body.loaded .fade-init {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .delay-nav { transition-delay: 0.1s; }
-        .delay-1   { transition-delay: 0.3s; }
-        .delay-2   { transition-delay: 0.5s; }
-
-        /* Canvas Particle Background */
+        /* Particle Background Canvas */
         #particle-canvas {
             position: fixed;
             top: 0;
@@ -68,19 +50,13 @@
             z-index: -2;
             background: linear-gradient(135deg, #FFFFFF 0%, #FFF5F0 50%, #FFEBE0 100%);
             pointer-events: none;
-            opacity: 0;
-            transition: opacity 2s ease;
-        }
-
-        body.loaded #particle-canvas {
-            opacity: 1;
         }
 
         .ambient-glow {
             position: fixed;
             width: 800px;
             height: 800px;
-            background: radial-gradient(circle, rgba(227, 82, 5, 0.14) 0%, rgba(255, 255, 255, 0) 70%);
+            background: radial-gradient(circle, rgba(227, 82, 5, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
             top: -150px;
             left: 50%;
             transform: translateX(-50%);
@@ -88,7 +64,7 @@
             pointer-events: none;
         }
 
-        /* Navigation Bar */
+        /* Top Navigation Bar */
         .top-nav-wrapper {
             position: fixed;
             top: 1.5rem;
@@ -102,7 +78,7 @@
         }
 
         .pill-navbar {
-            background: rgba(255, 255, 255, 0.88);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--card-border);
@@ -150,35 +126,34 @@
             background: var(--orange-soft-bg);
         }
 
-        /* Main Layout */
+        /* Container Layout */
         .page-container {
             width: 100%;
-            max-width: 960px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 8rem 1.5rem 5rem;
-            position: relative;
+            padding: 8.5rem 1.5rem 5rem;
         }
 
-        .section-header {
+        .header-title-wrapper {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
         }
 
-        .badge-dek {
+        .badge-category {
             display: inline-block;
             background: var(--orange-soft-bg);
             color: var(--orange-main);
-            border: 1px solid rgba(227, 82, 5, 0.35);
+            border: 1px solid rgba(227, 82, 5, 0.3);
             padding: 0.4rem 1.4rem;
-            border-radius: 25px;
-            font-size: 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 600;
             letter-spacing: 1.5px;
             margin-bottom: 0.8rem;
         }
 
         .page-title {
-            font-size: 2.5rem;
+            font-size: 2.4rem;
             font-weight: 700;
             color: var(--text-main);
             margin-bottom: 0.5rem;
@@ -186,33 +161,31 @@
 
         .page-subtitle {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
         }
 
-        /* Personal Info Container Layout */
-        .profile-card-container {
+        /* Main Content Layout Grid */
+        .profile-grid-container {
             display: grid;
             grid-template-columns: 320px 1fr;
             gap: 2rem;
             align-items: start;
         }
 
-        /* Left Column: Avatar & Summary */
-        .profile-avatar-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
+        /* Left Card: Profile Image & Name */
+        .left-profile-card {
+            background: #FFFFFF;
             border: 1px solid var(--card-border);
             border-radius: 28px;
-            padding: 2.5rem 2rem;
+            padding: 2.5rem 1.5rem;
             text-align: center;
             box-shadow: 0 15px 35px rgba(227, 82, 5, 0.08);
-            position: sticky;
-            top: 6rem;
+            position: relative;
         }
 
-        .avatar-wrapper {
-            width: 160px;
-            height: 160px;
+        .profile-image-frame {
+            width: 150px;
+            height: 150px;
             margin: 0 auto 1.5rem;
             border-radius: 50%;
             padding: 4px;
@@ -220,7 +193,7 @@
             box-shadow: 0 10px 25px rgba(227, 82, 5, 0.25);
         }
 
-        .avatar-wrapper img {
+        .profile-image-frame img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
@@ -228,75 +201,76 @@
             border: 3px solid #FFFFFF;
         }
 
-        .profile-name {
-            font-size: 1.35rem;
+        /* แก้ปัญหาคำตัดขอบ / ชื่อขาด โดยใช้ inline-block ป้องกันการตัดกลางคำ */
+        .profile-card-name {
+            font-size: 1.25rem;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 0.6rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            word-break: keep-all;
+        }
+
+        .profile-card-name span {
+            display: inline-block;
+            white-space: nowrap;
         }
 
         .nickname-badge {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             background: var(--orange-main);
             color: #FFFFFF;
-            padding: 0.3rem 1.2rem;
+            padding: 0.4rem 1.4rem;
             border-radius: 20px;
-            font-weight: 600;
             font-size: 0.95rem;
+            font-weight: 600;
             box-shadow: 0 4px 12px rgba(227, 82, 5, 0.3);
         }
 
-        /* Right Column: Information Grid */
-        .info-grid {
+        /* Right Side Info Cards Grid */
+        .info-cards-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1.2rem;
         }
 
-        .info-item {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
+        .info-card {
+            background: #FFFFFF;
             border: 1px solid var(--card-border);
             border-radius: 20px;
-            padding: 1.4rem 1.5rem;
+            padding: 1.2rem 1.5rem;
             display: flex;
             align-items: center;
             gap: 1.2rem;
-            box-shadow: 0 10px 25px rgba(227, 82, 5, 0.05);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .info-item:hover {
-            transform: translateY(-4px);
-            border-color: var(--orange-main);
-            box-shadow: 0 12px 30px rgba(227, 82, 5, 0.15);
-            background: #FFFFFF;
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(227, 82, 5, 0.12);
         }
 
-        .info-item.full-width {
+        .info-card.full-width {
             grid-column: span 2;
         }
 
-        .info-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 16px;
+        .info-icon-box {
+            width: 48px;
+            height: 48px;
             background: var(--orange-soft-bg);
             color: var(--orange-main);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             flex-shrink: 0;
-            transition: background 0.3s, color 0.3s;
         }
 
-        .info-item:hover .info-icon {
-            background: var(--orange-main);
-            color: #FFFFFF;
-        }
-
-        .info-content {
+        .info-details {
             display: flex;
             flex-direction: column;
         }
@@ -304,45 +278,71 @@
         .info-label {
             font-size: 0.85rem;
             color: var(--text-muted);
-            font-weight: 500;
-            margin-bottom: 0.2rem;
+            margin-bottom: 2px;
         }
 
         .info-value {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.05rem;
+            font-weight: 700;
             color: var(--text-main);
+            word-break: keep-all;
         }
 
-        .phone-highlight {
+        .info-value span {
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .phone-value {
+            font-size: 1.15rem;
             color: var(--orange-main);
-            font-size: 1.25rem;
             letter-spacing: 0.5px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 850px) {
-            .profile-card-container {
-                grid-template-columns: 1fr;
-            }
-
-            .profile-avatar-card {
-                position: static;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .info-item.full-width {
-                grid-column: span 1;
-            }
+        /* Navigation Button to Next Step */
+        .next-step-container {
+            margin-top: 3.5rem;
+            text-align: center;
         }
 
-        @media (max-width: 500px) {
-            .pill-navbar { padding: 0.5rem 1.2rem; gap: 0.8rem; }
-            .nav-logo { display: none; }
-            .page-title { font-size: 2rem; }
+        .btn-next-page {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #FF661A 0%, #E35205 100%);
+            color: #FFFFFF;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 10px 28px rgba(227, 82, 5, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .btn-next-page:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(227, 82, 5, 0.48);
+        }
+
+        .btn-next-page i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-next-page:hover i {
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 850px) {
+            .profile-grid-container {
+                grid-template-columns: 1fr;
+            }
+            .info-card.full-width {
+                grid-column: span 1;
+            }
+            .info-cards-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -351,8 +351,8 @@
     <canvas id="particle-canvas"></canvas>
     <div class="ambient-glow"></div>
 
-    <!-- Top Navigation -->
-    <div class="top-nav-wrapper fade-init delay-nav">
+    <!-- Navigation Bar -->
+    <div class="top-nav-wrapper">
         <nav class="pill-navbar">
             <a href="index.html" class="nav-logo">NATTAPHUM</a>
             <ul class="nav-menu-list">
@@ -363,82 +363,113 @@
         </nav>
     </div>
 
-    <!-- Main Content -->
     <div class="page-container">
         
-        <div class="section-header fade-init delay-1">
-            <span class="badge-dek">PERSONAL INFORMATION</span>
+        <!-- Header -->
+        <div class="header-title-wrapper">
+            <span class="badge-category">PERSONAL INFORMATION</span>
             <h1 class="page-title">ข้อมูลส่วนตัว</h1>
             <p class="page-subtitle">ประวัติส่วนตัวและรายละเอียดการติดต่อ</p>
         </div>
 
-        <div class="profile-card-container fade-init delay-2">
+        <!-- Main Content -->
+        <div class="profile-grid-container">
             
             <!-- Left Side Card -->
-            <div class="profile-avatar-card">
-                <div class="avatar-wrapper">
-                    <img src="my02.jpg" alt="นายณัฐภูมิ เฉวียงวาท">
+            <div class="left-profile-card">
+                <div class="profile-image-frame">
+                    <!-- อัปเดตชื่อรูปเป็น rr.jpg ตามที่แจ้ง -->
+                    <img src="rr.jpg" alt="นายณัฐภูมิ เฉวียงวาท">
                 </div>
-                <h2 class="profile-name">นายณัฐภูมิ เฉวียงวาท</h2>
-                <span class="nickname-badge">ชื่อเล่น: โอ้</span>
+                
+                <!-- จัดเรียงชื่อ-นามสกุล แยกคำให้สวยงาม ไม่ให้คำขาดกลาง -->
+                <h2 class="profile-card-name">
+                    <span>นายณัฐภูมิ</span> <span>เฉวียงวาท</span>
+                </h2>
+
+                <div class="nickname-badge">
+                    <span>ชื่อเล่น: โฮ้</span>
+                </div>
             </div>
 
-            <!-- Right Side Grid -->
-            <div class="info-grid">
+            <!-- Right Side Info Cards -->
+            <div class="info-cards-grid">
                 
-                <div class="info-item">
-                    <div class="info-icon"><i class="fa-solid fa-id-card"></i></div>
-                    <div class="info-content">
+                <!-- Card 1: ชื่อ - นามสกุล -->
+                <div class="info-card">
+                    <div class="info-icon-box">
+                        <i class="fa-solid fa-address-card"></i>
+                    </div>
+                    <div class="info-details">
                         <span class="info-label">ชื่อ - นามสกุล</span>
-                        <span class="info-value">นายณัฐภูมิ เฉวียงวาท</span>
+                        <!-- ป้องกันคำขาดกลางบรรทัด -->
+                        <span class="info-value"><span>นายณัฐภูมิ</span> <span>เฉวียงวาท</span></span>
                     </div>
                 </div>
 
-                <div class="info-item">
-                    <div class="info-icon"><i class="fa-solid fa-user-tag"></i></div>
-                    <div class="info-content">
+                <!-- Card 2: ชื่อเล่น -->
+                <div class="info-card">
+                    <div class="info-icon-box">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="info-details">
                         <span class="info-label">ชื่อเล่น</span>
-                        <span class="info-value">โอ้</span>
+                        <span class="info-value">โฮ้</span>
                     </div>
                 </div>
 
-                <div class="info-item">
-                    <div class="info-icon"><i class="fa-solid fa-cake-candles"></i></div>
-                    <div class="info-content">
+                <!-- Card 3: วันเกิด -->
+                <div class="info-card">
+                    <div class="info-icon-box">
+                        <i class="fa-solid fa-cake-candles"></i>
+                    </div>
+                    <div class="info-details">
                         <span class="info-label">วันเกิด</span>
                         <span class="info-value">16 กุมภาพันธ์ 2552</span>
                     </div>
                 </div>
 
-                <div class="info-item">
-                    <div class="info-icon"><i class="fa-solid fa-hourglass-half"></i></div>
-                    <div class="info-content">
+                <!-- Card 4: อายุ -->
+                <div class="info-card">
+                    <div class="info-icon-box">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                    </div>
+                    <div class="info-details">
                         <span class="info-label">อายุ</span>
                         <span class="info-value">17 ปี</span>
                     </div>
                 </div>
 
-                <div class="info-item">
-                    <div class="info-icon"><i class="fa-solid fa-flag"></i></div>
-                    <div class="info-content">
+                <!-- Card 5: เชื้อชาติ / สัญชาติ -->
+                <div class="info-card">
+                    <div class="info-icon-box">
+                        <i class="fa-solid fa-flag"></i>
+                    </div>
+                    <div class="info-details">
                         <span class="info-label">เชื้อชาติ / สัญชาติ</span>
                         <span class="info-value">ไทย</span>
                     </div>
                 </div>
 
-                <div class="info-item">
-                    <div class="info-icon"><i class="fa-solid fa-hands-praying"></i></div>
-                    <div class="info-content">
+                <!-- Card 6: ศาสนา -->
+                <div class="info-card">
+                    <div class="info-icon-box">
+                        <i class="fa-solid fa-om"></i>
+                    </div>
+                    <div class="info-details">
                         <span class="info-label">ศาสนา</span>
                         <span class="info-value">พุทธ</span>
                     </div>
                 </div>
 
-                <div class="info-item full-width">
-                    <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
-                    <div class="info-content">
+                <!-- Card 7: เบอร์โทรศัพท์ (Full Width) -->
+                <div class="info-card full-width">
+                    <div class="info-icon-box">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div class="info-details">
                         <span class="info-label">เบอร์โทรศัพท์</span>
-                        <span class="info-value phone-highlight">097-151-2382</span>
+                        <span class="info-value phone-value">097-151-2382</span>
                     </div>
                 </div>
 
@@ -446,16 +477,17 @@
 
         </div>
 
+        <!-- ปุ่มไปยังหน้าถัดไปตามลำดับ (แฟ้มสะสมผลงาน) -->
+        <div class="next-step-container">
+            <a href="portfolio.html" class="btn-next-page">
+                <span>เข้าชมแฟ้มสะสมผลงาน</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
     </div>
 
     <script>
-        /* Trigger Entrance Animations on Page Load */
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                document.body.classList.add('loaded');
-            }, 100);
-        });
-
         /* Background Canvas Particle System */
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
@@ -468,15 +500,15 @@
         resizeCanvas();
 
         const lines = [];
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 35; i++) {
             lines.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                length: Math.random() * 100 + 70,
+                length: Math.random() * 90 + 60,
                 angle: Math.random() * Math.PI * 2,
-                speed: Math.random() * 0.35 + 0.12,
+                speed: Math.random() * 0.3 + 0.1,
                 width: Math.random() * 2 + 1,
-                opacity: Math.random() * 0.35 + 0.12,
+                opacity: Math.random() * 0.3 + 0.1,
                 rotSpeed: (Math.random() - 0.5) * 0.002
             });
         }
