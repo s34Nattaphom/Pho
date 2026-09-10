@@ -40,7 +40,6 @@
             position: relative;
         }
 
-        /* Canvas พื้นหลัง */
         #particle-canvas {
             position: fixed;
             top: 0;
@@ -64,7 +63,7 @@
             pointer-events: none;
         }
 
-        /* Top Navigation Bar - ขยับมาทางขวาเล็กน้อย (+12px) ตามที่สั่ง */
+        /* Top Navigation Bar */
         .top-nav-wrapper {
             position: fixed;
             top: 1.5rem;
@@ -165,7 +164,6 @@
             font-size: 1.05rem;
         }
 
-        /* Main Content Layout Grid */
         .profile-grid-container {
             display: grid;
             grid-template-columns: 320px 1fr;
@@ -195,7 +193,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* กรอบโลโก้มหาวิทยาลัย - เอาพื้นหลังส้มออก */
+        /* Perspective สำหรับสร้างมิติ 3D ให้ภาพ */
         .profile-image-frame {
             width: 170px;
             height: 170px;
@@ -207,9 +205,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            perspective: 800px;
         }
 
-        /* โลโก้หมุนช้าๆ ต่อเนื่อง 360 องศา */
+        /* โลโก้หมุน 3D ด้านข้างแบบเหรียญ (rotateY) */
         .profile-image-frame img {
             width: 100%;
             height: 100%;
@@ -217,15 +216,16 @@
             background: transparent;
             border: none;
             filter: drop-shadow(0 8px 16px rgba(227, 82, 5, 0.15));
-            animation: slowRotate 25s linear infinite;
+            animation: coinSpin3D 10s linear infinite;
+            transform-style: preserve-3d;
         }
 
-        @keyframes slowRotate {
-            from {
-                transform: rotate(0deg);
+        @keyframes coinSpin3D {
+            0% {
+                transform: rotateY(0deg);
             }
-            to {
-                transform: rotate(360deg);
+            100% {
+                transform: rotateY(360deg);
             }
         }
 
@@ -243,7 +243,6 @@
             line-height: 1.5;
         }
 
-        /* Right Side Info Cards Grid */
         .info-cards-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -313,7 +312,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* ส่วนความสามารถพิเศษ */
         .special-talents-section {
             margin-top: 4rem;
             background: #FFFFFF;
@@ -360,7 +358,6 @@
             font-weight: 600;
         }
 
-        /* ปุ่มเข้าชมแฟ้มสะสมผลงาน (เลื่อนลงด้านล่าง) */
         .next-step-container {
             margin-top: 8rem;
             text-align: center;
@@ -415,7 +412,6 @@
     <canvas id="particle-canvas"></canvas>
     <div class="ambient-glow"></div>
 
-    <!-- Navigation Bar (ขยับมาทางขวาแล้ว) -->
     <div class="top-nav-wrapper">
         <nav class="pill-navbar">
             <a href="index.html" class="nav-logo">NATTAPHUM</a>
@@ -429,20 +425,18 @@
 
     <div class="page-container">
         
-        <!-- Header -->
         <div class="header-title-wrapper">
             <span class="badge-category">PERSONAL INFORMATION</span>
             <h1 class="page-title">ข้อมูลส่วนตัว</h1>
             <p class="page-subtitle">ประวัติส่วนตัวและรายละเอียดการติดต่อ</p>
         </div>
 
-        <!-- Main Content Grid -->
         <div class="profile-grid-container">
             
-            <!-- การ์ดฝั่งซ้าย: โลโก้มหาวิทยาลัย Mo.svg.webp แบบไม่มีพื้นหลังส้ม หมุนช้าๆ -->
             <div class="left-profile-card">
                 <span class="uni-badge-tag"><i class="fa-solid fa-graduation-cap"></i> TARGET UNIVERSITY</span>
                 
+                <!-- โลโก้หมุนด้านข้างแบบ 3D เหรียญ -->
                 <div class="profile-image-frame">
                     <img src="Mo.svg.webp" alt="โลโก้มหาวิทยาลัย" id="uni-logo-img">
                 </div>
@@ -456,10 +450,8 @@
                 </div>
             </div>
 
-            <!-- ฝั่งขวา: รายละเอียดข้อมูลส่วนตัว -->
             <div class="info-cards-grid">
                 
-                <!-- Card 1: ชื่อ - นามสกุล -->
                 <div class="info-card">
                     <div class="info-icon-box">
                         <i class="fa-solid fa-address-card"></i>
@@ -470,7 +462,6 @@
                     </div>
                 </div>
 
-                <!-- Card 2: ชื่อเล่น -->
                 <div class="info-card">
                     <div class="info-icon-box">
                         <i class="fa-solid fa-user"></i>
@@ -481,7 +472,6 @@
                     </div>
                 </div>
 
-                <!-- Card 3: วันเกิด -->
                 <div class="info-card">
                     <div class="info-icon-box">
                         <i class="fa-solid fa-cake-candles"></i>
@@ -492,7 +482,6 @@
                     </div>
                 </div>
 
-                <!-- Card 4: อายุ -->
                 <div class="info-card">
                     <div class="info-icon-box">
                         <i class="fa-solid fa-hourglass-half"></i>
@@ -503,7 +492,6 @@
                     </div>
                 </div>
 
-                <!-- Card 5: เชื้อชาติ / สัญชาติ -->
                 <div class="info-card">
                     <div class="info-icon-box">
                         <i class="fa-solid fa-flag"></i>
@@ -514,7 +502,6 @@
                     </div>
                 </div>
 
-                <!-- Card 6: ศาสนา -->
                 <div class="info-card">
                     <div class="info-icon-box">
                         <i class="fa-solid fa-om"></i>
@@ -525,7 +512,6 @@
                     </div>
                 </div>
 
-                <!-- Card 7: เบอร์โทรศัพท์ -->
                 <div class="info-card full-width">
                     <div class="info-icon-box">
                         <i class="fa-solid fa-phone"></i>
@@ -540,7 +526,6 @@
 
         </div>
 
-        <!-- ส่วนความสามารถพิเศษ -->
         <div class="special-talents-section">
             <div class="section-header-inline">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
@@ -552,7 +537,6 @@
             </div>
         </div>
 
-        <!-- ปุ่มเข้าชมแฟ้มสะสมผลงาน -->
         <div class="next-step-container">
             <a href="portfolio.html" class="btn-next-page">
                 <span>เข้าชมแฟ้มสะสมผลงาน</span>
@@ -563,7 +547,6 @@
     </div>
 
     <script>
-        /* Background Canvas Particle System */
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
 
