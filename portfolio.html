@@ -11,17 +11,15 @@
 
     <style>
         :root {
-            --bg-color: #faf9f6;
+            --bg-color: #fcfbfa;
             --card-bg: #ffffff;
-            --orange-primary: #f05a00;
-            --orange-secondary: #ff7700;
-            --orange-light: #fff3eb;
-            --orange-border: rgba(240, 90, 0, 0.22);
-            --orange-glow: rgba(240, 90, 0, 0.12);
-            --text-main: #2c2d30;
-            --text-muted: #6c727f;
-            --shadow-soft: 0 10px 30px rgba(240, 90, 0, 0.07);
-            --shadow-hover: 0 18px 40px rgba(240, 90, 0, 0.16);
+            --orange-primary: #e65100;
+            --orange-secondary: #ff6d00;
+            --orange-light: #fff3e0;
+            --orange-border: rgba(230, 81, 0, 0.2);
+            --orange-glow: rgba(230, 81, 0, 0.12);
+            --text-dark: #2d3139;
+            --text-muted: #64748b;
         }
 
         * {
@@ -30,209 +28,144 @@
             box-sizing: border-box;
             font-family: 'Prompt', sans-serif;
             scroll-behavior: smooth;
-            -webkit-font-smoothing: antialiased;
         }
 
         body {
             background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 50% -10%, rgba(255, 119, 0, 0.15) 0%, rgba(255, 255, 255, 0) 65%),
-                radial-gradient(circle at 10% 40%, rgba(255, 119, 0, 0.05) 0%, rgba(255, 255, 255, 0) 40%);
-            color: var(--text-main);
+            color: var(--text-dark);
             overflow-x: hidden;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            position: relative;
         }
 
-        /* 1. FLOATING PILL POP-UP NAVBAR (ออกแบบตามรูปภาพ) */
+        /* Canvas เอฟเฟกต์เส้นลอยไปลอยมาด้านหลัง */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 1. FLOATING PILL POP-UP NAVBAR (ปรับสี ขนาด และรูปทรงให้ตรงตาม Screenshot) */
         .nav-wrapper {
             position: fixed;
-            top: 1.5rem;
+            top: 1.2rem;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            width: 92%;
-            max-width: 820px;
-            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            width: max-content;
+            max-width: 92%;
         }
 
         .pill-navbar {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1.5px solid var(--orange-border);
-            border-radius: 50px;
-            padding: 0.65rem 2rem;
+            background: #ffffff;
+            border: 1.5px solid rgba(230, 81, 0, 0.18);
+            border-radius: 999px;
+            padding: 0.5rem 1.6rem;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            gap: 1.8rem;
-            box-shadow: 0 12px 35px rgba(240, 90, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.02);
-            transition: all 0.3s ease;
-        }
-
-        .pill-navbar:hover {
-            box-shadow: 0 15px 40px rgba(240, 90, 0, 0.14);
-            border-color: rgba(240, 90, 0, 0.4);
+            gap: 1.2rem;
+            box-shadow: 0 10px 30px rgba(230, 81, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .nav-brand {
             font-weight: 800;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: var(--orange-primary);
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             text-decoration: none;
+            text-transform: uppercase;
             white-space: nowrap;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-brand:hover {
-            transform: scale(1.03);
         }
 
         .nav-divider {
             width: 1px;
-            height: 26px;
-            background-color: rgba(240, 90, 0, 0.25);
+            height: 22px;
+            background-color: rgba(230, 81, 0, 0.25);
             flex-shrink: 0;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 1.5rem;
             list-style: none;
-            width: 100%;
         }
 
         .nav-item a {
             display: flex;
             align-items: center;
-            gap: 9px;
+            gap: 8px;
             text-decoration: none;
-            color: #4a4d55;
+            color: #4a4a4a;
             font-weight: 500;
-            font-size: 0.98rem;
-            transition: all 0.25s ease;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
             white-space: nowrap;
         }
 
         .nav-item a i {
             color: var(--orange-primary);
-            font-size: 1.05rem;
-            transition: transform 0.25s ease;
+            font-size: 1rem;
         }
 
-        .nav-item a:hover {
-            color: var(--orange-primary);
-        }
-
-        .nav-item a:hover i {
-            transform: translateY(-2px);
-        }
-
-        .nav-item a.active {
+        .nav-item a:hover, .nav-item a.active {
             color: var(--orange-primary);
             font-weight: 600;
         }
 
-        /* ANIMATIONS */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translate(-50%, -25px); }
-            to { opacity: 1; transform: translate(-50%, 0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes bounceScroll {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-7px); }
-            60% { transform: translateY(-3px); }
-        }
-
-        /* HERO INTRO SECTION */
-        .hero-space-container {
-            min-height: 55vh;
+        /* HERO & PAGE HEADER */
+        .hero-section {
+            padding: 8rem 1.5rem 2.5rem;
+            text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 8.5rem 1.5rem 2rem;
         }
 
-        .hero-space-badge {
-            display: inline-block;
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background: var(--orange-light);
             color: var(--orange-primary);
             border: 1px solid var(--orange-border);
-            padding: 0.45rem 1.3rem;
-            border-radius: 30px;
+            padding: 0.4rem 1.5rem;
+            border-radius: 999px;
             font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
+            font-weight: 700;
+            letter-spacing: 1px;
             margin-bottom: 1.2rem;
             box-shadow: 0 4px 12px var(--orange-glow);
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
         }
 
-        .page-header h1 {
-            font-size: 2.8rem;
+        .hero-title {
+            font-size: 2.6rem;
             font-weight: 800;
-            color: var(--text-main);
+            color: var(--text-dark);
             margin-bottom: 0.8rem;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
         }
 
         .orange-text {
             color: var(--orange-primary);
-            background: linear-gradient(135deg, var(--orange-primary) 0%, var(--orange-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
-        .page-header p {
+        .hero-subtitle {
             color: var(--text-muted);
-            font-size: 1.05rem;
-            max-width: 650px;
-            margin: 0 auto;
-            font-weight: 400;
+            font-size: 1rem;
+            max-width: 620px;
             line-height: 1.6;
-            opacity: 0;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
         }
 
-        .scroll-down-hint {
-            margin-top: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            color: var(--orange-primary);
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            animation: bounceScroll 2s infinite;
-        }
-
-        /* FILTER BUTTONS SECTION */
-        .filter-section {
-            padding-top: 1rem;
-            text-align: center;
-        }
-
+        /* FILTER BUTTONS */
         .filter-container {
             display: flex;
             justify-content: center;
-            gap: 0.8rem;
-            margin: 1.5rem 0 2.5rem;
+            gap: 0.75rem;
+            margin: 2rem 0;
             flex-wrap: wrap;
             padding: 0 1rem;
         }
@@ -241,65 +174,50 @@
             background: #ffffff;
             border: 1px solid var(--orange-border);
             color: var(--text-muted);
-            padding: 0.65rem 1.6rem;
-            border-radius: 30px;
+            padding: 0.55rem 1.4rem;
+            border-radius: 999px;
             cursor: pointer;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             font-weight: 500;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
 
         .filter-btn.active, .filter-btn:hover {
-            background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+            background: var(--orange-primary);
             color: #ffffff;
             font-weight: 600;
-            border-color: transparent;
-            box-shadow: 0 8px 20px rgba(240, 90, 0, 0.28);
-            transform: translateY(-2px);
+            border-color: var(--orange-primary);
+            box-shadow: 0 6px 18px rgba(230, 81, 0, 0.25);
         }
 
         /* PORTFOLIO GRID */
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 0 5% 6rem;
-            max-width: 1300px;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 1.8rem;
+            padding: 0 5% 5rem;
+            max-width: 1280px;
             margin: 0 auto;
-            width: 100%;
         }
 
-        /* PORTFOLIO CARD (ขาว-ส้ม) */
         .portfolio-item {
             background: var(--card-bg);
             border: 1px solid var(--orange-border);
-            border-radius: 20px;
+            border-radius: 18px;
             overflow: hidden;
-            box-shadow: var(--shadow-soft);
-            position: relative;
+            box-shadow: 0 8px 24px rgba(230, 81, 0, 0.05);
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .portfolio-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--orange-primary), var(--orange-secondary));
-            z-index: 5;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .portfolio-item:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             border-color: var(--orange-primary);
-            box-shadow: var(--shadow-hover);
+            box-shadow: 0 14px 32px rgba(230, 81, 0, 0.15);
         }
 
         .portfolio-item.inactive {
@@ -314,8 +232,8 @@
             align-items: center;
             justify-content: center;
             color: var(--orange-primary);
-            font-size: 3.2rem;
-            border-bottom: 1px solid rgba(240, 90, 0, 0.1);
+            font-size: 3rem;
+            border-bottom: 1px solid rgba(230, 81, 0, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -324,24 +242,24 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.4s ease;
         }
 
         .portfolio-item:hover .item-img img {
-            transform: scale(1.06);
+            transform: scale(1.05);
         }
 
         .item-img-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(240, 90, 0, 0.88);
+            background: rgba(230, 81, 0, 0.88);
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.25s ease;
             color: #ffffff;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
             gap: 8px;
         }
@@ -351,35 +269,33 @@
         }
 
         .item-content {
-            padding: 1.5rem;
+            padding: 1.4rem;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
 
         .item-tag {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             color: var(--orange-primary);
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 0.4rem;
-            display: block;
             font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.4rem;
         }
 
         .item-title {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 0.6rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
             line-height: 1.35;
         }
 
         .item-desc {
             color: var(--text-muted);
-            font-size: 0.88rem;
-            line-height: 1.6;
-            font-weight: 400;
+            font-size: 0.85rem;
+            line-height: 1.55;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
@@ -390,17 +306,16 @@
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(44, 45, 48, 0.45);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(8px);
             z-index: 2000;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1.2rem;
+            padding: 1rem;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.35s ease;
+            transition: opacity 0.3s ease;
         }
 
         .modal-overlay.active {
@@ -411,237 +326,213 @@
         .modal-container {
             background: #ffffff;
             border: 1px solid var(--orange-border);
-            border-radius: 24px;
-            width: 96vw;
-            height: 90vh;
-            max-width: 1100px;
+            border-radius: 20px;
+            width: 95vw;
+            height: 88vh;
+            max-width: 1000px;
             overflow-y: auto;
             position: relative;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15), 0 0 40px var(--orange-glow);
-            transform: scale(0.92) translateY(20px);
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
             display: flex;
             flex-direction: column;
         }
 
         .modal-overlay.active .modal-container {
-            transform: scale(1) translateY(0);
+            transform: scale(1);
         }
 
         .modal-close-btn {
             position: sticky;
-            top: 1.2rem;
+            top: 1rem;
             align-self: flex-end;
-            margin-right: 1.5rem;
-            margin-top: 1.2rem;
+            margin-right: 1.2rem;
+            margin-top: 1rem;
             background: #ffffff;
             border: 1.5px solid var(--orange-border);
             color: var(--orange-primary);
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            font-size: 1.1rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
             z-index: 100;
         }
 
         .modal-close-btn:hover {
             background: var(--orange-primary);
             color: #ffffff;
-            transform: rotate(90deg);
         }
 
         .modal-image-area {
             width: 100%;
-            min-height: 260px;
+            min-height: 240px;
             background-color: var(--orange-light);
             display: flex;
             align-items: center;
             justify-content: center;
             border-bottom: 1px solid var(--orange-border);
-            position: relative;
-            margin-top: -56px;
+            margin-top: -52px;
         }
 
         .modal-image-area img {
             width: 100%;
             height: auto;
-            max-height: 450px;
+            max-height: 420px;
             object-fit: contain;
         }
 
         .modal-placeholder-icon {
-            font-size: 4.5rem;
+            font-size: 4rem;
             color: var(--orange-primary);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
-            padding: 3rem 1rem;
+            gap: 10px;
+            padding: 2.5rem 1rem;
         }
 
         .modal-placeholder-icon span {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            font-weight: 400;
         }
 
         .modal-body {
-            padding: 2.2rem 2.8rem 3rem;
+            padding: 2rem 2.2rem 2.5rem;
             flex-grow: 1;
         }
 
         .modal-tag {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--orange-primary);
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.4rem;
+            letter-spacing: 0.8px;
+            margin-bottom: 0.3rem;
             display: block;
         }
 
         .modal-title {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 1rem;
+            color: var(--text-dark);
+            margin-bottom: 0.8rem;
             line-height: 1.3;
         }
 
         .modal-description {
             color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.8;
-            margin-bottom: 1.8rem;
-            font-weight: 400;
+            font-size: 0.95rem;
+            line-height: 1.75;
+            margin-bottom: 1.5rem;
             white-space: pre-line;
         }
 
         .modal-category-box {
             background: var(--orange-light);
             border: 1px solid var(--orange-border);
-            padding: 1.2rem 1.8rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 14px;
+            margin-bottom: 1.5rem;
         }
 
         .modal-category-box h4 {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--orange-primary);
-            margin-bottom: 0.2rem;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
             font-weight: 700;
+            margin-bottom: 0.2rem;
         }
 
         .modal-category-box p {
-            font-size: 1.1rem;
-            color: var(--text-main);
+            font-size: 1.05rem;
+            color: var(--text-dark);
             font-weight: 600;
         }
 
         .modal-section {
-            margin-top: 2rem;
-            padding-top: 1.8rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            margin-top: 1.8rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
         }
 
         .modal-section-title {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             color: var(--orange-primary);
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .modal-section-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 0.6rem;
         }
 
         .modal-section-list li {
-            color: var(--text-main);
-            font-size: 0.98rem;
-            line-height: 1.6;
+            color: var(--text-dark);
+            font-size: 0.92rem;
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 8px;
         }
 
         .modal-section-list li i {
             color: var(--orange-primary);
-            margin-top: 4px;
-            font-size: 0.9rem;
+            margin-top: 3px;
         }
 
         .tech-tags-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-top: 0.5rem;
+            gap: 0.5rem;
+            margin-top: 0.4rem;
         }
 
         .tech-badge {
             background: var(--orange-light);
             border: 1px solid var(--orange-border);
             color: var(--orange-primary);
-            padding: 0.4rem 1rem;
+            padding: 0.35rem 0.9rem;
             border-radius: 20px;
-            font-size: 0.88rem;
+            font-size: 0.82rem;
             font-weight: 600;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2.2rem;
-            border-top: 1px solid rgba(240, 90, 0, 0.12);
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            background: #ffffff;
         }
 
         @media (max-width: 768px) {
             .pill-navbar {
-                padding: 0.6rem 1.2rem;
-                gap: 1rem;
+                padding: 0.45rem 1rem;
+                gap: 0.8rem;
             }
-
             .nav-links {
-                gap: 1rem;
+                gap: 0.9rem;
             }
-
-            .nav-item a span {
-                font-size: 0.88rem;
+            .hero-title {
+                font-size: 2rem;
             }
-
-            .page-header h1 {
-                font-size: 2.2rem;
-            }
-
             .portfolio-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
                 gap: 1.2rem;
-            }
-
-            .modal-body {
-                padding: 1.8rem 1.5rem 2.5rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. POP-UP PILL NAVBAR (รูปแคปซูลตามภาพตัวอย่าง) -->
+    <!-- BACKGROUND CANVAS (เอฟเฟกต์เส้นลอยไปลอยมา) -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- 1. POP-UP PILL NAVBAR (ปรับแต่งตามแบบ Screenshot อย่างแม่นยำ) -->
     <div class="nav-wrapper">
         <nav class="pill-navbar">
             <a href="index.html" class="nav-brand">NATTAPHUM</a>
@@ -661,7 +552,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="portfolio.html" class="active">
-                        <i class="fa-solid fa-folder-open"></i>
+                        <i class="fa-solid fa-folder-closed"></i>
                         <span>แฟ้มสะสมผลงาน</span>
                     </a>
                 </li>
@@ -672,19 +563,16 @@
     <!-- MAIN CONTENT -->
     <main>
         <!-- HERO HEAD SECTION -->
-        <section class="hero-space-container page-header">
-            <span class="hero-space-badge">PORTFOLIO COLLECTION</span>
-            <h1>แฟ้มสะสมผลงาน <span class="orange-text">(Portfolio)</span></h1>
-            <p>รวบรวมโครงงาน การเข้าร่วมอบรม และวุฒิบัตรทางด้านวิทยาการคอมพิวเตอร์และเทคโนโลยี</p>
-
-            <div class="scroll-down-hint" id="scrollToPortfolio">
-                <span>เลื่อนลงเพื่อสำรวจผลงาน</span>
-                <i class="fa-solid fa-chevron-down"></i>
+        <section class="hero-section">
+            <div class="hero-badge">
+                <i class="fa-solid fa-award" style="margin-right: 6px;"></i> PORTFOLIO COLLECTION
             </div>
+            <h1 class="hero-title">แฟ้มสะสมผลงาน <span class="orange-text">(Portfolio)</span></h1>
+            <p class="hero-subtitle">รวบรวมโครงงาน การเข้าร่วมอบรม กิจกรรมทางวิชาการ และวุฒิบัตรทั้งหมด</p>
         </section>
 
         <!-- FILTER BUTTONS -->
-        <section class="filter-section" id="portfolioSection">
+        <section class="filter-section">
             <div class="filter-container">
                 <button class="filter-btn active" onclick="filterPortfolio('all', event)">ทั้งหมด</button>
                 <button class="filter-btn" onclick="filterPortfolio('projects', event)">โครงงาน / โปรเจกต์</button>
@@ -693,17 +581,17 @@
             </div>
         </section>
 
-        <!-- PORTFOLIO GRID -->
+        <!-- PORTFOLIO GRID (นำผลงานทั้งหมดกลับมาครบถ้วน) -->
         <section class="portfolio-grid" id="portfolioDeck">
 
             <!-- 1. PERSONAL PORTFOLIO WEBSITE -->
             <div class="portfolio-item projects" onclick="openModal(this)"
                  data-title="Personal Portfolio Website"
                  data-tag="Project / Web Development"
-                 data-desc="เว็บไซต์แฟ้มสะสมผลงานส่วนตัว ออกแบบและพัฒนาขึ้นเพื่อนำเสนอประวัติการศึกษา โครงงาน และกิจกรรมทางด้านเทคโนโลยี พัฒนาโครงสร้างด้วย HTML5, CSS3 และ JavaScript โฮสต์บนระบบ GitHub Pages เน้นดีไซน์ Clean & Modern White-Orange"
+                 data-desc="เว็บไซต์แฟ้มสะสมผลงานส่วนตัว ออกแบบและพัฒนาขึ้นเพื่อนำเสนอประวัติการศึกษา โครงงาน และกิจกรรมทางด้านเทคโนโลยี พัฒนาโครงสร้างด้วย HTML5, CSS3 และ JavaScript โฮสต์บนระบบ GitHub Pages เน้นดีไซน์ Clean White-Orange Modern Pill Layout"
                  data-img="" 
-                 data-features="ออกแบบสไตล์ Modern Pill Header & Glassmorphic Accent|มีระบบตัวกรองผลงาน (Category Filter) พร้อมแอนิเมชัน|ระบบหน้าต่าง Pop-up แสดงรายละเอียดผลงานอย่างชัดเจน|รองรับการแสดงผลบนสมาร์ตโฟน แท็บเล็ต และคอมพิวเตอร์อย่างสมบูรณ์"
-                 data-tech="HTML5, CSS3, JavaScript, GitHub Pages, FontAwesome"
+                 data-features="ออกแบบสไตล์ Modern Pill Pop-up Header & Soft Accent Lines|ระบบตัวกรองผลงาน (Category Filter) พร้อมแอนิเมชันเรียบลื่น|ระบบ Modal Pop-up แสดงรายละเอียดผลงานเต็มรูปแบบโดยไม่ต้องเปลี่ยนหน้า|รองรับการแสดงผลบนอุปกรณ์ทุกขนาด (Fully Responsive Design)"
+                 data-tech="HTML5, CSS3, JavaScript, GitHub Pages, FontAwesome, Canvas API"
                  data-icon="fa-laptop-code"
                  data-category="โครงงาน / โปรเจกต์">
                 <div class="item-img">
@@ -713,7 +601,7 @@
                 <div class="item-content">
                     <span class="item-tag">Project / Web Development</span>
                     <h3 class="item-title">Personal Portfolio Website</h3>
-                    <p class="item-desc">พัฒนาเว็บไซต์แฟ้มสะสมผลงานด้วย HTML5, CSS3, และ JavaScript โฮสต์บน GitHub Pages เน้นดีไซน์สีขาว-ส้ม สบายตา</p>
+                    <p class="item-desc">พัฒนาเว็บไซต์แฟ้มสะสมผลงานด้วย HTML5, CSS3, และ JavaScript โฮสต์บน GitHub Pages เน้นโทนสีขาว-ส้ม สบายตา</p>
                 </div>
             </div>
 
@@ -721,10 +609,10 @@
             <div class="portfolio-item projects" onclick="openModal(this)"
                  data-title="Computer Systems & Hardware Analysis"
                  data-tag="Project / Hardware"
-                 data-desc="การศึกษา เปรียบเทียบ และวิเคราะห์ประสิทธิภาพของชิ้นส่วนคอมพิวเตอร์ (Hardware Architecture) ทั้งหน่วยประมวลผลกลาง (CPU) หน่วยประมวลผลกราฟิก (GPU) ชิปเซ็ตเมนบอร์ด และระบบกักเก็บข้อมูลแบบ NVMe PCIe SSD เพื่อความเข้าใจในการเลือกใช้ทรัพยากรฮาร์ดแวร์ให้เหมาะสมกับงานประเภทต่างๆ"
+                 data-desc="การศึกษา เปรียบเทียบ และวิเคราะห์ประสิทธิภาพของชิ้นส่วนคอมพิวเตอร์ (Hardware Architecture) ทั้งหน่วยประมวลผลกลาง (CPU) หน่วยประมวลผลกราฟิก (GPU) ชิปเซ็ตเมนบอร์ด AM4 และระบบกักเก็บข้อมูล NVMe PCIe SSD เพื่อประเมินประสิทธิภาพในงานประมวลผลคำนวณกราฟิก"
                  data-img="" 
-                 data-features="เปรียบเทียบสเปกการทำงานของชิปประมวลผลรุ่นสถาปัตยกรรมต่างยุคสมัย|วิเคราะห์ความเร็วการรับส่งข้อมูลระหว่าง NVMe PCIe SSD กับ SSD รูปแบบเดิม|ศึกษาความเข้ากันได้ของเมนบอร์ดและหน่วยความจำแรม (RAM Bus Speeds)|จัดทำสรุปรายงานสเปกคอมพิวเตอร์เพื่อการประมวลผลระดับสูง"
-                 data-tech="CPU/GPU Benchmarking, NVMe Architecture, Motherboard Compatibility, PC Building"
+                 data-features="เปรียบเทียบสเปกการทำงานของชิปประมวลผลสถาปัตยกรรมต่างๆ|วิเคราะห์ความเร็วการรับส่งข้อมูลระหว่าง NVMe PCIe SSD กับ SSD ทั่วไป|ศึกษาความเข้ากันได้ของเมนบอร์ดและบัสหน่วยความจำแรม (RAM Bus Speeds)|จัดทำสรุปรายงานสเปกคอมพิวเตอร์เพื่อการประมวลผลระดับสูง"
+                 data-tech="CPU/GPU Benchmarking, NVMe PCIe Architecture, AM4 Motherboard System, Hardware Optimization"
                  data-icon="fa-server"
                  data-category="โครงงาน / สถาปัตยกรรมคอมพิวเตอร์">
                 <div class="item-img">
@@ -734,7 +622,7 @@
                 <div class="item-content">
                     <span class="item-tag">Project / Hardware</span>
                     <h3 class="item-title">Computer Systems & Hardware Analysis</h3>
-                    <p class="item-desc">การศึกษาและวิเคราะห์สถาปัตยกรรมฮาร์ดแวร์คอมพิวเตอร์ การเปรียบเทียบประสิทธิภาพสเปกการประมวลผล GPU และ CPU</p>
+                    <p class="item-desc">การศึกษาและวิเคราะห์สถาปัตยกรรมฮาร์ดแวร์คอมพิวเตอร์ การเปรียบเทียบประสิทธิภาพสเปกการประมวลผล GPU, CPU และ NVMe</p>
                 </div>
             </div>
 
@@ -783,11 +671,11 @@
             <!-- 5. K-ENGINEERING: BASIC PLC (A3.jpg) -->
             <div class="portfolio-item workshops" onclick="openModal(this)"
                  data-title="K-Engineering: Basic PLC Workshop"
-                 data-tag="Workshop / Engineering"
+                 data-tag="Workshop / Automation"
                  data-desc="การเข้าร่วมอบรมเชิงปฏิบัติการควบคุมอุปกรณ์อุตสาหกรรมด้วยโปรแกรม PLC (Programmable Logic Controller) ขั้นพื้นฐาน เรียนรู้การเขียนโปรแกรมควบคุมวงจรอัตโนมัติในระบบวิศวกรรม"
                  data-img="A3.jpg" 
                  data-features="ศึกษาโครงสร้างการทำงานของโปรแกรม PLC และอุปกรณ์อินพุต/เอาต์พุต|เขียนโค้ดภาษา Ladder Diagram ควบคุมการทำงานตามเงื่อนไข|ทดลองจำลองวงจรควบคุมอุตสาหกรรมในห้องปฏิบัติการวิศวกรรม"
-                 data-tech="PLC, Programmable Logic Controller, Automation, Control Systems"
+                 data-tech="PLC, Programmable Logic Controller, Automation Systems, Ladder Diagram"
                  data-icon="fa-microchip"
                  data-category="การอบรม / กิจกรรม">
                 <div class="item-img">
@@ -795,7 +683,7 @@
                     <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">Workshop / Engineering</span>
+                    <span class="item-tag">Workshop / Automation</span>
                     <h3 class="item-title">K-Engineering: Basic PLC Workshop</h3>
                     <p class="item-desc">เรียนรู้การเขียนโปรแกรมควบคุมวงจรอัตโนมัติด้วย PLC ขั้นพื้นฐาน ณ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
                 </div>
@@ -804,8 +692,8 @@
             <!-- 6. THAILAND UNIVERSITY EXPO 2024 (A4.jpg) -->
             <div class="portfolio-item certificates" onclick="openModal(this)"
                  data-title="Thailand University Expo 2024"
-                 data-tag="Certificate / Workshop"
-                 data-desc="เกียรติบัตรผ่านการเข้าร่วมกิจกรรมพัฒนาทักษะวิชาการและกิจกรรมเชิงปฏิบัติการ ในกลุ่มสาระ 'เทคโนโลยีสารสนเทศ นวัตกรรม' ภายใต้โครงการ Thailand University Expo 2024 ออกโดย สถาบันวิชาการ เจ โนว์เลจ ณ จังหวัดชลบุรี"
+                 data-tag="Certificate / Academic"
+                 data-desc="เกียรติบัตรผ่านการเข้าร่วมกิจกรรมพัฒนาทักษะวิชาการและกิจกรรมเชิงปฏิบัติการ ในกลุ่มสาระ 'เทคโนโลยีสารสนเทศ นวัตกรรม' ภายใต้โครงการ Thailand University Expo 2024 ออกโดย สถาบันวิชาการ เจ โนว์เลจ"
                  data-img="A4.jpg" 
                  data-features="เข้าร่วมกิจกรรมพัฒนาทักษะทางวิชาการด้านเทคโนโลยีสารสนเทศและนวัตกรรมดิจิทัล|ผ่านการประเมินและได้รับเกียรติบัตรรับรองจากสถาบันวิชาการ เจ โนว์เลจ|เตรียมความพร้อมการศึกษาต่อระดับอุดมศึกษาด้านคอมพิวเตอร์และไอที"
                  data-tech="Information Technology, Innovation, Academic Workshop, J-Knowledge"
@@ -816,18 +704,58 @@
                     <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">Certificate / Workshop</span>
+                    <span class="item-tag">Certificate / Academic</span>
                     <h3 class="item-title">Thailand University Expo 2024</h3>
                     <p class="item-desc">เกียรติบัตรเข้าร่วมการอบรมเชิงปฏิบัติการกลุ่มเทคโนโลยีสารสนเทศ นวัตกรรม จากสถาบันวิชาการ เจ โนว์เลจ</p>
+                </div>
+            </div>
+
+            <!-- 7. IOT ENGINEERING ON BLYNK.CONSOLE WORKSHOP -->
+            <div class="portfolio-item workshops" onclick="openModal(this)"
+                 data-title="IoT Engineering on Blynk.Console Workshop"
+                 data-tag="Workshop / Internet of Things"
+                 data-desc="การเข้าอบรมปฏิบัติการพัฒนาระบบ Internet of Things (IoT) ด้วย Blynk.Console เชื่อมต่อไมโครคอนโทรลเลอร์กับคลาวด์แพลตฟอร์ม เพื่อรับส่งข้อมูลและควบคุมอุปกรณ์แบบเรียลไทม์ผ่านแดชบอร์ด"
+                 data-img="" 
+                 data-features="ออกแบบและสร้างแดชบอร์ดควบคุมระบบ IoT บน Blynk.Console|เขียนโปรแกรมเชื่อมต่อเซนเซอร์และบอร์ดไมโครคอนโทรลเลอร์ผ่าน Wi-Fi|รับและส่งข้อมูลเซนเซอร์แบบ Real-time Telemetry"
+                 data-tech="IoT, Blynk.Console, Microcontrollers, Wi-Fi Telemetry, Cloud Dashboard"
+                 data-icon="fa-wifi"
+                 data-category="การอบรม / กิจกรรม">
+                <div class="item-img">
+                    <i class="fa-solid fa-wifi"></i>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">Workshop / Internet of Things</span>
+                    <h3 class="item-title">IoT Engineering on Blynk.Console</h3>
+                    <p class="item-desc">การอบรมเชิงปฏิบัติการพัฒนาระบบ IoT เชื่อมต่อไมโครคอนโทรลเลอร์กับ Blynk.Console คลาวด์แดชบอร์ด</p>
+                </div>
+            </div>
+
+            <!-- 8. HIGH SCHOOL ACADEMIC & SCIENTIFIC RESEARCH -->
+            <div class="portfolio-item certificates" onclick="openModal(this)"
+                 data-title="High School Academic & Scientific Research"
+                 data-tag="Certificate / Science & STEM"
+                 data-desc="สรุปการศึกษา ค้นคว้า และทำแบบฝึกหัดคำนวณทางวิทยาศาสตร์ (เคมี ฟิสิกส์ ชีววิทยา) ในระดับชั้นมัธยมศึกษาตอนปลาย รวมถึงการจัดทำสื่อการเรียนรู้ด้านระบบหมุนเวียนเลือดและชีววิทยา"
+                 data-img="" 
+                 data-features="การศึกษาหลักการคำนวณทางเคมีเชิงปริมาณและปฏิกิริยารีดอกซ์|การวิเคราะห์วงจรไฟฟ้าและความต้านทานทางฟิสิกส์|จัดทำสื่อสรุปเนื้อหาชีววิทยาเชิงโต้ตอบระบบหมุนเวียนเลือดบน Wayground"
+                 data-tech="Physics, Chemistry, Biology, STEM Research, Digital Learning Content"
+                 data-icon="fa-flask"
+                 data-category="เกียรติบัตร / วิชาการ">
+                <div class="item-img">
+                    <i class="fa-solid fa-flask"></i>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">Certificate / Science & STEM</span>
+                    <h3 class="item-title">Scientific & Physics Calculations</h3>
+                    <p class="item-desc">การศึกษาค้นคว้าประยุกต์ทักษะการคำนวณทางฟิสิกส์ เคมี และการสรุปบทเรียนชีววิทยาระดับมัธยมศึกษาตอนปลาย</p>
                 </div>
             </div>
 
         </section>
     </main>
 
-    <footer>
-        <p>© 2026 NATTAPHUM | Designed for University Admissions Portfolio</p>
-    </footer>
+    <!-- REMOVED FOOTER AS REQUESTED -->
 
     <!-- MODAL POPUP -->
     <div class="modal-overlay" id="cardModal" onclick="closeModalOnOuterClick(event)">
@@ -859,17 +787,82 @@
         </div>
     </div>
 
+    <!-- JAVASCRIPT: BACKGROUND CANVAS LINES ANIMATION & INTERACTION -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const scrollHint = document.getElementById('scrollToPortfolio');
-            const portfolioSection = document.getElementById('portfolioSection');
+        // BACKGROUND ANIMATED LINES CANVAS
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
 
-            if (scrollHint && portfolioSection) {
-                scrollHint.addEventListener('click', () => {
-                    portfolioSection.scrollIntoView({ behavior: 'smooth' });
-                });
-            }
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initPoints();
         });
+
+        class Point {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.8;
+                this.vy = (Math.random() - 0.5) * 0.8;
+                this.radius = Math.random() * 2 + 1.5;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(230, 81, 0, 0.35)';
+                ctx.fill();
+            }
+        }
+
+        let points = [];
+        function initPoints() {
+            points = [];
+            const count = Math.floor((width * height) / 18000);
+            for (let i = 0; i < Math.min(count, 65); i++) {
+                points.push(new Point());
+            }
+        }
+        initPoints();
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+
+            // วาดเส้นเชื่อมโยงลอยไปลอยมา
+            for (let i = 0; i < points.length; i++) {
+                points[i].update();
+                points[i].draw();
+
+                for (let j = i + 1; j < points.length; j++) {
+                    const dx = points[i].x - points[j].x;
+                    const dy = points[i].y - points[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 140) {
+                        ctx.beginPath();
+                        ctx.moveTo(points[i].x, points[i].y);
+                        ctx.lineTo(points[j].x, points[j].y);
+                        ctx.strokeStyle = `rgba(230, 81, 0, ${0.18 * (1 - dist / 140)})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
 
         // FILTER SYSTEM
         function filterPortfolio(category, evt) {
@@ -925,7 +918,7 @@
             if (featuresRaw.trim() !== '') {
                 const featuresArray = featuresRaw.split('|');
                 featuresArray.forEach(item => {
-                    featuresList.innerHTML += `<li><i class="fa-solid fa-check-circle"></i> <span>${item.trim()}</span></li>`;
+                    featuresList.innerHTML += `<li><i class="fa-solid fa-circle-check"></i> <span>${item.trim()}</span></li>`;
                 });
                 document.getElementById('modalFeaturesSection').style.display = 'block';
             } else {
