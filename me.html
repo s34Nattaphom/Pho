@@ -170,14 +170,23 @@
         }
 
         .nav-menu-item a i { color: var(--orange-main); transition: transform 0.25s ease; }
-        .nav-menu-item a:hover {
+
+        /* แท็บสถานะ Active และ Hover */
+        .nav-menu-item a:hover,
+        .nav-menu-item a.active {
             color: var(--orange-main);
             background: var(--orange-soft-bg);
+            font-weight: 600;
+        }
+
+        .nav-menu-item a:hover {
             transform: translateY(-2px);
         }
+
         .nav-menu-item a:hover i {
             transform: scale(1.2) rotate(8deg);
         }
+
         .nav-menu-item a:active {
             transform: scale(0.95);
         }
