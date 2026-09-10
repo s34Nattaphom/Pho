@@ -3,23 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Nattaphum</title>
+    <title>แฟ้มสะสมผลงาน | NATTAPHUM</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --bg-color: #fcfbfa;
-            --card-bg: #ffffff;
-            --orange-primary: #e65100;
-            --orange-secondary: #ff6d00;
-            --orange-light: #fff3e0;
-            --orange-border: rgba(230, 81, 0, 0.2);
-            --orange-glow: rgba(230, 81, 0, 0.12);
-            --text-dark: #2d3139;
-            --text-muted: #64748b;
+            --orange-main: #E35205;      
+            --orange-light: #FF661A;     
+            --orange-soft-bg: #FFF0E6;   
+            --orange-glow: rgba(227, 82, 5, 0.15);
+            
+            --bg-color: #FAFAFA;         
+            --card-border: rgba(227, 82, 5, 0.18);
+            
+            --text-main: #222222;       
+            --text-muted: #666666;      
+            --text-white: #FFFFFF;
         }
 
         * {
@@ -32,132 +34,179 @@
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-dark);
-            overflow-x: hidden;
+            color: var(--text-main);
             min-height: 100vh;
+            overflow-x: hidden;
             position: relative;
         }
 
-        /* Canvas เอฟเฟกต์เส้นลอยไปลอยมาด้านหลัง */
-        #bgCanvas {
+        /* Canvas และ Ambient Background Glow สไตล์ me.html */
+        #particle-canvas {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFF5F0 50%, #FFEBE0 100%);
             pointer-events: none;
         }
 
-        /* 1. FLOATING PILL POP-UP NAVBAR (ปรับสี ขนาด และรูปทรงให้ตรงตาม Screenshot) */
-        .nav-wrapper {
+        .ambient-glow {
             position: fixed;
-            top: 1.2rem;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(227, 82, 5, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
+            top: -150px;
             left: 50%;
             transform: translateX(-50%);
+            z-index: -1;
+            pointer-events: none;
+            animation: pulseAmbient 8s ease-in-out infinite alternate;
+        }
+
+        /* ===== Keyframe Animations เดียวกับ me.html ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.85) translateY(20px); }
+            70% { transform: scale(1.03) translateY(-4px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @keyframes pulseAmbient {
+            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.08); }
+        }
+
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(227, 82, 5, 0.15); }
+            50% { box-shadow: 0 0 25px rgba(227, 82, 5, 0.35); }
+        }
+
+        /* Floating Pill Navbar */
+        .top-nav-wrapper {
+            position: fixed;
+            top: 1.5rem;
+            left: 0;
+            width: 100%;
             z-index: 1000;
-            width: max-content;
-            max-width: 92%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 1rem;
+            transform: translateX(5px);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .pill-navbar {
-            background: #ffffff;
-            border: 1.5px solid rgba(230, 81, 0, 0.18);
-            border-radius: 999px;
-            padding: 0.5rem 1.6rem;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            padding: 0.6rem 2rem;
             display: flex;
             align-items: center;
-            gap: 1.2rem;
-            box-shadow: 0 10px 30px rgba(230, 81, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+            gap: 2rem;
+            box-shadow: 0 10px 30px rgba(227, 82, 5, 0.08);
+            transition: all 0.3s ease;
         }
 
-        .nav-brand {
-            font-weight: 800;
+        .nav-logo {
+            color: var(--orange-main);
+            font-weight: 700;
             font-size: 1.15rem;
-            color: var(--orange-primary);
             letter-spacing: 1.5px;
             text-decoration: none;
-            text-transform: uppercase;
-            white-space: nowrap;
+            padding-right: 1.2rem;
+            border-right: 1px solid rgba(227, 82, 5, 0.2);
+            transition: transform 0.3s ease;
         }
 
-        .nav-divider {
-            width: 1px;
-            height: 22px;
-            background-color: rgba(230, 81, 0, 0.25);
-            flex-shrink: 0;
-        }
+        .nav-logo:hover { transform: scale(1.05); }
 
-        .nav-links {
+        .nav-menu-list {
+            list-style: none;
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            list-style: none;
+            gap: 0.8rem;
         }
 
-        .nav-item a {
+        .nav-menu-item a {
             display: flex;
             align-items: center;
             gap: 8px;
+            padding: 0.5rem 1.2rem;
+            color: var(--text-muted);
             text-decoration: none;
-            color: #4a4a4a;
-            font-weight: 500;
+            border-radius: 25px;
             font-size: 0.95rem;
-            transition: all 0.2s ease;
-            white-space: nowrap;
+            font-weight: 500;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .nav-item a i {
-            color: var(--orange-primary);
-            font-size: 1rem;
-        }
+        .nav-menu-item a i { color: var(--orange-main); transition: transform 0.25s ease; }
 
-        .nav-item a:hover, .nav-item a.active {
-            color: var(--orange-primary);
+        .nav-menu-item a:hover,
+        .nav-menu-item a.active {
+            color: var(--orange-main);
+            background: var(--orange-soft-bg);
             font-weight: 600;
         }
 
+        .nav-menu-item a:hover { transform: translateY(-2px); }
+        .nav-menu-item a:hover i { transform: scale(1.2) rotate(8deg); }
+        .nav-menu-item a:active { transform: scale(0.95); }
+
         /* HERO & PAGE HEADER */
-        .hero-section {
-            padding: 8rem 1.5rem 2.5rem;
+        .page-container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 8.5rem 1.5rem 5rem;
+        }
+
+        .header-title-wrapper {
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
         }
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--orange-light);
-            color: var(--orange-primary);
-            border: 1px solid var(--orange-border);
-            padding: 0.4rem 1.5rem;
-            border-radius: 999px;
+        .badge-category {
+            display: inline-block;
+            background: var(--orange-soft-bg);
+            color: var(--orange-main);
+            border: 1px solid rgba(227, 82, 5, 0.3);
+            padding: 0.4rem 1.4rem;
+            border-radius: 20px;
             font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 1.2rem;
-            box-shadow: 0 4px 12px var(--orange-glow);
-        }
-
-        .hero-title {
-            font-size: 2.6rem;
-            font-weight: 800;
-            color: var(--text-dark);
+            font-weight: 600;
+            letter-spacing: 1.5px;
             margin-bottom: 0.8rem;
+            animation: floatBadge 4s ease-in-out infinite;
         }
 
-        .orange-text {
-            color: var(--orange-primary);
+        .page-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
         }
 
-        .hero-subtitle {
+        .orange-text { color: var(--orange-main); }
+
+        .page-subtitle {
             color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 620px;
-            line-height: 1.6;
+            font-size: 1.05rem;
         }
 
         /* FILTER BUTTONS */
@@ -165,75 +214,76 @@
             display: flex;
             justify-content: center;
             gap: 0.75rem;
-            margin: 2rem 0;
+            margin-bottom: 3rem;
             flex-wrap: wrap;
-            padding: 0 1rem;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
         }
 
         .filter-btn {
             background: #ffffff;
-            border: 1px solid var(--orange-border);
+            border: 1px solid var(--card-border);
             color: var(--text-muted);
             padding: 0.55rem 1.4rem;
-            border-radius: 999px;
+            border-radius: 50px;
             cursor: pointer;
             font-size: 0.9rem;
             font-weight: 500;
-            transition: all 0.25s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
         }
 
         .filter-btn.active, .filter-btn:hover {
-            background: var(--orange-primary);
+            background: var(--orange-main);
             color: #ffffff;
             font-weight: 600;
-            border-color: var(--orange-primary);
-            box-shadow: 0 6px 18px rgba(230, 81, 0, 0.25);
+            border-color: var(--orange-main);
+            box-shadow: 0 8px 22px rgba(227, 82, 5, 0.3);
+            transform: translateY(-2px);
         }
+
+        .filter-btn:active { transform: scale(0.95); }
 
         /* PORTFOLIO GRID */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
             gap: 1.8rem;
-            padding: 0 5% 5rem;
-            max-width: 1280px;
-            margin: 0 auto;
         }
 
         .portfolio-item {
-            background: var(--card-bg);
-            border: 1px solid var(--orange-border);
-            border-radius: 18px;
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 8px 24px rgba(230, 81, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(227, 82, 5, 0.05);
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
+            animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
         }
 
         .portfolio-item:hover {
-            transform: translateY(-6px);
-            border-color: var(--orange-primary);
-            box-shadow: 0 14px 32px rgba(230, 81, 0, 0.15);
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--orange-main);
+            box-shadow: 0 20px 40px rgba(227, 82, 5, 0.2);
         }
 
-        .portfolio-item.inactive {
-            display: none;
-        }
+        .portfolio-item:active { transform: scale(0.98); }
+
+        .portfolio-item.inactive { display: none; }
 
         .item-img {
             width: 100%;
             aspect-ratio: 4 / 3;
-            background-color: var(--orange-light);
+            background-color: var(--orange-soft-bg);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--orange-primary);
+            color: var(--orange-main);
             font-size: 3rem;
-            border-bottom: 1px solid rgba(230, 81, 0, 0.1);
+            border-bottom: 1px solid rgba(227, 82, 5, 0.12);
             position: relative;
             overflow: hidden;
         }
@@ -245,14 +295,12 @@
             transition: transform 0.4s ease;
         }
 
-        .portfolio-item:hover .item-img img {
-            transform: scale(1.05);
-        }
+        .portfolio-item:hover .item-img img { transform: scale(1.08); }
 
         .item-img-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(230, 81, 0, 0.88);
+            background: rgba(227, 82, 5, 0.88);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -264,12 +312,10 @@
             gap: 8px;
         }
 
-        .portfolio-item:hover .item-img-overlay {
-            opacity: 1;
-        }
+        .portfolio-item:hover .item-img-overlay { opacity: 1; }
 
         .item-content {
-            padding: 1.4rem;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
@@ -277,7 +323,7 @@
 
         .item-tag {
             font-size: 0.75rem;
-            color: var(--orange-primary);
+            color: var(--orange-main);
             text-transform: uppercase;
             font-weight: 700;
             letter-spacing: 0.5px;
@@ -285,16 +331,16 @@
         }
 
         .item-title {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: var(--text-main);
             margin-bottom: 0.5rem;
             line-height: 1.35;
         }
 
         .item-desc {
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             line-height: 1.55;
             display: -webkit-box;
             -webkit-line-clamp: 3;
@@ -308,76 +354,77 @@
             inset: 0;
             background: rgba(0, 0, 0, 0.45);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 2000;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
+            padding: 1.5rem;
             opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
         }
 
         .modal-overlay.active {
             opacity: 1;
-            pointer-events: auto;
+            visibility: visible;
         }
 
         .modal-container {
             background: #ffffff;
-            border: 1px solid var(--orange-border);
-            border-radius: 20px;
-            width: 95vw;
-            height: 88vh;
-            max-width: 1000px;
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 88vh;
             overflow-y: auto;
             position: relative;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
+            box-shadow: 0 25px 60px rgba(227, 82, 5, 0.25);
+            transform: translateY(40px) scale(0.88);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             display: flex;
             flex-direction: column;
         }
 
         .modal-overlay.active .modal-container {
-            transform: scale(1);
+            transform: translateY(0) scale(1);
         }
 
         .modal-close-btn {
             position: sticky;
-            top: 1rem;
+            top: 1.2rem;
             align-self: flex-end;
             margin-right: 1.2rem;
-            margin-top: 1rem;
-            background: #ffffff;
-            border: 1.5px solid var(--orange-border);
-            color: var(--orange-primary);
-            width: 40px;
-            height: 40px;
+            margin-top: 1.2rem;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
+            background: var(--orange-soft-bg);
+            color: var(--orange-main);
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             z-index: 100;
         }
 
         .modal-close-btn:hover {
-            background: var(--orange-primary);
+            background: var(--orange-main);
             color: #ffffff;
+            transform: rotate(90deg) scale(1.15);
         }
 
         .modal-image-area {
             width: 100%;
             min-height: 240px;
-            background-color: var(--orange-light);
+            background-color: var(--orange-soft-bg);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-bottom: 1px solid var(--orange-border);
+            border-bottom: 1px solid var(--card-border);
             margin-top: -52px;
         }
 
@@ -390,7 +437,7 @@
 
         .modal-placeholder-icon {
             font-size: 4rem;
-            color: var(--orange-primary);
+            color: var(--orange-main);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -409,19 +456,21 @@
         }
 
         .modal-tag {
+            display: inline-block;
+            background: var(--orange-soft-bg);
+            color: var(--orange-main);
             font-size: 0.8rem;
-            color: var(--orange-primary);
             font-weight: 700;
+            padding: 0.35rem 1.1rem;
+            border-radius: 15px;
+            margin-bottom: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 0.3rem;
-            display: block;
         }
 
         .modal-title {
             font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--text-dark);
+            font-weight: 700;
+            color: var(--text-main);
             margin-bottom: 0.8rem;
             line-height: 1.3;
         }
@@ -435,8 +484,8 @@
         }
 
         .modal-category-box {
-            background: var(--orange-light);
-            border: 1px solid var(--orange-border);
+            background: var(--orange-soft-bg);
+            border-left: 4px solid var(--orange-main);
             padding: 1rem 1.5rem;
             border-radius: 14px;
             margin-bottom: 1.5rem;
@@ -444,7 +493,7 @@
 
         .modal-category-box h4 {
             font-size: 0.75rem;
-            color: var(--orange-primary);
+            color: var(--orange-main);
             text-transform: uppercase;
             font-weight: 700;
             margin-bottom: 0.2rem;
@@ -452,19 +501,19 @@
 
         .modal-category-box p {
             font-size: 1.05rem;
-            color: var(--text-dark);
+            color: var(--text-main);
             font-weight: 600;
         }
 
         .modal-section {
             margin-top: 1.8rem;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            border-top: 1px solid rgba(227, 82, 5, 0.15);
         }
 
         .modal-section-title {
-            font-size: 1.05rem;
-            color: var(--orange-primary);
+            font-size: 1.1rem;
+            color: var(--orange-main);
             font-weight: 700;
             margin-bottom: 0.8rem;
             display: flex;
@@ -480,15 +529,15 @@
         }
 
         .modal-section-list li {
-            color: var(--text-dark);
+            color: var(--text-main);
             font-size: 0.92rem;
             display: flex;
             align-items: flex-start;
-            gap: 8px;
+            gap: 10px;
         }
 
         .modal-section-list li i {
-            color: var(--orange-primary);
+            color: var(--orange-main);
             margin-top: 3px;
         }
 
@@ -500,89 +549,62 @@
         }
 
         .tech-badge {
-            background: var(--orange-light);
-            border: 1px solid var(--orange-border);
-            color: var(--orange-primary);
+            background: var(--orange-soft-bg);
+            border: 1px solid rgba(227, 82, 5, 0.3);
+            color: var(--orange-main);
             padding: 0.35rem 0.9rem;
             border-radius: 20px;
             font-size: 0.82rem;
             font-weight: 600;
         }
 
-        @media (max-width: 768px) {
-            .pill-navbar {
-                padding: 0.45rem 1rem;
-                gap: 0.8rem;
-            }
-            .nav-links {
-                gap: 0.9rem;
-            }
-            .hero-title {
-                font-size: 2rem;
-            }
-            .portfolio-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 1.2rem;
-            }
+        @media (max-width: 850px) {
+            .top-nav-wrapper { transform: translateX(0); }
+            .pill-navbar { padding: 0.5rem 1.2rem; gap: 1rem; }
+            .page-title { font-size: 2rem; }
+            .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.2rem; }
+            .modal-container { max-width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- BACKGROUND CANVAS (เอฟเฟกต์เส้นลอยไปลอยมา) -->
-    <canvas id="bgCanvas"></canvas>
+    <!-- BACKGROUND CANVAS & AMBIENT GLOW (สไตล์เดียวกับ me.html) -->
+    <canvas id="particle-canvas"></canvas>
+    <div class="ambient-glow"></div>
 
-    <!-- 1. POP-UP PILL NAVBAR (ปรับแต่งตามแบบ Screenshot อย่างแม่นยำ) -->
-    <div class="nav-wrapper">
+    <!-- 1. POP-UP PILL NAVBAR -->
+    <div class="top-nav-wrapper">
         <nav class="pill-navbar">
-            <a href="index.html" class="nav-brand">NATTAPHUM</a>
-            <div class="nav-divider"></div>
-            <ul class="nav-links">
-                <li class="nav-item">
-                    <a href="index.html">
-                        <i class="fa-solid fa-house"></i>
-                        <span>หน้าแรก</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="index.html#about">
-                        <i class="fa-solid fa-user"></i>
-                        <span>ข้อมูลส่วนตัว</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="portfolio.html" class="active">
-                        <i class="fa-solid fa-folder-closed"></i>
-                        <span>แฟ้มสะสมผลงาน</span>
-                    </a>
-                </li>
+            <a href="index.html" class="nav-logo">NATTAPHUM</a>
+            <ul class="nav-menu-list">
+                <li class="nav-menu-item"><a href="index.html"><i class="fa-solid fa-house"></i><span>หน้าแรก</span></a></li>
+                <li class="nav-menu-item"><a href="me.html"><i class="fa-solid fa-user"></i><span>ข้อมูลส่วนตัว</span></a></li>
+                <li class="nav-menu-item"><a href="portfolio.html" class="active"><i class="fa-solid fa-folder-open"></i><span>แฟ้มสะสมผลงาน</span></a></li>
             </ul>
         </nav>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <main>
+    <!-- MAIN CONTENT CONTAINER -->
+    <div class="page-container">
+        
         <!-- HERO HEAD SECTION -->
-        <section class="hero-section">
-            <div class="hero-badge">
-                <i class="fa-solid fa-award" style="margin-right: 6px;"></i> PORTFOLIO COLLECTION
-            </div>
-            <h1 class="hero-title">แฟ้มสะสมผลงาน <span class="orange-text">(Portfolio)</span></h1>
-            <p class="hero-subtitle">รวบรวมโครงงาน การเข้าร่วมอบรม กิจกรรมทางวิชาการ และวุฒิบัตรทั้งหมด</p>
-        </section>
+        <div class="header-title-wrapper">
+            <span class="badge-category">PORTFOLIO COLLECTION</span>
+            <h1 class="page-title">แฟ้มสะสมผลงาน <span class="orange-text">(Portfolio)</span></h1>
+            <p class="page-subtitle">รวบรวมโครงงาน การเข้าร่วมอบรม กิจกรรมทางวิชาการ และวุฒิบัตรทั้งหมด</p>
+        </div>
 
         <!-- FILTER BUTTONS -->
-        <section class="filter-section">
-            <div class="filter-container">
-                <button class="filter-btn active" onclick="filterPortfolio('all', event)">ทั้งหมด</button>
-                <button class="filter-btn" onclick="filterPortfolio('projects', event)">โครงงาน / โปรเจกต์</button>
-                <button class="filter-btn" onclick="filterPortfolio('workshops', event)">การอบรม / กิจกรรม</button>
-                <button class="filter-btn" onclick="filterPortfolio('certificates', event)">เกียรติบัตร</button>
-            </div>
-        </section>
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterPortfolio('all', event)">ทั้งหมด</button>
+            <button class="filter-btn" onclick="filterPortfolio('projects', event)">โครงงาน / โปรเจกต์</button>
+            <button class="filter-btn" onclick="filterPortfolio('workshops', event)">การอบรม / กิจกรรม</button>
+            <button class="filter-btn" onclick="filterPortfolio('certificates', event)">เกียรติบัตร</button>
+        </div>
 
-        <!-- PORTFOLIO GRID (นำผลงานทั้งหมดกลับมาครบถ้วน) -->
-        <section class="portfolio-grid" id="portfolioDeck">
+        <!-- PORTFOLIO GRID -->
+        <div class="portfolio-grid" id="portfolioDeck">
 
             <!-- 1. PERSONAL PORTFOLIO WEBSITE -->
             <div class="portfolio-item projects" onclick="openModal(this)"
@@ -752,10 +774,8 @@
                 </div>
             </div>
 
-        </section>
-    </main>
-
-    <!-- REMOVED FOOTER AS REQUESTED -->
+        </div>
+    </div>
 
     <!-- MODAL POPUP -->
     <div class="modal-overlay" id="cardModal" onclick="closeModalOnOuterClick(event)">
@@ -787,84 +807,68 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT: BACKGROUND CANVAS LINES ANIMATION & INTERACTION -->
+    <!-- JAVASCRIPT: BACKGROUND ANIMATION & INTERACTION (สไตล์เดียวกับ me.html) -->
     <script>
-        // BACKGROUND ANIMATED LINES CANVAS
-        const canvas = document.getElementById('bgCanvas');
+        /* ===== Canvas Particle Lines Script เดียวกับ me.html ===== */
+        const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
 
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            initPoints();
-        });
+        const lines = [];
+        for (let i = 0; i < 35; i++) {
+            lines.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                length: Math.random() * 90 + 60,
+                angle: Math.random() * Math.PI * 2,
+                speed: Math.random() * 0.3 + 0.1,
+                width: Math.random() * 2 + 1,
+                opacity: Math.random() * 0.3 + 0.1,
+                rotSpeed: (Math.random() - 0.5) * 0.002
+            });
+        }
 
-        class Point {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.8;
-                this.vy = (Math.random() - 0.5) * 0.8;
-                this.radius = Math.random() * 2 + 1.5;
-            }
+        function drawAndAnimate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            lines.forEach(line => {
+                line.x += Math.cos(line.angle) * line.speed;
+                line.y += Math.sin(line.angle) * line.speed;
+                line.angle += line.rotSpeed;
 
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
+                if (line.x < -150) line.x = canvas.width + 150;
+                if (line.x > canvas.width + 150) line.x = -150;
+                if (line.y < -150) line.y = canvas.height + 150;
+                if (line.y > canvas.height + 150) line.y = -150;
 
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-            }
+                ctx.save();
+                ctx.translate(line.x, line.y);
+                ctx.rotate(line.angle);
 
-            draw() {
+                const grad = ctx.createLinearGradient(0, 0, line.length, 0);
+                grad.addColorStop(0, 'rgba(227, 82, 5, 0)');
+                grad.addColorStop(0.5, `rgba(227, 82, 5, ${line.opacity})`);
+                grad.addColorStop(1, 'rgba(227, 82, 5, 0)');
+
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = line.width;
+                ctx.lineCap = 'round';
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(230, 81, 0, 0.35)';
-                ctx.fill();
-            }
+                ctx.moveTo(0, 0);
+                ctx.lineTo(line.length, 0);
+                ctx.stroke();
+                ctx.restore();
+            });
+            requestAnimationFrame(drawAndAnimate);
         }
+        drawAndAnimate();
 
-        let points = [];
-        function initPoints() {
-            points = [];
-            const count = Math.floor((width * height) / 18000);
-            for (let i = 0; i < Math.min(count, 65); i++) {
-                points.push(new Point());
-            }
-        }
-        initPoints();
-
-        function animateCanvas() {
-            ctx.clearRect(0, 0, width, height);
-
-            // วาดเส้นเชื่อมโยงลอยไปลอยมา
-            for (let i = 0; i < points.length; i++) {
-                points[i].update();
-                points[i].draw();
-
-                for (let j = i + 1; j < points.length; j++) {
-                    const dx = points[i].x - points[j].x;
-                    const dy = points[i].y - points[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < 140) {
-                        ctx.beginPath();
-                        ctx.moveTo(points[i].x, points[i].y);
-                        ctx.lineTo(points[j].x, points[j].y);
-                        ctx.strokeStyle = `rgba(230, 81, 0, ${0.18 * (1 - dist / 140)})`;
-                        ctx.lineWidth = 1;
-                        ctx.stroke();
-                    }
-                }
-            }
-            requestAnimationFrame(animateCanvas);
-        }
-        animateCanvas();
-
-        // FILTER SYSTEM
+        /* ===== Filter System ===== */
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.portfolio-item');
             const buttons = document.querySelectorAll('.filter-btn');
@@ -882,7 +886,7 @@
             });
         }
 
-        // MODAL FUNCTIONS
+        /* ===== Modal Control Functions ===== */
         function openModal(cardElement) {
             if (cardElement.classList.contains('inactive')) return;
 
