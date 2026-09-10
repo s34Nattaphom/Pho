@@ -63,7 +63,7 @@
             pointer-events: none;
         }
 
-        /* Top Navigation Bar - ขยับกลับมาทางซ้ายนิดนึง (+5px) */
+        /* Top Navigation Bar - ขยับไว้ที่ตำแหน่งที่ต้องการ */
         .top-nav-wrapper {
             position: fixed;
             top: 1.5rem;
@@ -207,6 +207,7 @@
             perspective: 800px;
         }
 
+        /* โลโก้หมุน 3D ด้านข้างแบบเหรียญ */
         .profile-image-frame img {
             width: 100%;
             height: 100%;
@@ -310,6 +311,7 @@
             letter-spacing: 0.5px;
         }
 
+        /* ===== ส่วนความสามารถพิเศษ (ปรับดีไซน์ให้สวยงามทันสมัย) ===== */
         .special-talents-section {
             margin-top: 4rem;
             background: #FFFFFF;
@@ -323,7 +325,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
         }
 
         .section-header-inline i {
@@ -337,23 +339,83 @@
             color: var(--text-main);
         }
 
-        .talents-placeholder-box {
-            border: 2px dashed rgba(227, 82, 5, 0.3);
+        /* Grid การ์ดความสามารถพิเศษ */
+        .talents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.3rem;
+        }
+
+        .talent-card {
+            background: rgba(255, 240, 230, 0.35);
+            border: 1px solid rgba(227, 82, 5, 0.15);
             border-radius: 20px;
-            padding: 3rem 2rem;
-            text-align: center;
-            background: var(--orange-soft-bg);
-            color: var(--orange-main);
+            padding: 1.4rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+            transition: all 0.35 ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .talents-placeholder-box i {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        .talent-card:hover {
+            transform: translateY(-5px);
+            background: #FFFFFF;
+            border-color: var(--orange-main);
+            box-shadow: 0 12px 30px rgba(227, 82, 5, 0.15);
         }
 
-        .talents-placeholder-box p {
-            font-size: 1.1rem;
+        .talent-icon-wrapper {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #FF661A 0%, #E35205 100%);
+            color: #FFFFFF;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            flex-shrink: 0;
+            box-shadow: 0 6px 16px rgba(227, 82, 5, 0.28);
+            transition: transform 0.3s ease;
+        }
+
+        .talent-card:hover .talent-icon-wrapper {
+            transform: scale(1.08) rotate(-4deg);
+        }
+
+        .talent-info {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .talent-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+
+        .talent-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .talent-badge {
+            display: inline-block;
+            margin-top: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 600;
+            color: var(--orange-main);
+            background: var(--orange-soft-bg);
+            padding: 0.2rem 0.75rem;
+            border-radius: 12px;
+            width: fit-content;
+            border: 1px solid rgba(227, 82, 5, 0.2);
         }
 
         .next-step-container {
@@ -400,6 +462,9 @@
                 grid-column: span 1;
             }
             .info-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .talents-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -523,14 +588,75 @@
 
         </div>
 
+        <!-- ส่วนความสามารถพิเศษ (ปรับแต่งรูปแบบการ์ดให้โดดเด่นน่าสนใจ) -->
         <div class="special-talents-section">
             <div class="section-header-inline">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
                 <h2>ความสามารถพิเศษ</h2>
             </div>
-            <div class="talents-placeholder-box">
-                <i class="fa-solid fa-plus-circle"></i>
-                <p>พื้นที่สำหรับใส่ข้อมูลความสามารถพิเศษเพิ่มเติม</p>
+
+            <div class="talents-grid">
+                
+                <!-- การ์ด 1: หุ่นยนต์ -->
+                <div class="talent-card">
+                    <div class="talent-icon-wrapper">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="talent-info">
+                        <h3 class="talent-title">ระบบหุ่นยนต์ (Robotics)</h3>
+                        <p class="talent-desc">มีความเข้าใจในระบบหุ่นยนต์ การทำงานของกลไก และโครงสร้างการสั่งงานระบบอัตโนมัติ</p>
+                        <span class="talent-badge">#Robotics</span>
+                    </div>
+                </div>
+
+                <!-- การ์ด 2: ควบคุม PLC -->
+                <div class="talent-card">
+                    <div class="talent-icon-wrapper">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div class="talent-info">
+                        <h3 class="talent-title">การควบคุม PLC</h3>
+                        <p class="talent-desc">สามารถควบคุมและโปรแกรมระบบ Programmable Logic Controller ในการสั่งงานฮาร์ดแวร์</p>
+                        <span class="talent-badge">#Automation</span>
+                    </div>
+                </div>
+
+                <!-- การ์ด 3: การแก้ปัญหา & วางแผน -->
+                <div class="talent-card">
+                    <div class="talent-icon-wrapper">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="talent-info">
+                        <h3 class="talent-title">การแก้ปัญหา & การวางแผน</h3>
+                        <p class="talent-desc">มีความสามารถในการวิเคราะห์ปัญหาที่ซับซ้อน จัดลำดับขั้นตอน และแก้ปัญหาเชิงกลยุทธ์ได้อย่างเป็นระบบ</p>
+                        <span class="talent-badge">#ProblemSolving</span>
+                    </div>
+                </div>
+
+                <!-- การ์ด 4: ออกแบบเว็บไซต์ -->
+                <div class="talent-card">
+                    <div class="talent-icon-wrapper">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <div class="talent-info">
+                        <h3 class="talent-title">ออกแบบเว็บไซต์ (Web Design)</h3>
+                        <p class="talent-desc">มีความสามารถในการออกแบบและจัดวางโครงสร้างเว็บไซต์ให้มีความสวยงาม ทันสมัย และตอบโจทย์การใช้งาน</p>
+                        <span class="talent-badge">#UI/UX Design</span>
+                    </div>
+                </div>
+
+                <!-- การ์ด 5: ทำโมเดล 3D -->
+                <div class="talent-card">
+                    <div class="talent-icon-wrapper">
+                        <i class="fa-solid fa-cubes"></i>
+                    </div>
+                    <div class="talent-info">
+                        <h3 class="talent-title">การสร้างโมเดล 3D</h3>
+                        <p class="talent-desc">สามารถขึ้นรูปและดีไซน์โมเดล 3 มิติ สำหรับนำไปใช้ในงานออกแบบ โครงงาน หรือการจำลองชิ้นงาน</p>
+                        <span class="talent-badge">#3DModeling</span>
+                    </div>
+                </div>
+
             </div>
         </div>
 
