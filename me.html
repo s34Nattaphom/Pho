@@ -1077,7 +1077,7 @@
                 </div>
             </div>
 
-            <!-- การ์ดข้อมูลพื้นฐาน (6 ช่อง สมดุลสวยงาม) -->
+            <!-- การ์ดข้อมูลพื้นฐาน -->
             <div class="info-cards-grid">
                 
                 <div class="info-card">
@@ -1144,7 +1144,7 @@
 
         </div>
 
-        <!-- ===== ส่วนประวัติการศึกษา (ตรงเส้นสีแดง) ===== -->
+        <!-- ===== ส่วนประวัติการศึกษา ===== -->
         <div class="education-section">
             <div class="section-header-inline">
                 <i class="fa-solid fa-graduation-cap"></i>
@@ -1205,14 +1205,15 @@
                     </div>
                 </div>
 
-                <div class="talent-card">
+                <!-- แก้ไขเพิ่ม Event เปิด Pop-up แสดงรูปภาพ Pp.jpg ในส่วนนี้ -->
+                <div class="talent-card" onclick="openImageModal('Pp.jpg', 'การควบคุม PLC')" style="cursor: pointer;">
                     <div class="talent-icon-wrapper">
                         <i class="fa-solid fa-microchip"></i>
                     </div>
                     <div class="talent-info">
                         <h3 class="talent-title">การควบคุม PLC</h3>
                         <p class="talent-desc">สามารถควบคุมและโปรแกรมระบบ Programmable Logic Controller ในการสั่งงานฮาร์ดแวร์</p>
-                        <span class="talent-badge">#Automation</span>
+                        <span class="talent-badge"><i class="fa-solid fa-image"></i> คลิกเพื่อดูรูปภาพ</span>
                     </div>
                 </div>
 
@@ -1252,7 +1253,7 @@
             </div>
         </div>
 
-        <!-- ===== ส่วนช่องทางการติดต่อ (ย้ายเบอร์โทรศัพท์ลงมาเพิ่มช่องทางเต็มรูปแบบ) ===== -->
+        <!-- ===== ส่วนช่องทางการติดต่อ ===== -->
         <div class="contact-section">
             <div class="section-header-inline">
                 <i class="fa-solid fa-address-book"></i>
@@ -1314,7 +1315,7 @@
             </div>
         </div>
 
-        <!-- ปุ่มไปยังหน้าถัดไป (อยู่ล่างสุดเสมอ) -->
+        <!-- ปุ่มไปยังหน้าถัดไป -->
         <div class="next-step-container">
             <a href="portfolio.html" class="btn-next-page">
                 <span>เข้าชมแฟ้มสะสมผลงาน</span>
@@ -1386,8 +1387,24 @@
         </div>
     </div>
 
+    <!-- ===== Pop-up Modal สำหรับแสดงรูปภาพ (Pp.jpg) ===== -->
+    <div class="modal-overlay" id="imageModal" onclick="closeImageModalOnOverlay(event)">
+        <div class="modal-card" style="text-align: center; max-width: 700px; padding: 2.5rem;">
+            <button class="modal-close-btn" onclick="closeImageModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <span class="modal-header-tag"><i class="fa-solid fa-image"></i> WORK / CERTIFICATE</span>
+            <h2 class="modal-faculty-title" id="imageModalTitle" style="margin-bottom: 1.2rem;">การควบคุม PLC</h2>
+            
+            <div style="width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid var(--card-border); background: #f8f8f8;">
+                <img id="modalImgTag" src="Pp.jpg" alt="การควบคุม PLC" style="width: 100%; height: auto; display: block; max-height: 70vh; object-fit: contain; margin: 0 auto;">
+            </div>
+        </div>
+    </div>
+
     <script>
-        /* ===== Modal Control Scripts ===== */
+        /* ===== Uni Modal Control Scripts ===== */
         function openUniModal() {
             document.getElementById('uniModal').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -1404,9 +1421,32 @@
             }
         }
 
+        /* ===== Image Modal Control Scripts ===== */
+        function openImageModal(imgSrc, titleText) {
+            document.getElementById('modalImgTag').src = imgSrc;
+            if (titleText) {
+                document.getElementById('imageModalTitle').innerText = titleText;
+            }
+            document.getElementById('imageModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeImageModalOnOverlay(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                closeImageModal();
+            }
+        }
+
+        /* ===== Keyboard Controls ===== */
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeUniModal();
+                closeImageModal();
             }
         });
 
