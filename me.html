@@ -171,7 +171,6 @@
 
         .nav-menu-item a i { color: var(--orange-main); transition: transform 0.25s ease; }
 
-        /* แท็บสถานะ Active และ Hover */
         .nav-menu-item a:hover,
         .nav-menu-item a.active {
             color: var(--orange-main);
@@ -238,7 +237,7 @@
             align-items: start;
         }
 
-        /* Left Card - ปรับแต่งการเด้งและแอนิเมชัน */
+        /* Left Card */
         .left-profile-card {
             background: #FFFFFF;
             border: 1px solid var(--card-border);
@@ -355,7 +354,6 @@
             gap: 1.2rem;
         }
 
-        /* Staggered entrance for info cards */
         .info-card {
             background: #FFFFFF;
             border: 1px solid var(--card-border);
@@ -375,7 +373,6 @@
         .info-card:nth-child(4) { animation-delay: 0.46s; }
         .info-card:nth-child(5) { animation-delay: 0.53s; }
         .info-card:nth-child(6) { animation-delay: 0.60s; }
-        .info-card:nth-child(7) { animation-delay: 0.67s; }
 
         .info-card:hover {
             transform: translateY(-5px) scale(1.02);
@@ -386,10 +383,6 @@
         .info-card:active {
             transform: scale(0.97) !important;
             transition: transform 0.1s ease !important;
-        }
-
-        .info-card.full-width {
-            grid-column: span 2;
         }
 
         .info-icon-box {
@@ -435,23 +428,7 @@
             white-space: nowrap;
         }
 
-        .phone-value {
-            font-size: 1.15rem;
-            color: var(--orange-main);
-            letter-spacing: 0.5px;
-        }
-
-        /* ความสามารถพิเศษ */
-        .special-talents-section {
-            margin-top: 4rem;
-            background: #FFFFFF;
-            border: 1px solid var(--card-border);
-            border-radius: 28px;
-            padding: 2.5rem;
-            box-shadow: 0 15px 35px rgba(227, 82, 5, 0.06);
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
-        }
-
+        /* ===== Common Section Header ===== */
         .section-header-inline {
             display: flex;
             align-items: center;
@@ -469,6 +446,167 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--text-main);
+        }
+
+        /* ===== ส่วนประวัติการศึกษา (EDUCATION SECTION) ===== */
+        .education-section {
+            margin-top: 3.5rem;
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 2.2rem 2.5rem;
+            box-shadow: 0 15px 35px rgba(227, 82, 5, 0.06);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+            transition: all 0.35s ease;
+        }
+
+        .education-section:hover {
+            border-color: rgba(227, 82, 5, 0.35);
+            box-shadow: 0 20px 40px rgba(227, 82, 5, 0.12);
+        }
+
+        .edu-card-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            align-items: stretch;
+        }
+
+        .edu-main-card {
+            background: linear-gradient(135deg, #FFF0E6 0%, #FFFFFF 100%);
+            border: 1px solid rgba(227, 82, 5, 0.25);
+            border-radius: 22px;
+            padding: 1.6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .edu-main-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            border-color: var(--orange-main);
+            box-shadow: 0 12px 28px rgba(227, 82, 5, 0.18);
+        }
+
+        .edu-school-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .edu-school-icon {
+            width: 54px;
+            height: 54px;
+            background: var(--orange-main);
+            color: #FFFFFF;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 18px rgba(227, 82, 5, 0.28);
+            flex-shrink: 0;
+        }
+
+        .edu-school-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.35;
+        }
+
+        .edu-level-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--orange-soft-bg);
+            color: var(--orange-main);
+            border: 1px solid rgba(227, 82, 5, 0.3);
+            padding: 0.5rem 1.1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            width: fit-content;
+        }
+
+        .edu-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        .edu-sub-box {
+            background: rgba(255, 240, 230, 0.35);
+            border: 1px solid rgba(227, 82, 5, 0.15);
+            border-radius: 20px;
+            padding: 1.4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .edu-sub-box:hover {
+            background: #FFFFFF;
+            transform: translateY(-4px);
+            border-color: var(--orange-main);
+            box-shadow: 0 10px 25px rgba(227, 82, 5, 0.14);
+        }
+
+        .edu-sub-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .edu-sub-label i { color: var(--orange-main); }
+
+        .edu-sub-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .gpax-highlight-box {
+            background: linear-gradient(135deg, var(--orange-main) 0%, var(--orange-light) 100%);
+            color: #FFFFFF;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gpax-highlight-box .edu-sub-label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .gpax-highlight-box .edu-sub-label i {
+            color: #FFFFFF;
+        }
+
+        .gpax-num {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            line-height: 1;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        /* ===== ความสามารถพิเศษ (TALENTS) ===== */
+        .special-talents-section {
+            margin-top: 3.5rem;
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(227, 82, 5, 0.06);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
         }
 
         .talents-grid {
@@ -489,11 +627,11 @@
             animation: popIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
-        .talent-card:nth-child(1) { animation-delay: 0.55s; }
-        .talent-card:nth-child(2) { animation-delay: 0.62s; }
-        .talent-card:nth-child(3) { animation-delay: 0.69s; }
-        .talent-card:nth-child(4) { animation-delay: 0.76s; }
-        .talent-card:nth-child(5) { animation-delay: 0.83s; }
+        .talent-card:nth-child(1) { animation-delay: 0.60s; }
+        .talent-card:nth-child(2) { animation-delay: 0.67s; }
+        .talent-card:nth-child(3) { animation-delay: 0.74s; }
+        .talent-card:nth-child(4) { animation-delay: 0.81s; }
+        .talent-card:nth-child(5) { animation-delay: 0.88s; }
 
         .talent-card:hover {
             transform: translateY(-6px) scale(1.02);
@@ -563,11 +701,115 @@
             color: #FFFFFF;
         }
 
+        /* ===== ช่องทางการติดต่อ (CONTACT SECTION) ===== */
+        .contact-section {
+            margin-top: 3.5rem;
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(227, 82, 5, 0.06);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.70s both;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.3rem;
+        }
+
+        .contact-card {
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 1.3rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            box-shadow: 0 6px 18px rgba(227, 82, 5, 0.04);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .contact-card.full-width {
+            grid-column: span 2;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            border-color: var(--orange-main);
+            box-shadow: 0 14px 30px rgba(227, 82, 5, 0.18);
+        }
+
+        .contact-card:active {
+            transform: scale(0.98) !important;
+        }
+
+        .contact-icon-box {
+            width: 50px;
+            height: 50px;
+            background: var(--orange-soft-bg);
+            color: var(--orange-main);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover .contact-icon-box {
+            background: var(--orange-main);
+            color: #FFFFFF;
+            transform: rotate(-6deg) scale(1.1);
+        }
+
+        /* Contact Custom Colors on Hover */
+        .contact-icon-box.line-icon { color: #00C300; background: rgba(0, 195, 0, 0.12); }
+        .contact-card:hover .contact-icon-box.line-icon { background: #00C300; color: #FFFFFF; }
+
+        .contact-icon-box.fb-icon { color: #1877F2; background: rgba(24, 119, 242, 0.12); }
+        .contact-card:hover .contact-icon-box.fb-icon { background: #1877F2; color: #FFFFFF; }
+
+        .contact-icon-box.mail-icon { color: #EA4335; background: rgba(234, 67, 53, 0.12); }
+        .contact-card:hover .contact-icon-box.mail-icon { background: #EA4335; color: #FFFFFF; }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .contact-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .contact-value {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            word-break: break-word;
+        }
+
+        .contact-value-link {
+            color: var(--orange-main);
+            transition: color 0.2s ease;
+        }
+
+        .contact-card:hover .contact-value-link {
+            color: var(--orange-light);
+            text-decoration: underline;
+        }
+
         /* ปุ่มเปลี่ยนหน้า */
         .next-step-container {
-            margin-top: 5rem;
+            margin-top: 4.5rem;
             text-align: center;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.85s both;
         }
 
         .btn-next-page {
@@ -737,7 +979,6 @@
             transform: translateX(-20px);
         }
 
-        /* Pop in staggered for modal items */
         .modal-overlay.active .reason-item-card {
             opacity: 1;
             transform: translateX(0);
@@ -778,10 +1019,14 @@
         @media (max-width: 850px) {
             .top-nav-wrapper { transform: translateX(0); }
             .profile-grid-container { grid-template-columns: 1fr; }
-            .info-card.full-width { grid-column: span 1; }
             .info-cards-grid { grid-template-columns: 1fr; }
+            .edu-card-container { grid-template-columns: 1fr; }
+            .edu-details-grid { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .contact-card.full-width { grid-column: span 1; }
             .talents-grid { grid-template-columns: 1fr; }
             .modal-card { padding: 1.8rem; }
+            .education-section, .special-talents-section, .contact-section { padding: 1.8rem 1.5rem; }
         }
     </style>
 </head>
@@ -806,12 +1051,12 @@
         <div class="header-title-wrapper">
             <span class="badge-category">PERSONAL INFORMATION</span>
             <h1 class="page-title">ข้อมูลส่วนตัว</h1>
-            <p class="page-subtitle">ประวัติส่วนตัวและรายละเอียดการติดต่อ</p>
+            <p class="page-subtitle">ประวัติส่วนตัว รายละเอียดการศึกษา และช่องทางการติดต่อ</p>
         </div>
 
         <div class="profile-grid-container">
             
-            <!-- การ์ดเป้าหมายการศึกษา (กดคลิกเพื่อเปิด Pop-up ได้) -->
+            <!-- การ์ดเป้าหมายการศึกษา -->
             <div class="left-profile-card" id="uniTargetCard" onclick="openUniModal()">
                 <span class="uni-badge-tag"><i class="fa-solid fa-graduation-cap"></i> TARGET UNIVERSITY</span>
                 
@@ -832,6 +1077,7 @@
                 </div>
             </div>
 
+            <!-- การ์ดข้อมูลพื้นฐาน (6 ช่อง สมดุลสวยงาม) -->
             <div class="info-cards-grid">
                 
                 <div class="info-card">
@@ -894,18 +1140,49 @@
                     </div>
                 </div>
 
-                <div class="info-card full-width">
-                    <div class="info-icon-box">
-                        <i class="fa-solid fa-phone"></i>
+            </div>
+
+        </div>
+
+        <!-- ===== ส่วนประวัติการศึกษา (ตรงเส้นสีแดง) ===== -->
+        <div class="education-section">
+            <div class="section-header-inline">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h2>ประวัติการศึกษา</h2>
+            </div>
+
+            <div class="edu-card-container">
+                <!-- สถานศึกษาปัจจุบัน -->
+                <div class="edu-main-card">
+                    <div class="edu-school-header">
+                        <div class="edu-school-icon">
+                            <i class="fa-solid fa-school"></i>
+                        </div>
+                        <div>
+                            <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">สถานศึกษาปัจจุบัน</span>
+                            <h3 class="edu-school-name">โรงเรียนบ้านบึง "อุตสาหกรรมนุเคราะห์"</h3>
+                        </div>
                     </div>
-                    <div class="info-details">
-                        <span class="info-label">เบอร์โทรศัพท์</span>
-                        <span class="info-value phone-value">097-151-2382</span>
+                    
+                    <div class="edu-level-badge">
+                        <i class="fa-solid fa-user-graduate"></i>
+                        <span>ศึกษาอยู่ชั้นมัธยมศึกษาปีที่ 6 (ม.6)</span>
                     </div>
                 </div>
 
-            </div>
+                <!-- สายการเรียน & เกรดเฉลี่ย -->
+                <div class="edu-details-grid">
+                    <div class="edu-sub-box">
+                        <span class="edu-sub-label"><i class="fa-solid fa-laptop-code"></i> สายการเรียน</span>
+                        <span class="edu-sub-value">วิทย์ - คณิต คอม</span>
+                    </div>
 
+                    <div class="edu-sub-box gpax-highlight-box">
+                        <span class="edu-sub-label"><i class="fa-solid fa-star"></i> เกรดเฉลี่ยสะสม (GPAX)</span>
+                        <span class="gpax-num">3.68</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- ส่วนความสามารถพิเศษ -->
@@ -975,6 +1252,69 @@
             </div>
         </div>
 
+        <!-- ===== ส่วนช่องทางการติดต่อ (ย้ายเบอร์โทรศัพท์ลงมาเพิ่มช่องทางเต็มรูปแบบ) ===== -->
+        <div class="contact-section">
+            <div class="section-header-inline">
+                <i class="fa-solid fa-address-book"></i>
+                <h2>ช่องทางการติดต่อ</h2>
+            </div>
+
+            <div class="contact-grid">
+                
+                <a href="tel:0971512382" class="contact-card">
+                    <div class="contact-icon-box">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <span class="contact-label">เบอร์โทรศัพท์</span>
+                        <span class="contact-value contact-value-link">097-151-2382</span>
+                    </div>
+                </a>
+
+                <div class="contact-card">
+                    <div class="contact-icon-box line-icon">
+                        <i class="fa-brands fa-line"></i>
+                    </div>
+                    <div class="contact-details">
+                        <span class="contact-label">ID Line</span>
+                        <span class="contact-value">0971512382</span>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon-box fb-icon">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </div>
+                    <div class="contact-details">
+                        <span class="contact-label">Facebook</span>
+                        <span class="contact-value">ณัฐภูมิ เฉวียงวาท</span>
+                    </div>
+                </div>
+
+                <a href="mailto:nattaphom1602@gmail.com" class="contact-card">
+                    <div class="contact-icon-box mail-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <span class="contact-label">Gmail</span>
+                        <span class="contact-value contact-value-link">nattaphom1602@gmail.com</span>
+                    </div>
+                </a>
+
+                <div class="contact-card full-width">
+                    <div class="contact-icon-box">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div class="contact-details">
+                        <span class="contact-label">ที่อยู่ปัจจุบัน</span>
+                        <span class="contact-value">133/1 หมู่.1 ต.มาบไผ่ อ.บ้านบึง จ.ชลบุรี</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ปุ่มไปยังหน้าถัดไป (อยู่ล่างสุดเสมอ) -->
         <div class="next-step-container">
             <a href="portfolio.html" class="btn-next-page">
                 <span>เข้าชมแฟ้มสะสมผลงาน</span>
@@ -1131,3 +1471,4 @@
     </script>
 </body>
 </html>
+
