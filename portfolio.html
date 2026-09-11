@@ -22,6 +22,11 @@
             --text-main: #222222;       
             --text-muted: #666666;      
             --text-white: #FFFFFF;
+
+            /* Standardized Smooth Timing Functions */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-smooth: cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
@@ -38,9 +43,10 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Canvas และ Ambient Background Glow */
+        /* Ambient Background Canvas & Glow */
         #particle-canvas {
             position: fixed;
             top: 0;
@@ -50,6 +56,7 @@
             z-index: -2;
             background: linear-gradient(135deg, #FFFFFF 0%, #FFF5F0 50%, #FFEBE0 100%);
             pointer-events: none;
+            will-change: transform;
         }
 
         .ambient-glow {
@@ -62,29 +69,29 @@
             transform: translateX(-50%);
             z-index: -1;
             pointer-events: none;
-            animation: pulseAmbient 8s ease-in-out infinite alternate;
+            animation: pulseAmbient 10s ease-in-out infinite alternate;
+            will-change: transform, opacity;
         }
 
-        /* ===== Keyframe Animations ===== */
+        /* ===== GPU-Accelerated Smooth Animations ===== */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            0% { opacity: 0; transform: translateY(24px) translateZ(0); }
+            100% { opacity: 1; transform: translateY(0) translateZ(0); }
         }
 
         @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.88) translateY(20px); }
-            70% { transform: scale(1.02) translateY(-4px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+            0% { opacity: 0; transform: scale(0.92) translateY(16px) translateZ(0); }
+            100% { opacity: 1; transform: scale(1) translateY(0) translateZ(0); }
         }
 
         @keyframes pulseAmbient {
-            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
-            100% { opacity: 1; transform: translateX(-50%) scale(1.08); }
+            0% { opacity: 0.5; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 0.95; transform: translateX(-50%) scale(1.06); }
         }
 
         @keyframes floatBadge {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+            50% { transform: translateY(-5px); }
         }
 
         /* Floating Pill Navbar */
@@ -98,7 +105,7 @@
             justify-content: center;
             align-items: center;
             padding: 0 1rem;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeInUp 0.8s var(--ease-out-expo) forwards;
         }
 
         .pill-navbar {
@@ -112,7 +119,8 @@
             align-items: center;
             gap: 2rem;
             box-shadow: 0 10px 30px rgba(227, 82, 5, 0.08);
-            transition: all 0.3s ease;
+            transition: all 0.4s var(--ease-smooth);
+            will-change: transform, box-shadow;
         }
 
         .nav-logo {
@@ -123,10 +131,10 @@
             text-decoration: none;
             padding-right: 1.2rem;
             border-right: 1px solid rgba(227, 82, 5, 0.2);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s var(--ease-smooth);
         }
 
-        .nav-logo:hover { transform: scale(1.05); }
+        .nav-logo:hover { transform: scale(1.04); }
 
         .nav-menu-list {
             list-style: none;
@@ -145,10 +153,14 @@
             border-radius: 25px;
             font-size: 0.95rem;
             font-weight: 500;
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s var(--ease-out-back);
+            will-change: transform, background-color, color;
         }
 
-        .nav-menu-item a i { color: var(--orange-main); transition: transform 0.25s ease; }
+        .nav-menu-item a i { 
+            color: var(--orange-main); 
+            transition: transform 0.3s var(--ease-out-back); 
+        }
 
         .nav-menu-item a:hover,
         .nav-menu-item a.active {
@@ -158,7 +170,7 @@
         }
 
         .nav-menu-item a:hover { transform: translateY(-2px); }
-        .nav-menu-item a:hover i { transform: scale(1.2) rotate(8deg); }
+        .nav-menu-item a:hover i { transform: scale(1.18) rotate(8deg); }
 
         /* HERO & PAGE HEADER */
         .page-container {
@@ -171,7 +183,7 @@
         .header-title-wrapper {
             text-align: center;
             margin-bottom: 2.5rem;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.1s both;
         }
 
         .badge-category {
@@ -209,7 +221,7 @@
             gap: 0.75rem;
             margin-bottom: 3rem;
             flex-wrap: wrap;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.2s both;
         }
 
         .filter-btn {
@@ -221,8 +233,9 @@
             cursor: pointer;
             font-size: 0.9rem;
             font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.35s var(--ease-smooth);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            will-change: transform, background-color, box-shadow;
         }
 
         .filter-btn.active, .filter-btn:hover {
@@ -230,11 +243,11 @@
             color: #ffffff;
             font-weight: 600;
             border-color: var(--orange-main);
-            box-shadow: 0 8px 22px rgba(227, 82, 5, 0.3);
+            box-shadow: 0 8px 22px rgba(227, 82, 5, 0.28);
             transform: translateY(-2px);
         }
 
-        .filter-btn:active { transform: scale(0.95); }
+        .filter-btn:active { transform: scale(0.96); }
 
         /* PORTFOLIO GRID */
         .portfolio-grid {
@@ -252,18 +265,23 @@
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
-            animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+            animation: popIn 0.6s var(--ease-out-expo) both;
+            transition: transform 0.4s var(--ease-smooth), opacity 0.4s var(--ease-smooth), box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+            will-change: transform, opacity;
         }
 
         .portfolio-item:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-8px) scale(1.015);
             border-color: var(--orange-main);
-            box-shadow: 0 20px 40px rgba(227, 82, 5, 0.2);
+            box-shadow: 0 20px 40px rgba(227, 82, 5, 0.18);
         }
 
-        .portfolio-item.inactive { display: none; }
+        .portfolio-item.inactive {
+            display: none;
+            opacity: 0;
+            transform: scale(0.9) translateY(10px);
+        }
 
         .item-img {
             width: 100%;
@@ -283,10 +301,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s ease;
+            transition: transform 0.5s var(--ease-smooth);
+            will-change: transform;
         }
 
-        .portfolio-item:hover .item-img img { transform: scale(1.08); }
+        .portfolio-item:hover .item-img img { transform: scale(1.07); }
 
         .item-img-overlay {
             position: absolute;
@@ -296,11 +315,12 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.25s ease;
+            transition: opacity 0.3s var(--ease-smooth);
             color: #ffffff;
             font-size: 0.9rem;
             font-weight: 600;
             gap: 8px;
+            will-change: opacity;
         }
 
         .portfolio-item:hover .item-img-overlay { opacity: 1; }
@@ -344,8 +364,8 @@
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.45);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             z-index: 2000;
             display: flex;
             align-items: center;
@@ -353,7 +373,8 @@
             padding: 1.5rem;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.35s ease, visibility 0.35s ease;
+            transition: opacity 0.4s var(--ease-smooth), visibility 0.4s var(--ease-smooth);
+            will-change: opacity, visibility;
         }
 
         .modal-overlay.active {
@@ -371,10 +392,11 @@
             overflow-y: auto;
             position: relative;
             box-shadow: 0 25px 60px rgba(227, 82, 5, 0.25);
-            transform: translateY(40px) scale(0.88);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translateY(30px) scale(0.92);
+            transition: transform 0.45s var(--ease-out-back);
             display: flex;
             flex-direction: column;
+            will-change: transform;
         }
 
         .modal-overlay.active .modal-container {
@@ -398,14 +420,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s var(--ease-out-back);
             z-index: 100;
+            will-change: transform, background-color, color;
         }
 
         .modal-close-btn:hover {
             background: var(--orange-main);
             color: #ffffff;
-            transform: rotate(90deg) scale(1.15);
+            transform: rotate(90deg) scale(1.12);
         }
 
         .modal-image-area {
@@ -547,7 +570,10 @@
             border-radius: 20px;
             font-size: 0.82rem;
             font-weight: 600;
+            transition: transform 0.25s var(--ease-smooth);
         }
+
+        .tech-badge:hover { transform: translateY(-2px); }
 
         @media (max-width: 850px) {
             .top-nav-wrapper { transform: translateX(0); }
@@ -582,8 +608,8 @@
         <!-- HERO HEAD SECTION -->
         <div class="header-title-wrapper">
             <span class="badge-category">PORTFOLIO COLLECTION</span>
-            <h1 class="page-title">แฟ้มสะสมผลงาน <span class="orange-text">(Portfolio A1 - A11)</span></h1>
-            <p class="page-subtitle">รวบรวมเกียรติบัตร โครงงาน และกิจกรรมอบรม เรียงลำดับตามไฟล์ A1.jpg ถึง A11.jpg</p>
+            <h1 class="page-title">แฟ้มสะสมผลงาน <span class="orange-text">(Portfolio)</span></h1>
+            <p class="page-subtitle">รวบรวมเกียรติบัตร โครงงาน และกิจกรรมอบรมที่ได้เข้าร่วมปฏิบัติและรับการอบรม</p>
         </div>
 
         <!-- FILTER BUTTONS -->
@@ -594,13 +620,13 @@
             <button class="filter-btn" onclick="filterPortfolio('competitions', event)">การแข่งขัน</button>
         </div>
 
-        <!-- PORTFOLIO GRID (A1.jpg to A11.jpg) -->
+        <!-- PORTFOLIO GRID -->
         <div class="portfolio-grid" id="portfolioDeck">
 
-            <!-- A1.jpg -->
+            <!-- Item 1 -->
             <div class="portfolio-item certificates workshops" onclick="openModal(this)"
                  data-title="Thailand University Expo 2024 (กลุ่มเทคโนโลยีสารสนเทศ นวัตกรรม)"
-                 data-tag="A1.jpg | Certificate"
+                 data-tag="Certificate"
                  data-desc="เกียรติบัตรผ่านการเข้าร่วมพัฒนาทักษะวิชาการและกิจกรรมเชิงปฏิบัติการในกลุ่มคณะ 'เทคโนโลยีสารสนเทศ นวัตกรรม' ภายใต้โครงการ Thailand University Expo 2024 จัดโดย สถาบันวิชาการ เจ โนว์เลจ ณ จังหวัดชลบุรี วันที่ 29 มิถุนายน พ.ศ. 2567"
                  data-img="A1.jpg" 
                  data-features="ผ่านการฝึกปฏิบัติการกลุ่มเทคโนโลยีสารสนเทศและนวัตกรรมดิจิทัล|ได้รับการประเมินทักษะทางวิชาการจากสถาบันวิชาการ เจ โนว์เลจ|สร้างแนวทางเตรียมความพร้อมเข้าศึกษาต่อระดับอุดมศึกษา"
@@ -610,19 +636,19 @@
                 <div class="item-img">
                     <img src="A1.jpg" alt="A1.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-laptop-code"></i></div>
-                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด (A1.jpg)</div>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">A1.jpg | Certificate</span>
+                    <span class="item-tag">Certificate</span>
                     <h3 class="item-title">Thailand Expo 2024: เทคโนโลยีสารสนเทศ นวัตกรรม</h3>
                     <p class="item-desc">ผ่านการเข้าร่วมพัฒนาทักษะวิชาการและปฏิบัติการ กลุ่มเทคโนโลยีสารสนเทศ นวัตกรรม สถาบันวิชาการ เจ โนว์เลจ</p>
                 </div>
             </div>
 
-            <!-- A2.jpg -->
+            <!-- Item 2 -->
             <div class="portfolio-item certificates workshops" onclick="openModal(this)"
                  data-title="Thailand University Expo 2024 (กลุ่มวิศวกรรมศาสตร์)"
-                 data-tag="A2.jpg | Certificate"
+                 data-tag="Certificate"
                  data-desc="เกียรติบัตรผ่านการเข้าร่วมพัฒนาทักษะวิชาการและกิจกรรมเชิงปฏิบัติการในกลุ่มคณะ 'วิศวกรรมศาสตร์' ภายใต้โครงการ Thailand University Expo 2024 จัดโดย สถาบันวิชาการ เจ โนว์เลจ ณ จังหวัดชลบุรี วันที่ 29 มิถุนายน พ.ศ. 2567"
                  data-img="A2.jpg" 
                  data-features="ผ่านการอบรมเชิงปฏิบัติการกลุ่มคณะวิศวกรรมศาสตร์|ฝึกแก้โจทย์ปัญหากระบวนการคิดเชิงวิศวกรรม|จัดโดยสถาบันวิชาการ เจ โนว์เลจ (จนล.ชบ.0979/2567)"
@@ -632,19 +658,19 @@
                 <div class="item-img">
                     <img src="A2.jpg" alt="A2.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-gears"></i></div>
-                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด (A2.jpg)</div>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">A2.jpg | Certificate</span>
+                    <span class="item-tag">Certificate</span>
                     <h3 class="item-title">Thailand Expo 2024: กลุ่มวิศวกรรมศาสตร์</h3>
                     <p class="item-desc">ผ่านการเข้าร่วมพัฒนาทักษะวิชาการและกิจกรรมเชิงปฏิบัติการ กลุ่มคณะวิศวกรรมศาสตร์ สถาบันวิชาการ เจ โนว์เลจ</p>
                 </div>
             </div>
 
-            <!-- A3.jpg -->
+            <!-- Item 3 -->
             <div class="portfolio-item certificates" onclick="openModal(this)"
                  data-title="ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน ประจำปีการศึกษา 2569"
-                 data-tag="A3.jpg | Certificate"
+                 data-tag="Certificate"
                  data-desc="เกียรติบัตรเข้าร่วมกิจกรรมค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน ประจำปีการศึกษา 2569 ออกโดย โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์' ให้ไว้ ณ วันที่ 8 กรกฎาคม พ.ศ. 2569"
                  data-img="A3.jpg" 
                  data-features="ปลูกฝังคุณธรรม จริยธรรม และภาวะผู้นำนักเรียน|เสริมสร้างจิตสำนึกสาธารณะและการทำงานร่วมกันเป็นทีม|รับรองโดยผู้อำนวยการโรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'"
@@ -654,19 +680,19 @@
                 <div class="item-img">
                     <img src="A3.jpg" alt="A3.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-hands-praying"></i></div>
-                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด (A3.jpg)</div>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">A3.jpg | Certificate</span>
+                    <span class="item-tag">Certificate</span>
                     <h3 class="item-title">ค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน 2569</h3>
                     <p class="item-desc">เข้าร่วมกิจกรรมค่ายพัฒนาคุณธรรม จริยธรรมนักเรียน ประจำปีการศึกษา 2569 โรงเรียนบ้านบึง "อุตสาหกรรมนุเคราะห์"</p>
                 </div>
             </div>
 
-            <!-- A4.jpg -->
+            <!-- Item 4 -->
             <div class="portfolio-item workshops certificates" onclick="openModal(this)"
                  data-title="K-Engineering Workshop: PLC ขั้นพื้นฐาน [EE, Computing]"
-                 data-tag="A4.jpg | Workshop Certificate"
+                 data-tag="Workshop Certificate"
                  data-desc="เกียรติบัตรเข้าร่วม Workshop หัวข้อ PLC ขั้นพื้นฐาน [EE, Computing] ในงาน K-ENGINEERING WORLD TOUR AND COMPETENCY CHALLENGE 2026 จัดโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง (KMITL) วันที่ 5 กรกฎาคม 2569"
                  data-img="A4.jpg" 
                  data-features="ศึกษาหลักการทำงานและการเขียนโปรแกรมควบคุม PLC (Programmable Logic Controller)|เรียนรู้การประยุกต์ใช้ในระบบอัตโนมัติของวิศวกรรมไฟฟ้าและคอมพิวเตอร์|ออกโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"
@@ -676,19 +702,19 @@
                 <div class="item-img">
                     <img src="A4.jpg" alt="A4.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-microchip"></i></div>
-                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด (A4.jpg)</div>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">A4.jpg | Workshop Certificate</span>
+                    <span class="item-tag">Workshop Certificate</span>
                     <h3 class="item-title">K-Engineering: PLC ขั้นพื้นฐาน (KMITL)</h3>
                     <p class="item-desc">เข้าร่วมการอบรมเชิงปฏิบัติการ PLC ขั้นพื้นฐาน [EE, Computing] ณ คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
                 </div>
             </div>
 
-            <!-- A5.jpg -->
+            <!-- Item 5 -->
             <div class="portfolio-item certificates" onclick="openModal(this)"
                  data-title="กิจกรรมวันวิทยาศาสตร์ 'วิทย์ WITH วัด (มองวัดในมุมวิทย์)'"
-                 data-tag="A5.jpg | Activity Certificate"
+                 data-tag="Activity Certificate"
                  data-desc="เกียรติบัตรเข้าร่วมกิจกรรม วันวิทยาศาสตร์ หัวข้อ 'วิทย์ WITH วัด (มองวัดในมุมวิทย์)' เนื่องในสัปดาห์วิทยาศาสตร์ ประจำปีการศึกษา 2568 จัดโดย โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'"
                  data-img="A5.jpg" 
                  data-features="ประยุกต์ใช้หลักการทางวิทยาศาสตร์ในการอธิบายสถาปัตยกรรมและวัฒนธรรมท้องถิ่น|เรียนรู้การบูรณาการวิทยาศาสตร์เข้ากับชุมชนและศาสนสถาน|ได้รับเกียรติบัตรรับรองการเข้าร่วมกิจกรรมสัปดาห์วิทยาศาสตร์ 2568"
@@ -698,19 +724,19 @@
                 <div class="item-img">
                     <img src="A5.jpg" alt="A5.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-atom"></i></div>
-                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด (A5.jpg)</div>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">A5.jpg | Activity Certificate</span>
+                    <span class="item-tag">Activity Certificate</span>
                     <h3 class="item-title">วันวิทยาศาสตร์: วิทย์ WITH วัด 2568</h3>
                     <p class="item-desc">เข้าร่วมกิจกรรมสัปดาห์วิทยาศาสตร์ หัวข้อ "วิทย์ WITH วัด (มองวัดในมุมวิทย์)" โรงเรียนบ้านบึง "อุตสาหกรรมนุเคราะห์"</p>
                 </div>
             </div>
 
-            <!-- A6.jpg -->
+            <!-- Item 6 -->
             <div class="portfolio-item competitions certificates" onclick="openModal(this)"
                  data-title="การแข่งขัน Be Fast E-Searching 2025 (ระดับมัธยมศึกษาตอนปลาย)"
-                 data-tag="A6.jpg | Competition"
+                 data-tag="Competition Certificate"
                  data-desc="เกียรติบัตรเข้าร่วม การแข่งขัน Be Fast E-Searching 2025 ระดับมัธยมศึกษาตอนปลาย จัดโดย แผนกคอมพิวเตอร์ วิทยาลัยเทคโนโลยีภาคตะวันออก (อี.เทค) / EASTERN TECHNOLOGICAL COLLEGE (E.TECH) วันที่ 25 สิงหาคม 2568"
                  data-img="A6.jpg" 
                  data-features="ทดสอบทักษะการสืบค้นข้อมูลดิจิทัล เทคนิคการใช้ Search Engine และความเร็วเชิงไอที|แข่งขันวัดระดับทักษะดิจิทัลร่วมกับนักเรียนระดับมัธยมศึกษาตอนปลาย|จัดโดยวิทยาลัยเทคโนโลยีภาคตะวันออก (อี.เทค)"
@@ -720,19 +746,19 @@
                 <div class="item-img">
                     <img src="A6.jpg" alt="A6.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-magnifying-glass"></i></div>
-                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด (A6.jpg)</div>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">A6.jpg | Competition</span>
+                    <span class="item-tag">Competition Certificate</span>
                     <h3 class="item-title">Be Fast E-Searching 2025 (E.TECH)</h3>
                     <p class="item-desc">เข้าร่วมการแข่งขันสืบค้นข้อมูลเชิงดิจิทัล Be Fast E-Searching 2025 จัดโดยวิทยาลัยเทคโนโลยีภาคตะวันออก (อี.เทค)</p>
                 </div>
             </div>
 
-            <!-- A7.jpg -->
+            <!-- Item 7 -->
             <div class="portfolio-item workshops certificates" onclick="openModal(this)"
                  data-title="โครงการ 'ค่ายพัฒนานวัตกรรมและเทคโนโลยี' ครั้งที่ 5"
-                 data-tag="A7.jpg | Camp Certificate"
+                 data-tag="Camp Certificate"
                  data-desc="เกียรติบัตรเข้าร่วมโครงการ 'ค่ายพัฒนานวัตกรรมและเทคโนโลยี' ครั้งที่ 5 ระหว่างวันที่ 9-11 มกราคม พ.ศ. 2569 จัดโดย โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์' ให้ไว้ ณ วันที่ 11 มกราคม พ.ศ. 2569"
                  data-img="A7.jpg" 
                  data-features="อบรมและพัฒนาทักษะสร้างสรรค์นวัตกรรมเทคโนโลยียุคใหม่|ฝึกฝนกระบวนการคิดวิเคราะห์ และการแก้ไขปัญหาด้วยนวัตกรรมดิจิทัล|ร่วมกิจกรรมปฏิบัติการเข้มข้นตลอด 3 วัน"
@@ -742,19 +768,19 @@
                 <div class="item-img">
                     <img src="A7.jpg" alt="A7.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-lightbulb"></i></div>
-                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด (A7.jpg)</div>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">A7.jpg | Camp Certificate</span>
+                    <span class="item-tag">Camp Certificate</span>
                     <h3 class="item-title">ค่ายพัฒนานวัตกรรมและเทคโนโลยี ครั้งที่ 5</h3>
                     <p class="item-desc">ผ่านการฝึกอบรมในโครงการค่ายพัฒนานวัตกรรมและเทคโนโลยี ครั้งที่ 5 โรงเรียนบ้านบึง "อุตสาหกรรมนุเคราะห์"</p>
                 </div>
             </div>
 
-            <!-- A8.jpg -->
+            <!-- Item 8 -->
             <div class="portfolio-item workshops certificates" onclick="openModal(this)"
                  data-title="วิทยากรนิทรรศการวิทยาศาสตร์และเทคโนโลยี งานวันวิทยาศาสตร์ 2569"
-                 data-tag="A8.jpg | Speaker Certificate"
+                 data-tag="Speaker Certificate"
                  data-desc="เกียรติบัตรแสดงว่าเป็น 'วิทยากรจัดแสดงนิทรรศการวิทยาศาสตร์และเทคโนโลยี' เนื่องในงานวันวิทยาศาสตร์แห่งชาติ ประจำปีการศึกษา 2569 หัวข้อ 'Intelligence in Science for a Sustainable Future' ณ โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์' วันที่ 20 สิงหาคม พ.ศ. 2569"
                  data-img="A8.jpg" 
                  data-features="ทำหน้าที่วิทยากรบรรยายและสาธิตนิทรรศการเทคโนโลยีและปัญญาประดิษฐ์|ถ่ายทอดความรู้วิทยาศาสตร์เพื่ออนาคตที่ยั่งยืนให้แก่ผู้เข้าร่วมงาน|พัฒนาทักษะการสื่อสารและการนำเสนอผลงานระดับสาธารณะ"
@@ -764,19 +790,19 @@
                 <div class="item-img">
                     <img src="A8.jpg" alt="A8.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-chalkboard-user"></i></div>
-                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด (A8.jpg)</div>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">A8.jpg | Speaker Certificate</span>
+                    <span class="item-tag">Speaker Certificate</span>
                     <h3 class="item-title">วิทยากรนิทรรศการวิทยาศาสตร์และเทคโนโลยี</h3>
                     <p class="item-desc">รับหน้าที่วิทยากรจัดแสดงนิทรรศการวิทยาศาสตร์ หัวข้อ Intelligence in Science for a Sustainable Future</p>
                 </div>
             </div>
 
-            <!-- A9.jpg -->
+            <!-- Item 9 -->
             <div class="portfolio-item workshops certificates" onclick="openModal(this)"
                  data-title="K-Engineering Workshop: AI & Cybersecurity [EE, Computing]"
-                 data-tag="A9.jpg | Workshop Certificate"
+                 data-tag="Workshop Certificate"
                  data-desc="เกียรติบัตรเข้าร่วม Workshop หัวข้อ 'ปัญญาประดิษฐ์พื้นฐานร่วมกับข้อมูลด้านความมั่นคงปลอดภัยทางไซเบอร์ [EE, Computing]' ในงาน K-ENGINEERING WORLD TOUR AND COMPETENCY CHALLENGE 2026 จัดโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง วันที่ 5 กรกฎาคม 2569"
                  data-img="A9.jpg" 
                  data-features="เรียนรู้หลักการพื้นฐานปัญญาประดิษฐ์ (AI) ร่วมกับระบบความมั่นคงปลอดภัยทางไซเบอร์|ประยุกต์ใช้ในการวิเคราะห์ข้อมูลและป้องกันภัยคุกคามทางเทคโนโลยี|รับรองโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"
@@ -786,19 +812,19 @@
                 <div class="item-img">
                     <img src="A9.jpg" alt="A9.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-shield-cat"></i></div>
-                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด (A9.jpg)</div>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">A9.jpg | Workshop Certificate</span>
+                    <span class="item-tag">Workshop Certificate</span>
                     <h3 class="item-title">K-Engineering: Basic AI & Cybersecurity (KMITL)</h3>
                     <p class="item-desc">เข้าร่วม Workshop ปัญญาประดิษฐ์พื้นฐานและความมั่นคงปลอดภัยทางไซเบอร์ ณ คณะวิศวกรรมศาสตร์ KMITL</p>
                 </div>
             </div>
 
-            <!-- A10.jpg -->
+            <!-- Item 10 -->
             <div class="portfolio-item workshops certificates" onclick="openModal(this)"
                  data-title="สัมมนาพัฒนาเทคโนโลยี (Technology Development Seminar)"
-                 data-tag="A10.jpg | Seminar Certificate"
+                 data-tag="Seminar Certificate"
                  data-desc="เกียรติบัตรเข้าร่วมการสัมมนา เรื่อง 'สัมมนาพัฒนาเทคโนโลยี (Technology Development Seminar)' ในวันที่ 11 กุมภาพันธ์ พ.ศ. 2569 ณ ห้อง Fabrication Laboratory (FabLab) อาคาร 1 ชั้น 5 โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'"
                  data-img="A10.jpg" 
                  data-features="เข้าร่วมสัมมนาแลกเปลี่ยนความรู้ด้านการพัฒนานวัตกรรมและเทคโนโลยีสมัยใหม่|สัมผัสเครื่องมือและกระบวนการสร้างชิ้นงานในห้องปฏิบัติการ Fabrication Laboratory (FabLab)|รับรองโดยผู้อำนวยการโรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'"
@@ -808,32 +834,32 @@
                 <div class="item-img">
                     <img src="A10.jpg" alt="A10.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-microscope"></i></div>
-                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด (A10.jpg)</div>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">A10.jpg | Seminar Certificate</span>
+                    <span class="item-tag">Seminar Certificate</span>
                     <h3 class="item-title">สัมมนาพัฒนาเทคโนโลยี (FabLab Seminar)</h3>
                     <p class="item-desc">เข้าร่วมงานสัมมนาพัฒนาเทคโนโลยี ณ ห้อง Fabrication Laboratory (FabLab) โรงเรียนบ้านบึง "อุตสาหกรรมนุเคราะห์"</p>
                 </div>
             </div>
 
-            <!-- A11.jpg -->
+            <!-- Item 11 -->
             <div class="portfolio-item workshops certificates" onclick="openModal(this)"
                  data-title="ค่ายยกระดับผลสัมฤทธิ์ทางการเรียนเทคโนโลยี"
-                 data-tag="A11.jpg | Certificate"
+                 data-tag="Camp Certificate"
                  data-desc="เกียรติบัตรเข้าร่วมกิจกรรม 'ค่ายยกระดับผลสัมฤทธิ์ทางการเรียนเทคโนโลยี' เพื่อยกระดับผลสัมฤทธิ์ทางการเรียนด้านเทคโนโลยีให้สูงขึ้น ผ่านกิจกรรมเสริมความรู้และทักษะที่สอดคล้องกับเนื้อหาของหลักสูตร ณ หอประชุมกาญจนานนท์ โรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์' ให้ไว้ ณ วันที่ 24 มกราคม พ.ศ. 2569"
-                 data-img="A11.jpg" 
+                 data-img="1000018069.jpg" 
                  data-features="เข้าร่วมกิจกรรมพัฒนาและยกระดับทักษะความรู้ทางเทคโนโลยีตามหลักสูตร|ปฏิบัติกิจกรรมเสริมสร้างกระบวนการคิดวิเคราะห์และแก้ปัญหาด้านเทคโนโลยี|รับรองโดย ดร.รุ่งทวี พรรณา ผู้อำนวยการโรงเรียนบ้านบึง 'อุตสาหกรรมนุเคราะห์'"
                  data-tech="Technology Enhancement, Skill Building, Academic Improvement"
                  data-icon="fa-laptop-code"
                  data-category="เกียรติบัตร / ค่ายพัฒนาทักษะเทคโนโลยี">
                 <div class="item-img">
-                    <img src="A11.jpg" alt="A11.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <img src="1000018069.jpg" alt="1000018069.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-laptop-code"></i></div>
-                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด (A11.jpg)</div>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">A11.jpg | Certificate</span>
+                    <span class="item-tag">Camp Certificate</span>
                     <h3 class="item-title">ค่ายยกระดับผลสัมฤทธิ์ทางการเรียนเทคโนโลยี</h3>
                     <p class="item-desc">เข้าร่วมกิจกรรมค่ายยกระดับผลสัมฤทธิ์ทางการเรียนด้านเทคโนโลยี ณ หอประชุมกาญจนานนท์ โรงเรียนบ้านบึง "อุตสาหกรรมนุเคราะห์"</p>
                 </div>
@@ -872,9 +898,9 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT: BACKGROUND ANIMATION & INTERACTION -->
+    <!-- JAVASCRIPT: OPTIMIZED ANIMATION & INTERACTION -->
     <script>
-        /* Canvas Particle Lines Script */
+        /* Smooth Particle Canvas Animation */
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -892,19 +918,23 @@
                 y: Math.random() * canvas.height,
                 length: Math.random() * 90 + 60,
                 angle: Math.random() * Math.PI * 2,
-                speed: Math.random() * 0.3 + 0.1,
+                speed: Math.random() * 0.25 + 0.1,
                 width: Math.random() * 2 + 1,
-                opacity: Math.random() * 0.3 + 0.1,
-                rotSpeed: (Math.random() - 0.5) * 0.002
+                opacity: Math.random() * 0.25 + 0.1,
+                rotSpeed: (Math.random() - 0.5) * 0.0015
             });
         }
 
-        function drawAndAnimate() {
+        let lastTime = performance.now();
+        function drawAndAnimate(currentTime) {
+            const deltaTime = (currentTime - lastTime) / 1000;
+            lastTime = currentTime;
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             lines.forEach(line => {
-                line.x += Math.cos(line.angle) * line.speed;
-                line.y += Math.sin(line.angle) * line.speed;
-                line.angle += line.rotSpeed;
+                line.x += Math.cos(line.angle) * line.speed * (deltaTime * 60);
+                line.y += Math.sin(line.angle) * line.speed * (deltaTime * 60);
+                line.angle += line.rotSpeed * (deltaTime * 60);
 
                 if (line.x < -150) line.x = canvas.width + 150;
                 if (line.x > canvas.width + 150) line.x = -150;
@@ -931,9 +961,9 @@
             });
             requestAnimationFrame(drawAndAnimate);
         }
-        drawAndAnimate();
+        requestAnimationFrame(drawAndAnimate);
 
-        /* Filter System */
+        /* Smooth Portfolio Filter System */
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.portfolio-item');
             const buttons = document.querySelectorAll('.filter-btn');
@@ -941,10 +971,13 @@
             buttons.forEach(btn => btn.classList.remove('active'));
             if (evt) evt.currentTarget.classList.add('active');
 
-            items.forEach(item => {
+            items.forEach((item, index) => {
                 const matches = category === 'all' || item.classList.contains(category);
                 if (matches) {
                     item.classList.remove('inactive');
+                    item.style.animation = 'none';
+                    item.offsetHeight; // trigger reflow
+                    item.style.animation = `popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.04}s both`;
                 } else {
                     item.classList.add('inactive');
                 }
