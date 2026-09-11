@@ -73,17 +73,6 @@
             will-change: transform, opacity;
         }
 
-        /* ===== GPU-Accelerated Smooth Animations ===== */
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(24px) translateZ(0); }
-            100% { opacity: 1; transform: translateY(0) translateZ(0); }
-        }
-
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.92) translateY(16px) translateZ(0); }
-            100% { opacity: 1; transform: scale(1) translateY(0) translateZ(0); }
-        }
-
         @keyframes pulseAmbient {
             0% { opacity: 0.5; transform: translateX(-50%) scale(0.95); }
             100% { opacity: 0.95; transform: translateX(-50%) scale(1.06); }
@@ -105,7 +94,6 @@
             justify-content: center;
             align-items: center;
             padding: 0 1rem;
-            animation: fadeInUp 0.8s var(--ease-out-expo) forwards;
         }
 
         .pill-navbar {
@@ -172,18 +160,29 @@
         .nav-menu-item a:hover { transform: translateY(-2px); }
         .nav-menu-item a:hover i { transform: scale(1.18) rotate(8deg); }
 
-        /* HERO & PAGE HEADER */
+        /* HERO & PAGE HEADER CONTAINER */
         .page-container {
             width: 100%;
             max-width: 1280px;
             margin: 0 auto;
-            padding: 8.5rem 1.5rem 5rem;
+            padding: 9.5rem 1.5rem 5rem; /* เว้นระยะห่างด้านบนอย่างเหมาะสม */
+            perspective: 1200px; /* รองรับ 3D Brochure Fold Effect */
         }
 
+        /* ===== 3D BROCHURE UNFOLD SCROLL ANIMATIONS ===== */
         .header-title-wrapper {
             text-align: center;
             margin-bottom: 2.5rem;
-            animation: fadeInUp 0.8s var(--ease-out-expo) 0.1s both;
+            transform-origin: top center;
+            opacity: 0;
+            transform: perspective(1000px) rotateX(-50deg) translateY(-35deg) scale(0.92);
+            transition: transform 0.95s var(--ease-out-expo), opacity 0.85s var(--ease-out-expo);
+            will-change: transform, opacity;
+        }
+
+        .header-title-wrapper.unfold {
+            opacity: 1;
+            transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
         }
 
         .badge-category {
@@ -221,7 +220,16 @@
             gap: 0.75rem;
             margin-bottom: 3rem;
             flex-wrap: wrap;
-            animation: fadeInUp 0.8s var(--ease-out-expo) 0.2s both;
+            transform-origin: top center;
+            opacity: 0;
+            transform: perspective(1000px) rotateX(-35deg) translateY(-20px);
+            transition: transform 0.85s var(--ease-out-expo) 0.15s, opacity 0.85s var(--ease-out-expo) 0.15s;
+            will-change: transform, opacity;
+        }
+
+        .filter-container.unfold {
+            opacity: 1;
+            transform: perspective(1000px) rotateX(0deg) translateY(0);
         }
 
         .filter-btn {
@@ -249,11 +257,12 @@
 
         .filter-btn:active { transform: scale(0.96); }
 
-        /* PORTFOLIO GRID */
+        /* PORTFOLIO GRID & BROCHURE UNFOLD CARDS */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
             gap: 1.8rem;
+            perspective: 1200px;
         }
 
         .portfolio-item {
@@ -266,13 +275,20 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            animation: popIn 0.6s var(--ease-out-expo) both;
-            transition: transform 0.4s var(--ease-smooth), opacity 0.4s var(--ease-smooth), box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+            transform-origin: top center;
+            opacity: 0;
+            transform: perspective(1000px) rotateX(-45deg) translateY(40px) scale(0.92);
+            transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo), box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
             will-change: transform, opacity;
         }
 
+        .portfolio-item.unfold {
+            opacity: 1;
+            transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
+        }
+
         .portfolio-item:hover {
-            transform: translateY(-8px) scale(1.015);
+            transform: translateY(-8px) scale(1.02) !important;
             border-color: var(--orange-main);
             box-shadow: 0 20px 40px rgba(227, 82, 5, 0.18);
         }
@@ -581,7 +597,14 @@
             justify-content: center;
             margin-top: 4rem;
             padding-top: 2rem;
-            animation: fadeInUp 0.8s var(--ease-out-expo) both;
+            opacity: 0;
+            transform: perspective(1000px) rotateX(-30deg) translateY(30px);
+            transition: transform 0.85s var(--ease-out-expo), opacity 0.85s var(--ease-out-expo);
+        }
+
+        .next-page-wrapper.unfold {
+            opacity: 1;
+            transform: perspective(1000px) rotateX(0deg) translateY(0);
         }
 
         .btn-next-page {
@@ -616,6 +639,7 @@
         @media (max-width: 850px) {
             .top-nav-wrapper { transform: translateX(0); }
             .pill-navbar { padding: 0.5rem 1.2rem; gap: 1rem; }
+            .page-container { padding-top: 8rem; }
             .page-title { font-size: 2rem; }
             .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.2rem; }
             .modal-container { max-width: 100%; }
@@ -643,14 +667,14 @@
     <!-- MAIN CONTENT CONTAINER -->
     <div class="page-container">
         
-        <!-- HERO HEAD SECTION -->
+        <!-- HERO HEAD SECTION (UNFOLD ANIMATION) -->
         <div class="header-title-wrapper">
             <span class="badge-category">PORTFOLIO COLLECTION</span>
             <h1 class="page-title">แฟ้มสะสมผลงาน <span class="orange-text">(Portfolio)</span></h1>
             <p class="page-subtitle">รวบรวมเกียรติบัตร โครงงาน และกิจกรรมอบรมที่ได้เข้าร่วมปฏิบัติและรับการอบรม</p>
         </div>
 
-        <!-- FILTER BUTTONS -->
+        <!-- FILTER BUTTONS (UNFOLD ANIMATION) -->
         <div class="filter-container">
             <button class="filter-btn active" onclick="filterPortfolio('all', event)">ทั้งหมด</button>
             <button class="filter-btn" onclick="filterPortfolio('workshops', event)">การอบรม / กิจกรรม</button>
@@ -905,7 +929,7 @@
 
         </div>
 
-        <!-- NEXT PAGE BUTTON (ปุ่มกดไปหน้า end.html ที่เพิ่มเข้ามา) -->
+        <!-- NEXT PAGE BUTTON SECTION -->
         <div class="next-page-wrapper">
             <a href="end.html" class="btn-next-page">
                 <span>ไปยังหน้าสุดท้าย</span>
@@ -945,9 +969,9 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT: OPTIMIZED ANIMATION & INTERACTION -->
+    <!-- JAVASCRIPT: BROCHURE UNFOLD & INTERACTION -->
     <script>
-        /* Smooth Particle Canvas Animation */
+        /* Smooth Background Particle Canvas */
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -1010,6 +1034,35 @@
         }
         requestAnimationFrame(drawAndAnimate);
 
+        /* INTERSECTION OBSERVER FOR 3D BROCHURE UNFOLD ON SCROLL */
+        const unfoldObserverOptions = {
+            root: null,
+            threshold: 0.12
+        };
+
+        const unfoldObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('unfold');
+                }
+            });
+        }, unfoldObserverOptions);
+
+        // Target Header, Filters, Cards, and Next Button
+        const headerTitle = document.querySelector('.header-title-wrapper');
+        const filterBox = document.querySelector('.filter-container');
+        const portfolioCards = document.querySelectorAll('.portfolio-item');
+        const nextBtnBox = document.querySelector('.next-page-wrapper');
+
+        if (headerTitle) unfoldObserver.observe(headerTitle);
+        if (filterBox) unfoldObserver.observe(filterBox);
+        if (nextBtnBox) unfoldObserver.observe(nextBtnBox);
+
+        portfolioCards.forEach((card, index) => {
+            card.style.transitionDelay = `${(index % 3) * 0.12}s`;
+            unfoldObserver.observe(card);
+        });
+
         /* Smooth Portfolio Filter System */
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.portfolio-item');
@@ -1018,14 +1071,18 @@
             buttons.forEach(btn => btn.classList.remove('active'));
             if (evt) evt.currentTarget.classList.add('active');
 
-            items.forEach((item, index) => {
+            let visibleIndex = 0;
+            items.forEach((item) => {
                 const matches = category === 'all' || item.classList.contains(category);
                 if (matches) {
                     item.classList.remove('inactive');
-                    item.style.animation = 'none';
-                    item.offsetHeight; // trigger reflow
-                    item.style.animation = `popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.04}s both`;
+                    item.style.transitionDelay = `${(visibleIndex % 3) * 0.08}s`;
+                    visibleIndex++;
+                    setTimeout(() => {
+                        item.classList.add('unfold');
+                    }, 10);
                 } else {
+                    item.classList.remove('unfold');
                     item.classList.add('inactive');
                 }
             });
@@ -1111,3 +1168,4 @@
     </script>
 </body>
 </html>
+
