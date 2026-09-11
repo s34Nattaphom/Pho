@@ -575,6 +575,44 @@
 
         .tech-badge:hover { transform: translateY(-2px); }
 
+        /* NEXT PAGE BUTTON SECTION */
+        .next-page-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            animation: fadeInUp 0.8s var(--ease-out-expo) both;
+        }
+
+        .btn-next-page {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--orange-main), var(--orange-light));
+            color: #ffffff;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            box-shadow: 0 10px 25px rgba(227, 82, 5, 0.3);
+            transition: all 0.35s var(--ease-out-back);
+        }
+
+        .btn-next-page:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(227, 82, 5, 0.45);
+            color: #ffffff;
+        }
+
+        .btn-next-page i {
+            transition: transform 0.3s var(--ease-out-back);
+        }
+
+        .btn-next-page:hover i {
+            transform: translateX(6px);
+        }
+
         @media (max-width: 850px) {
             .top-nav-wrapper { transform: translateX(0); }
             .pill-navbar { padding: 0.5rem 1.2rem; gap: 1rem; }
@@ -866,6 +904,15 @@
             </div>
 
         </div>
+
+        <!-- NEXT PAGE BUTTON (ปุ่มกดไปหน้า end.html ที่เพิ่มเข้ามา) -->
+        <div class="next-page-wrapper">
+            <a href="end.html" class="btn-next-page">
+                <span>ไปยังหน้าสุดท้าย</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
     </div>
 
     <!-- MODAL POPUP -->
@@ -1064,4 +1111,3 @@
     </script>
 </body>
 </html>
-
