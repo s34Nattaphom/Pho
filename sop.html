@@ -1,1 +1,588 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เรียงความแสดงเจตจำนง (SOP) | NATTAPHUM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <style>
+        :root {
+            --orange-main: #E35205;      
+            --orange-light: #FF661A;     
+            --orange-soft-bg: #FFF0E6;   
+            --orange-glow: rgba(227, 82, 5, 0.15);
+            
+            --bg-color: #FAFAFA;         
+            --card-border: rgba(227, 82, 5, 0.18);
+            
+            --text-main: #222222;       
+            --text-muted: #666666;      
+            --text-white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFF5F0 50%, #FFEBE0 100%);
+            pointer-events: none;
+        }
+
+        .ambient-glow {
+            position: fixed;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(227, 82, 5, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+            pointer-events: none;
+            animation: pulseAmbient 8s ease-in-out infinite alternate;
+        }
+
+        /* ===== Keyframe Animations ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.85) translateY(20px);
+            }
+            70% {
+                transform: scale(1.03) translateY(-4px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes pulseAmbient {
+            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.08); }
+        }
+
+        @keyframes floatBadge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        /* Top Navigation Bar */
+        .top-nav-wrapper {
+            position: fixed;
+            top: 1.5rem;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 1rem;
+            transform: translateX(5px);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .pill-navbar {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 10px 30px rgba(227, 82, 5, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo {
+            color: var(--orange-main);
+            font-weight: 700;
+            font-size: 1.15rem;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            padding-right: 1.2rem;
+            border-right: 1px solid rgba(227, 82, 5, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-menu-list {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .nav-menu-item a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.5rem 1.1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .nav-menu-item a i { color: var(--orange-main); transition: transform 0.25s ease; }
+
+        .nav-menu-item a:hover,
+        .nav-menu-item a.active {
+            color: var(--orange-main);
+            background: var(--orange-soft-bg);
+            font-weight: 600;
+        }
+
+        .nav-menu-item a:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-menu-item a:hover i {
+            transform: scale(1.2) rotate(8deg);
+        }
+
+        /* Container Layout */
+        .page-container {
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 8.5rem 1.5rem 6rem;
+        }
+
+        .header-title-wrapper {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+        }
+
+        .badge-category {
+            display: inline-block;
+            background: var(--orange-soft-bg);
+            color: var(--orange-main);
+            border: 1px solid rgba(227, 82, 5, 0.3);
+            padding: 0.4rem 1.4rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.8rem;
+            animation: floatBadge 4s ease-in-out infinite;
+        }
+
+        .page-title {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Quote Banner */
+        .sop-quote-box {
+            background: linear-gradient(135deg, var(--orange-main) 0%, var(--orange-light) 100%);
+            color: #FFFFFF;
+            border-radius: 24px;
+            padding: 2rem 2.5rem;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(227, 82, 5, 0.25);
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            animation: popIn 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s both;
+        }
+
+        .sop-quote-box i {
+            font-size: 2.5rem;
+            opacity: 0.3;
+            margin-bottom: 0.5rem;
+        }
+
+        .sop-quote-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.6;
+            letter-spacing: 0.3px;
+        }
+
+        .sop-quote-author {
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        /* SOP Content Cards */
+        .sop-section-card {
+            background: #FFFFFF;
+            border: 1px solid var(--card-border);
+            border-radius: 26px;
+            padding: 2.2rem 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 12px 30px rgba(227, 82, 5, 0.05);
+            transition: all 0.35s ease;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .sop-section-card:hover {
+            border-color: var(--orange-main);
+            box-shadow: 0 18px 40px rgba(227, 82, 5, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .sop-card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(227, 82, 5, 0.12);
+        }
+
+        .sop-card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--orange-soft-bg);
+            color: var(--orange-main);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .sop-section-card:hover .sop-card-icon {
+            background: var(--orange-main);
+            color: #FFFFFF;
+            transform: rotate(-6deg) scale(1.1);
+        }
+
+        .sop-card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .sop-card-body {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.85;
+        }
+
+        .sop-card-body b {
+            color: var(--orange-main);
+            font-weight: 600;
+        }
+
+        /* Synergy Highlight Grid */
+        .synergy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        .synergy-box {
+            background: var(--orange-soft-bg);
+            border: 1px solid rgba(227, 82, 5, 0.2);
+            border-radius: 18px;
+            padding: 1.2rem 1.4rem;
+            transition: all 0.3s ease;
+        }
+
+        .synergy-box:hover {
+            background: #FFFFFF;
+            border-color: var(--orange-main);
+            box-shadow: 0 8px 20px rgba(227, 82, 5, 0.12);
+            transform: translateY(-3px);
+        }
+
+        .synergy-box-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.4rem;
+        }
+
+        .synergy-box-header i {
+            color: var(--orange-main);
+        }
+
+        .synergy-box-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        /* Bottom Nav Button */
+        .next-step-container {
+            margin-top: 3.5rem;
+            text-align: center;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.85s both;
+        }
+
+        .btn-next-page {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #FF661A 0%, #E35205 100%);
+            color: #FFFFFF;
+            padding: 1.1rem 2.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 10px 28px rgba(227, 82, 5, 0.35);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .btn-next-page:hover {
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 18px 38px rgba(227, 82, 5, 0.5);
+        }
+
+        .btn-next-page:hover i {
+            transform: translateX(6px);
+        }
+
+        @media (max-width: 850px) {
+            .top-nav-wrapper { transform: translateX(0); }
+            .pill-navbar { padding: 0.5rem 1.2rem; gap: 0.8rem; }
+            .nav-menu-item a span { display: none; } /* ซ่อนข้อความเหลือแค่ไอคอนเมื่อจอเล็ก */
+            .nav-menu-item a { padding: 0.5rem 0.8rem; }
+            .synergy-grid { grid-template-columns: 1fr; }
+            .sop-section-card { padding: 1.8rem 1.4rem; }
+            .sop-quote-box { padding: 1.6rem 1.4rem; }
+            .sop-quote-text { font-size: 1.05rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="particle-canvas"></canvas>
+    <div class="ambient-glow"></div>
+
+    <!-- Navigation Bar (อัปเดตเพิ่มเมนู SOP เรียบร้อย) -->
+    <div class="top-nav-wrapper">
+        <nav class="pill-navbar">
+            <a href="index.html" class="nav-logo">NATTAPHUM</a>
+            <ul class="nav-menu-list">
+                <li class="nav-menu-item"><a href="index.html"><i class="fa-solid fa-house"></i><span>หน้าแรก</span></a></li>
+                <li class="nav-menu-item"><a href="me.html"><i class="fa-solid fa-user"></i><span>ข้อมูลส่วนตัว</span></a></li>
+                <li class="nav-menu-item"><a href="portfolio.html"><i class="fa-solid fa-folder-open"></i><span>แฟ้มสะสมผลงาน</span></a></li>
+                <li class="nav-menu-item"><a href="sop.html" class="active"><i class="fa-solid fa-pen-nib"></i><span>SOP</span></a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="page-container">
+        
+        <div class="header-title-wrapper">
+            <span class="badge-category">STATEMENT OF PURPOSE</span>
+            <h1 class="page-title">เรียงความแสดงเจตจำนง (SOP)</h1>
+            <p class="page-subtitle">การผสานความหลงใหลใน Graphic Design สู่เป้าหมาย Cybersecurity</p>
+        </div>
+
+        <!-- Banner คำคมแสดงจุดยืน -->
+        <div class="sop-quote-box">
+            <i class="fa-solid fa-quote-left"></i>
+            <div class="sop-quote-text">
+                "งานดีไซน์ที่ดีไม่ใช่แค่สวยงาม แต่คือการสื่อสารที่ถูกต้อง <br>และการปกป้องผู้ใช้งานให้ปลอดภัยในโลกดิจิทัล"
+            </div>
+            <div class="sop-quote-author">— ณัฐภูมิ เฉวียงวาท (Nattaphum Chawiangwat)</div>
+        </div>
+
+        <!-- Section 1: จุดเริ่มต้นและความหลงใหลใน Graphic Design -->
+        <div class="sop-section-card" style="animation-delay: 0.35s;">
+            <div class="sop-card-header">
+                <div class="sop-card-icon">
+                    <i class="fa-solid fa-palette"></i>
+                </div>
+                <h2 class="sop-card-title">1. จุดเริ่มต้นและความหลงใหลใน Graphic & Web Design</h2>
+            </div>
+            <div class="sop-card-body">
+                ตลอดระยะเวลาการเรียนในสายวิทย์-คณิต คอมพิวเตอร์ สิ่งที่ผมหลงใหลเป็นพิเศษคือ <b>Graphic Design, Web Design (UI/UX) และ 3D Modeling</b> ผมเชื่อว่าดีไซน์คือสะพานเชื่อมระหว่างมนุษย์กับเทคโนโลยี การจัดวางโครงสร้าง ประสบการณ์ผู้ใช้ (User Experience) และความสวยงามไม่ได้เพียงแค่ดึงดูดสายตา แต่ทำให้ผู้ใช้งานเข้าใจระบบที่ซับซ้อนได้อย่างง่ายดาย การฝึกฝนออกแบบเว็บไซต์และสร้างโมเดล 3 มิติ ช่วยเกลาความคิดสร้างสรรค์และการสื่อสารเชิงสัญลักษณ์ของผมให้เป็นระบบ
+            </div>
+        </div>
+
+        <!-- Section 2: การค้นพบความสนใจใน Cybersecurity -->
+        <div class="sop-section-card" style="animation-delay: 0.45s;">
+            <div class="sop-card-header">
+                <div class="sop-card-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h2 class="sop-card-title">2. จุดประกายความสนใจสู่โลกของ Cybersecurity</h2>
+            </div>
+            <div class="sop-card-body">
+                ความสนใจด้านระบบไซเบอร์ของผมเริ่มต้นเด่นชัดขึ้นจากการเข้าร่วมเวิร์กช็อป <b>K-Engineering World Tour (หัวข้อ Basic AI with Cybersecurity และ PLC Control)</b> ที่ สจล.[span_0](start_span)[span_0](end_span) การได้สัมผัสการทำงานของระบบความปลอดภัย อัลกอริทึมเตือนภัย และโครงสร้างฮาร์ดแวร์จริง ทำให้ผมตระหนักว่า <i>"ท่ามกลางเทคโนโลยีที่พัฒนาอย่างรวดเร็ว ช่องโหว่ที่อันตรายที่สุดมักเกิดขึ้นจากความไม่รู้และความเข้าใจผิดของผู้ใช้งาน"</i> ภัยคุกคาม เช่น Phishing หรือ Social Engineering มักใช้ประโยชน์จากการหลอกลวงทางสายตาและพฤติกรรมมนุษย์ ทำให้ผมเห็นความสำคัญอย่างยิ่งในการปกป้องข้อมูลและระบบดิจิทัล
+            </div>
+        </div>
+
+        <!-- Section 3: การผสานศาสตร์ (Graphic Design x Cybersecurity) -->
+        <div class="sop-section-card" style="animation-delay: 0.55s;">
+            <div class="sop-card-header">
+                <div class="sop-card-icon">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <h2 class="sop-card-title">3. การผสานความหลงใหล: Design x Security Synergy</h2>
+            </div>
+            <div class="sop-card-body">
+                ผมมองว่า Graphic Design และ Cybersecurity ไม่ใช่เรื่องที่แยกออกจากกัน แต่สามารถผสานร่วมกันอย่างทรงพลังในรูปแบบ <b>"Human-Centered Cybersecurity & Secure UI/UX"</b>:
+                
+                <div class="synergy-grid">
+                    <div class="synergy-box">
+                        <div class="synergy-box-header">
+                            <i class="fa-solid fa-eye"></i>
+                            <span>Security Visualization</span>
+                        </div>
+                        <div class="synergy-box-desc">
+                            การนำทักษะกราฟิกและ UI/UX มาออกแบบหน้าต่างแจ้งเตือน (Security Dashboards) ให้ชัดเจน เข้าใจง่าย ช่วยให้ผู้ใช้รู้เท่าทันภัยคุกคามได้ทันที
+                        </div>
+                    </div>
+
+                    <div class="synergy-box">
+                        <div class="synergy-box-header">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <span>Secure UX Design</span>
+                        </div>
+                        <div class="synergy-box-desc">
+                            ออกแบบระบบอินเทอร์เฟซที่ป้องกัน Human Error ออกแบบขั้นตอนที่บีบให้ผู้ใช้ปฏิบัติตามมาตรฐานความปลอดภัยโดยไม่รู้สึกยุ่งยาก
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: เป้าหมายในอนาคต -->
+        <div class="sop-section-card" style="animation-delay: 0.65s;">
+            <div class="sop-card-header">
+                <div class="sop-card-icon">
+                    <i class="fa-solid fa-bullseye"></i>
+                </div>
+                <h2 class="sop-card-title">4. เป้าหมายการศึกษาและอนาคตที่ สจล. (KMITL)</h2>
+            </div>
+            <div class="sop-card-body">
+                ด้วยความมุ่งมั่นที่อยากเข้าศึกษาใน <b>คณะเทคโนโลยีสารสนเทศ (IT) สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</b> ผมต้องการเข้ามาต่อยอดความรู้เชิงลึกด้านเครือข่าย ความปลอดภัยทางไซเบอร์ การพัฒนาซอฟต์แวร์ และระบบปัญญาประดิษฐ์[span_1](start_span)[span_1](end_span) เพื่อนำทักษะด้านดีไซน์และเทคโนโลยีมาหลอมรวมกัน สร้างนวัตกรรมดิจิทัลที่ทั้ง<b>"ใช้งานง่าย เป็นมิตรกับผู้ใช้ และมีความปลอดภัยสูงสุด"</b> พร้อมที่จะเติบโตเป็นบุคลากรด้านเทคโนโลยีสารสนเทศที่มีคุณภาพของประเทศต่อไป
+            </div>
+        </div>
+
+        <!-- ปุ่มไปยังหน้าถัดไป/กลับหน้าหลัก -->
+        <div class="next-step-container">
+            <a href="portfolio.html" class="btn-next-page">
+                <span>รับชมแฟ้มสะสมผลงาน (Portfolio)</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        /* ===== Canvas Particles Script ===== */
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const lines = [];
+        for (let i = 0; i < 35; i++) {
+            lines.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                length: Math.random() * 90 + 60,
+                angle: Math.random() * Math.PI * 2,
+                speed: Math.random() * 0.3 + 0.1,
+                width: Math.random() * 2 + 1,
+                opacity: Math.random() * 0.3 + 0.1,
+                rotSpeed: (Math.random() - 0.5) * 0.002
+            });
+        }
+
+        function drawAndAnimate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            lines.forEach(line => {
+                line.x += Math.cos(line.angle) * line.speed;
+                line.y += Math.sin(line.angle) * line.speed;
+                line.angle += line.rotSpeed;
+
+                if (line.x < -150) line.x = canvas.width + 150;
+                if (line.x > canvas.width + 150) line.x = -150;
+                if (line.y < -150) line.y = canvas.height + 150;
+                if (line.y > canvas.height + 150) line.y = -150;
+
+                ctx.save();
+                ctx.translate(line.x, line.y);
+                ctx.rotate(line.angle);
+
+                const grad = ctx.createLinearGradient(0, 0, line.length, 0);
+                grad.addColorStop(0, 'rgba(227, 82, 5, 0)');
+                grad.addColorStop(0.5, `rgba(227, 82, 5, ${line.opacity})`);
+                grad.addColorStop(1, 'rgba(227, 82, 5, 0)');
+
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = line.width;
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(line.length, 0);
+                ctx.stroke();
+                ctx.restore();
+            });
+            requestAnimationFrame(drawAndAnimate);
+        }
+        drawAndAnimate();
+    </script>
+</body>
+</html>
