@@ -40,7 +40,7 @@
             position: relative;
         }
 
-        /* Canvas และ Ambient Background Glow สไตล์ me.html */
+        /* Canvas และ Ambient Background Glow */
         #particle-canvas {
             position: fixed;
             top: 0;
@@ -65,15 +65,15 @@
             animation: pulseAmbient 8s ease-in-out infinite alternate;
         }
 
-        /* ===== Keyframe Animations เดียวกับ me.html ===== */
+        /* ===== Keyframe Animations ===== */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.85) translateY(20px); }
-            70% { transform: scale(1.03) translateY(-4px); }
+            0% { opacity: 0; transform: scale(0.88) translateY(20px); }
+            70% { transform: scale(1.02) translateY(-4px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
@@ -87,11 +87,6 @@
             50% { transform: translateY(-4px); }
         }
 
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 15px rgba(227, 82, 5, 0.15); }
-            50% { box-shadow: 0 0 25px rgba(227, 82, 5, 0.35); }
-        }
-
         /* Floating Pill Navbar */
         .top-nav-wrapper {
             position: fixed;
@@ -103,7 +98,6 @@
             justify-content: center;
             align-items: center;
             padding: 0 1rem;
-            transform: translateX(5px);
             animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
@@ -165,7 +159,6 @@
 
         .nav-menu-item a:hover { transform: translateY(-2px); }
         .nav-menu-item a:hover i { transform: scale(1.2) rotate(8deg); }
-        .nav-menu-item a:active { transform: scale(0.95); }
 
         /* HERO & PAGE HEADER */
         .page-container {
@@ -270,8 +263,6 @@
             box-shadow: 0 20px 40px rgba(227, 82, 5, 0.2);
         }
 
-        .portfolio-item:active { transform: scale(0.98); }
-
         .portfolio-item.inactive { display: none; }
 
         .item-img {
@@ -375,7 +366,7 @@
             border: 1px solid var(--card-border);
             border-radius: 28px;
             width: 100%;
-            max-width: 900px;
+            max-width: 880px;
             max-height: 88vh;
             overflow-y: auto;
             position: relative;
@@ -569,7 +560,7 @@
 </head>
 <body>
 
-    <!-- BACKGROUND CANVAS & AMBIENT GLOW (สไตล์เดียวกับ me.html) -->
+    <!-- BACKGROUND CANVAS & AMBIENT GLOW -->
     <canvas id="particle-canvas"></canvas>
     <div class="ambient-glow"></div>
 
@@ -592,7 +583,7 @@
         <div class="header-title-wrapper">
             <span class="badge-category">PORTFOLIO COLLECTION</span>
             <h1 class="page-title">แฟ้มสะสมผลงาน <span class="orange-text">(Portfolio)</span></h1>
-            <p class="page-subtitle">รวบรวมโครงงาน การเข้าร่วมอบรม กิจกรรมทางวิชาการ และวุฒิบัตรทั้งหมด</p>
+            <p class="page-subtitle">รวบรวมโครงงาน การเข้าร่วมอบรม กิจกรรมทางวิชาการ และเกียรติบัตรทั้งหมด</p>
         </div>
 
         <!-- FILTER BUTTONS -->
@@ -643,69 +634,72 @@
                 </div>
                 <div class="item-content">
                     <span class="item-tag">Project / Hardware</span>
-                    <h3 class="item-title">Computer Systems & Hardware Analysis</h3>
+                    <h3 class="item-title">Computer Hardware Analysis</h3>
                     <p class="item-desc">การศึกษาและวิเคราะห์สถาปัตยกรรมฮาร์ดแวร์คอมพิวเตอร์ การเปรียบเทียบประสิทธิภาพสเปกการประมวลผล GPU, CPU และ NVMe</p>
                 </div>
             </div>
 
             <!-- 3. K-ENGINEERING: BASIC AI (A1.jpg) -->
-            <div class="portfolio-item workshops" onclick="openModal(this)"
+            <div class="portfolio-item workshops certificates" onclick="openModal(this)"
                  data-title="K-Engineering: Basic AI Workshop"
-                 data-tag="Workshop / Engineering"
+                 data-tag="Certificate / Engineering"
                  data-desc="การเข้าร่วมอบรมเชิงปฏิบัติการทางด้านปัญญาประดิษฐ์ขั้นพื้นฐาน (Basic AI) ในงาน K-Engineering World Tour and Competency Challenge จัดโดย คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง (KMITL)"
                  data-img="A1.jpg" 
                  data-features="เรียนรู้หลักการทำงานของ AI และ Machine Learning เบื้องต้น|ทดลองใช้งานเครื่องมือและอัลกอริทึมประมวลผลข้อมูล|ได้รับวุฒิบัตรรับรองจากคณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"
                  data-tech="Artificial Intelligence, Machine Learning, Data Analytics, KMITL"
                  data-icon="fa-brain"
-                 data-category="การอบรม / กิจกรรม">
+                 data-category="เกียรติบัตร / การอบรมวิศวกรรม">
                 <div class="item-img">
-                    <img src="A1.jpg" alt="K-Engineering Basic AI">
+                    <img src="A1.jpg" alt="K-Engineering Basic AI" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-brain"></i></div>
                     <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">Workshop / Engineering</span>
+                    <span class="item-tag">Certificate / Engineering</span>
                     <h3 class="item-title">K-Engineering: Basic AI Workshop</h3>
                     <p class="item-desc">อบรมเชิงปฏิบัติการด้านปัญญาประดิษฐ์ขั้นพื้นฐาน จากคณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
                 </div>
             </div>
 
             <!-- 4. K-ENGINEERING: CYBERSECURITY (A2.jpg) -->
-            <div class="portfolio-item workshops" onclick="openModal(this)"
-                 data-title="K-Engineering: Cybersecurity Competency Challenge"
-                 data-tag="Workshop / Cybersecurity"
+            <div class="portfolio-item workshops certificates" onclick="openModal(this)"
+                 data-title="K-Engineering: Cybersecurity Challenge"
+                 data-tag="Certificate / Cybersecurity"
                  data-desc="การเข้าร่วมอบรมและทดสอบทักษะความมั่นคงปลอดภัยทางไซเบอร์ ในงาน K-Engineering World Tour and Competency Challenge ณ คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"
                  data-img="A2.jpg" 
                  data-features="ศึกษากรณีตัวอย่างการโจมตีทางไซเบอร์และภัยคุกคามในระบบดิจิทัล|ฝึกปฏิบัติการวิเคราะห์ความเสี่ยงและการปกป้องข้อมูลส่วนบุคคล|ได้รับวุฒิบัตรการเข้าร่วมกิจกรรมจากคณะวิศวกรรมศาสตร์ KMITL"
                  data-tech="Cybersecurity, Data Privacy, Network Security, KMITL"
                  data-icon="fa-shield-halved"
-                 data-category="การอบรม / กิจกรรม">
+                 data-category="เกียรติบัตร / การอบรมวิศวกรรม">
                 <div class="item-img">
-                    <img src="A2.jpg" alt="K-Engineering Cybersecurity">
+                    <img src="A2.jpg" alt="K-Engineering Cybersecurity" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-shield-halved"></i></div>
                     <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">Workshop / Cybersecurity</span>
+                    <span class="item-tag">Certificate / Cybersecurity</span>
                     <h3 class="item-title">K-Engineering: Cybersecurity Challenge</h3>
                     <p class="item-desc">เข้าร่วมกิจกรรมอบรมทักษะและความรู้ด้านความมั่นคงปลอดภัยทางไซเบอร์ ณ คณะวิศวกรรมศาสตร์ KMITL</p>
                 </div>
             </div>
 
             <!-- 5. K-ENGINEERING: BASIC PLC (A3.jpg) -->
-            <div class="portfolio-item workshops" onclick="openModal(this)"
+            <div class="portfolio-item workshops certificates" onclick="openModal(this)"
                  data-title="K-Engineering: Basic PLC Workshop"
-                 data-tag="Workshop / Automation"
+                 data-tag="Certificate / Automation"
                  data-desc="การเข้าร่วมอบรมเชิงปฏิบัติการควบคุมอุปกรณ์อุตสาหกรรมด้วยโปรแกรม PLC (Programmable Logic Controller) ขั้นพื้นฐาน เรียนรู้การเขียนโปรแกรมควบคุมวงจรอัตโนมัติในระบบวิศวกรรม"
                  data-img="A3.jpg" 
-                 data-features="ศึกษาโครงสร้างการทำงานของโปรแกรม PLC และอุปกรณ์อินพุต/เอาต์พุต|เขียนโค้ดภาษา Ladder Diagram ควบคุมการทำงานตามเงื่อนไข|ทดลองจำลองวงจรควบคุมอุตสาหกรรมในห้องปฏิบัติการวิศวกรรม"
+                 data-features="ศึกษาโครงสร้างการทำงานของโปรแกรม PLC และอุปกรณ์อินพุต/เอาต์พุต|เขียนโค้ดภาษา Ladder Diagram ควบคุมการทำงานตามเงื่อนไข|ได้รับวุฒิบัตรรับรองจากคณะวิศวกรรมศาสตร์ KMITL"
                  data-tech="PLC, Programmable Logic Controller, Automation Systems, Ladder Diagram"
                  data-icon="fa-microchip"
-                 data-category="การอบรม / กิจกรรม">
+                 data-category="เกียรติบัตร / การอบรมวิศวกรรม">
                 <div class="item-img">
-                    <img src="A3.jpg" alt="K-Engineering Basic PLC">
+                    <img src="A3.jpg" alt="K-Engineering Basic PLC" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-microchip"></i></div>
                     <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
-                    <span class="item-tag">Workshop / Automation</span>
+                    <span class="item-tag">Certificate / Automation</span>
                     <h3 class="item-title">K-Engineering: Basic PLC Workshop</h3>
                     <p class="item-desc">เรียนรู้การเขียนโปรแกรมควบคุมวงจรอัตโนมัติด้วย PLC ขั้นพื้นฐาน ณ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
                 </div>
@@ -722,7 +716,8 @@
                  data-icon="fa-graduation-cap"
                  data-category="เกียรติบัตร / การอบรมวิชาการ">
                 <div class="item-img">
-                    <img src="A4.jpg" alt="Thailand University Expo 2024">
+                    <img src="A4.jpg" alt="Thailand University Expo 2024" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="modal-placeholder-icon" style="display:none;"><i class="fa-solid fa-graduation-cap"></i></div>
                     <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
                 </div>
                 <div class="item-content">
@@ -753,14 +748,35 @@
                 </div>
             </div>
 
-            <!-- 8. HIGH SCHOOL ACADEMIC & SCIENTIFIC RESEARCH -->
+            <!-- 8. BIOLOGY INTERACTIVE MEDIA (WAYGROUND) -->
+            <div class="portfolio-item projects" onclick="openModal(this)"
+                 data-title="Interactive Circulatory System Study Media"
+                 data-tag="Project / EdTech"
+                 data-desc="การออกแบบและสร้างสื่อการเรียนรู้ออนไลน์เชิงโต้ตอบ สรุปบทเรียนชีววิทยาระดับชั้นมัธยมศึกษาปีที่ 5 เรื่อง 'ระบบหมุนเวียนเลือด' (Circulatory System) บนแพลตฟอร์ม Wayground เพื่อช่วยสรุปเนื้อหาและทบทวนบทเรียน"
+                 data-img="" 
+                 data-features="ออกแบบอินเทอร์เฟซสื่อการเรียนรู้แบบ Interactive มีความน่าสนใจ|สรุปโครงสร้างการทำงานของหัวใจ หลอดเลือด และระบบไหลเวียนโลหิต|นำเทคโนโลยีดิจิทัลมาประยุกต์ใช้ในการส่งเสริมการเรียนรู้ STEM"
+                 data-tech="Wayground Platform, Digital Content, Biology, STEM Education"
+                 data-icon="fa-heart-pulse"
+                 data-category="โครงงาน / สื่อการเรียนรู้">
+                <div class="item-img">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">Project / EdTech</span>
+                    <h3 class="item-title">Interactive Circulatory System Media</h3>
+                    <p class="item-desc">สื่อการเรียนรู้ออนไลน์เชิงโต้ตอบ สรุปเนื้อหาชีววิทยาเรื่องระบบหมุนเวียนเลือดบน Wayground</p>
+                </div>
+            </div>
+
+            <!-- 9. HIGH SCHOOL ACADEMIC & SCIENTIFIC RESEARCH -->
             <div class="portfolio-item certificates" onclick="openModal(this)"
                  data-title="High School Academic & Scientific Research"
                  data-tag="Certificate / Science & STEM"
-                 data-desc="สรุปการศึกษา ค้นคว้า และทำแบบฝึกหัดคำนวณทางวิทยาศาสตร์ (เคมี ฟิสิกส์ ชีววิทยา) ในระดับชั้นมัธยมศึกษาตอนปลาย รวมถึงการจัดทำสื่อการเรียนรู้ด้านระบบหมุนเวียนเลือดและชีววิทยา"
+                 data-desc="สรุปผลการศึกษา ค้นคว้า และทำแบบฝึกหัดคำนวณทางวิทยาศาสตร์ระดับสูง (เคมี ฟิสิกส์ ชีววิทยา) ในระดับชั้นมัธยมศึกษาตอนปลาย รวมถึงการคำนวณทางไฟฟ้า วงจรความต้านทาน และเลขออกซิเดชัน"
                  data-img="" 
-                 data-features="การศึกษาหลักการคำนวณทางเคมีเชิงปริมาณและปฏิกิริยารีดอกซ์|การวิเคราะห์วงจรไฟฟ้าและความต้านทานทางฟิสิกส์|จัดทำสื่อสรุปเนื้อหาชีววิทยาเชิงโต้ตอบระบบหมุนเวียนเลือดบน Wayground"
-                 data-tech="Physics, Chemistry, Biology, STEM Research, Digital Learning Content"
+                 data-features="การศึกษาหลักการคำนวณทางเคมีเชิงปริมาณและปฏิกิริยารีดอกซ์|การวิเคราะห์วงจรไฟฟ้าและความต้านทานทางฟิสิกส์|ทดลองและศึกษาโครงสร้างระบบหายใจในสิ่งมีชีวิต"
+                 data-tech="Physics, Chemistry, Biology, STEM Research, Circuit Analysis"
                  data-icon="fa-flask"
                  data-category="เกียรติบัตร / วิชาการ">
                 <div class="item-img">
@@ -770,7 +786,28 @@
                 <div class="item-content">
                     <span class="item-tag">Certificate / Science & STEM</span>
                     <h3 class="item-title">Scientific & Physics Calculations</h3>
-                    <p class="item-desc">การศึกษาค้นคว้าประยุกต์ทักษะการคำนวณทางฟิสิกส์ เคมี และการสรุปบทเรียนชีววิทยาระดับมัธยมศึกษาตอนปลาย</p>
+                    <p class="item-desc">การศึกษาค้นคว้าประยุกต์ทักษะการคำนวณทางฟิสิกส์ เคมี และงานวิจัยชีววิทยาระดับมัธยมศึกษาตอนปลาย</p>
+                </div>
+            </div>
+
+            <!-- 10. SCRATCH ALGORITHM & LOGIC DEVELOPMENT -->
+            <div class="portfolio-item projects" onclick="openModal(this)"
+                 data-title="Scratch Visual Logic & Game Programming"
+                 data-tag="Project / Logic & Coding"
+                 data-desc="การพัฒนาอัลกอริทึมและตรรกะการเขียนโปรแกรมผ่าน Visual Block-based Programming บนแพลตฟอร์ม Scratch เพื่อสร้างมินิเกมและแบบจำลองจำลองเงื่อนไขคำสั่งทางคณิตศาสตร์"
+                 data-img="" 
+                 data-features="ฝึกการคิดเชิงคำนวณ (Computational Thinking) และตรรกะโปรแกรมมิ่ง|วางโครงสร้างเงื่อนไข ตัวแปร Loop และ Event-driven Logic|ทดลองพัฒนาองค์ประกอบ interactive แอนิเมชันและเกมเบื้องต้น"
+                 data-tech="Scratch Platform, Computational Thinking, Logic Design, Event-Driven Programming"
+                 data-icon="fa-cubes"
+                 data-category="โครงงาน / ตรรกะโปรแกรมมิ่ง">
+                <div class="item-img">
+                    <i class="fa-solid fa-cubes"></i>
+                    <div class="item-img-overlay"><i class="fa-solid fa-expand"></i> คลิกเพื่ออ่านรายละเอียด</div>
+                </div>
+                <div class="item-content">
+                    <span class="item-tag">Project / Logic & Coding</span>
+                    <h3 class="item-title">Scratch Visual Logic & Programming</h3>
+                    <p class="item-desc">การออกแบบและพัฒนาอัลกอริทึมผ่านโปรแกรม Scratch เพื่อสร้างตรรกะคำนวณและมินิเกมเชิงโต้ตอบ</p>
                 </div>
             </div>
 
@@ -807,9 +844,9 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT: BACKGROUND ANIMATION & INTERACTION (สไตล์เดียวกับ me.html) -->
+    <!-- JAVASCRIPT: BACKGROUND ANIMATION & INTERACTION -->
     <script>
-        /* ===== Canvas Particle Lines Script เดียวกับ me.html ===== */
+        /* ===== Canvas Particle Lines Script ===== */
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
 
