@@ -23,6 +23,7 @@
             --text-muted: #666666;      
             --text-white: #FFFFFF;
 
+            /* Standardized Smooth Timing Functions */
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
             --ease-smooth: cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -72,6 +73,17 @@
             will-change: transform, opacity;
         }
 
+        /* ===== GPU-Accelerated Smooth Animations ===== */
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(24px) translateZ(0); }
+            100% { opacity: 1; transform: translateY(0) translateZ(0); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.92) translateY(16px) translateZ(0); }
+            100% { opacity: 1; transform: scale(1) translateY(0) translateZ(0); }
+        }
+
         @keyframes pulseAmbient {
             0% { opacity: 0.5; transform: translateX(-50%) scale(0.95); }
             100% { opacity: 0.95; transform: translateX(-50%) scale(1.06); }
@@ -93,6 +105,7 @@
             justify-content: center;
             align-items: center;
             padding: 0 1rem;
+            animation: fadeInUp 0.8s var(--ease-out-expo) forwards;
         }
 
         .pill-navbar {
@@ -159,29 +172,18 @@
         .nav-menu-item a:hover { transform: translateY(-2px); }
         .nav-menu-item a:hover i { transform: scale(1.18) rotate(8deg); }
 
-        /* HERO & PAGE HEADER CONTAINER */
+        /* HERO & PAGE HEADER */
         .page-container {
             width: 100%;
             max-width: 1280px;
             margin: 0 auto;
-            padding: 9.5rem 1.5rem 5rem;
-            perspective: 1200px;
+            padding: 8.5rem 1.5rem 5rem;
         }
 
-        /* 3D BROCHURE UNFOLD ANIMATION STATES */
         .header-title-wrapper {
             text-align: center;
             margin-bottom: 2.5rem;
-            transform-origin: top center;
-            opacity: 0;
-            transform: perspective(1000px) rotateX(-55deg) translateY(-40px) scale(0.9);
-            transition: transform 0.85s var(--ease-out-expo), opacity 0.85s var(--ease-out-expo);
-            will-change: transform, opacity;
-        }
-
-        .header-title-wrapper.unfold {
-            opacity: 1;
-            transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.1s both;
         }
 
         .badge-category {
@@ -219,16 +221,7 @@
             gap: 0.75rem;
             margin-bottom: 3rem;
             flex-wrap: wrap;
-            transform-origin: top center;
-            opacity: 0;
-            transform: perspective(1000px) rotateX(-40deg) translateY(-25px);
-            transition: transform 0.85s var(--ease-out-expo) 0.1s, opacity 0.85s var(--ease-out-expo) 0.1s;
-            will-change: transform, opacity;
-        }
-
-        .filter-container.unfold {
-            opacity: 1;
-            transform: perspective(1000px) rotateX(0deg) translateY(0);
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.2s both;
         }
 
         .filter-btn {
@@ -256,12 +249,11 @@
 
         .filter-btn:active { transform: scale(0.96); }
 
-        /* PORTFOLIO GRID & BROCHURE UNFOLD CARDS */
+        /* PORTFOLIO GRID */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
             gap: 1.8rem;
-            perspective: 1200px;
         }
 
         .portfolio-item {
@@ -274,20 +266,13 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            transform-origin: top center;
-            opacity: 0;
-            transform: perspective(1000px) rotateX(-50deg) translateY(50px) scale(0.9);
-            transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo), box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
+            animation: popIn 0.6s var(--ease-out-expo) both;
+            transition: transform 0.4s var(--ease-smooth), opacity 0.4s var(--ease-smooth), box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth);
             will-change: transform, opacity;
         }
 
-        .portfolio-item.unfold {
-            opacity: 1;
-            transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
-        }
-
         .portfolio-item:hover {
-            transform: translateY(-8px) scale(1.02) !important;
+            transform: translateY(-8px) scale(1.015);
             border-color: var(--orange-main);
             box-shadow: 0 20px 40px rgba(227, 82, 5, 0.18);
         }
@@ -295,7 +280,7 @@
         .portfolio-item.inactive {
             display: none;
             opacity: 0;
-            transform: scale(0.9) translateY(20px);
+            transform: scale(0.9) translateY(10px);
         }
 
         .item-img {
@@ -596,14 +581,7 @@
             justify-content: center;
             margin-top: 4rem;
             padding-top: 2rem;
-            opacity: 0;
-            transform: perspective(1000px) rotateX(-40deg) translateY(30px);
-            transition: transform 0.85s var(--ease-out-expo), opacity 0.85s var(--ease-out-expo);
-        }
-
-        .next-page-wrapper.unfold {
-            opacity: 1;
-            transform: perspective(1000px) rotateX(0deg) translateY(0);
+            animation: fadeInUp 0.8s var(--ease-out-expo) both;
         }
 
         .btn-next-page {
@@ -638,7 +616,6 @@
         @media (max-width: 850px) {
             .top-nav-wrapper { transform: translateX(0); }
             .pill-navbar { padding: 0.5rem 1.2rem; gap: 1rem; }
-            .page-container { padding-top: 8rem; }
             .page-title { font-size: 2rem; }
             .portfolio-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.2rem; }
             .modal-container { max-width: 100%; }
@@ -928,7 +905,7 @@
 
         </div>
 
-        <!-- NEXT PAGE BUTTON SECTION -->
+        <!-- NEXT PAGE BUTTON (ปุ่มกดไปหน้า end.html ที่เพิ่มเข้ามา) -->
         <div class="next-page-wrapper">
             <a href="end.html" class="btn-next-page">
                 <span>ไปยังหน้าสุดท้าย</span>
@@ -968,9 +945,9 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT: DYNAMIC 3D UNFOLD RE-TRIGGER & FILTER LOGIC -->
+    <!-- JAVASCRIPT: OPTIMIZED ANIMATION & INTERACTION -->
     <script>
-        /* Smooth Background Particle Canvas */
+        /* Smooth Particle Canvas Animation */
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -1033,40 +1010,7 @@
         }
         requestAnimationFrame(drawAndAnimate);
 
-        /* DYNAMIC INTERSECTION OBSERVER (RE-TRIGGERS ON SCROLL & NAVIGATION) */
-        const unfoldObserverOptions = {
-            root: null,
-            threshold: 0.1,
-            rootMargin: "0px 0px -40px 0px"
-        };
-
-        const unfoldObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('unfold');
-                } else {
-                    // ลบ class unfold ออกเมื่อพ้นหน้าจอ เพื่อให้เวลาเลื่อนกลับมา อนิเมชั่นแผ่นพับจะทำงานใหม่ซ้ำเสมอ
-                    entry.target.classList.remove('unfold');
-                }
-            });
-        }, unfoldObserverOptions);
-
-        function initAnimations() {
-            const elements = document.querySelectorAll('.header-title-wrapper, .filter-container, .portfolio-item, .next-page-wrapper');
-            elements.forEach((el, idx) => {
-                if (el.classList.contains('portfolio-item')) {
-                    el.style.transitionDelay = `${(idx % 3) * 0.1}s`;
-                }
-                unfoldObserver.observe(el);
-            });
-        }
-
-        // เรียกใช้งานอนิเมชั่นเมื่อโหลดหน้าเว็บ
-        window.addEventListener('DOMContentLoaded', () => {
-            initAnimations();
-        });
-
-        /* Smooth Portfolio Filter System (FORCE RE-ANIMATE EVERY SWITCH) */
+        /* Smooth Portfolio Filter System */
         function filterPortfolio(category, evt) {
             const items = document.querySelectorAll('.portfolio-item');
             const buttons = document.querySelectorAll('.filter-btn');
@@ -1074,24 +1018,13 @@
             buttons.forEach(btn => btn.classList.remove('active'));
             if (evt) evt.currentTarget.classList.add('active');
 
-            let visibleIndex = 0;
-            items.forEach((item) => {
-                // ลบ unfold ออกก่อนเพื่อ Reset อนิเมชั่น
-                item.classList.remove('unfold');
-
+            items.forEach((item, index) => {
                 const matches = category === 'all' || item.classList.contains(category);
                 if (matches) {
                     item.classList.remove('inactive');
-                    item.style.transitionDelay = `${(visibleIndex % 3) * 0.08}s`;
-                    visibleIndex++;
-
-                    // บังคับให้ Browser ทำ Reflow เพื่อรีเซ็ต Transition CSS
-                    void item.offsetWidth;
-
-                    // แสดงอนิเมชั่นคลี่แผ่นพับใหม่ทุกครั้งที่กดฟิลเตอร์
-                    setTimeout(() => {
-                        item.classList.add('unfold');
-                    }, 20);
+                    item.style.animation = 'none';
+                    item.offsetHeight; // trigger reflow
+                    item.style.animation = `popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.04}s both`;
                 } else {
                     item.classList.add('inactive');
                 }
@@ -1178,4 +1111,3 @@
     </script>
 </body>
 </html>
-
